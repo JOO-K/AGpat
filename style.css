@@ -430,10 +430,13 @@ section p,
 .mtab:hover { border-color: var(--accent); color: var(--accent); }
 .mtab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Viewer — full screen, pointer-events active so 3D controls work */
+/* Viewer — right 55% of screen so model appears on that side */
 .viewer-wrap {
   position: absolute;
-  inset: 0;
+  left: 45%;
+  right: 0;
+  top: 0;
+  bottom: 0;
   pointer-events: auto;
 }
 
