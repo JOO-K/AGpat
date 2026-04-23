@@ -170,9 +170,11 @@ a:hover { text-decoration: underline; }
   display: block;
 }
 
-/* ── PATENT BODY — full-width text column ────────────────────────── */
+/* ── PATENT BODY — full-width text column, above viewer so text stays clickable ── */
 .patent-body {
   min-height: 100vh;
+  position: relative;
+  z-index: 15;
 }
 
 /* Page separator — spans both columns, three-part like the real patent */
@@ -398,15 +400,28 @@ section p,
   z-index: 10;
 }
 
-/* Model selector tabs — pinned top-right */
-.model-tabs {
+/* ── Part tree panel — top right ────────────────────── */
+.part-tree-panel {
   position: absolute;
-  top: 1rem;
+  top: 3.8rem;
   right: 1.2rem;
-  width: 260px;
+  width: 230px;
+  max-height: calc(100vh - 12rem);
+  overflow-y: auto;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--rule);
+  pointer-events: auto;
+  z-index: 20;
+}
+
+/* Model selector tabs — inside tree panel header */
+.model-tabs {
   display: flex;
-  gap: 0.3rem;
+  gap: 0.25rem;
   flex-wrap: wrap;
+  padding: 0.4rem;
+  border-bottom: 1px solid var(--rule);
   pointer-events: auto;
 }
 
@@ -430,10 +445,10 @@ section p,
 .mtab:hover { border-color: var(--accent); color: var(--accent); }
 .mtab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Viewer — right 55% of screen so model appears on that side */
+/* Viewer — right 70%, left 15% overlaps text zone */
 .viewer-wrap {
   position: absolute;
-  left: 45%;
+  left: 30%;
   right: 0;
   top: 0;
   bottom: 0;
@@ -446,6 +461,7 @@ section p,
   background: transparent !important;
   --poster-color: transparent !important;
   --progress-bar-color: transparent;
+  filter: drop-shadow(0 0 2px rgba(90,90,90,0.45)) drop-shadow(0 0 6px rgba(60,60,60,0.18));
 }
 
 /* ── Hotspot annotations ────────────────────────────────── */
@@ -751,6 +767,73 @@ section.in-view > h2 { color: var(--ink); }
 
 .landing-footer a { color: var(--dim); }
 .landing-footer a:hover { color: var(--accent); text-decoration: underline; }
+
+/* ── Part tree ───────────────────────────────────────── */
+.tree-header {
+  padding: 0.35rem 0.65rem;
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+  border-bottom: 1px solid var(--rule);
+  background: rgba(245,246,250,0.7);
+}
+
+.tree-list,
+.tree-children {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tree-list { padding: 0.2rem 0; }
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.22rem 0.6rem;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--ink);
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tree-row:hover  { background: var(--acc-bg); color: var(--accent); }
+.tree-row.active { background: var(--acc-bg); color: var(--accent); font-weight: 500; }
+
+.tree-toggle, .tree-dot {
+  font-size: 0.48rem;
+  width: 10px;
+  flex-shrink: 0;
+  color: var(--dim);
+  user-select: none;
+}
+
+.tree-name { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+
+.tree-rn {
+  font-size: 0.5rem;
+  color: var(--accent);
+  background: var(--acc-bg);
+  padding: 0.05rem 0.22rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Depth indentation */
+.tree-children > .tree-item > .tree-row          { padding-left: 1.4rem; }
+.tree-children > .tree-item > .tree-children
+  > .tree-item > .tree-row                       { padding-left: 2.2rem; }
+.tree-children > .tree-item > .tree-children
+  > .tree-item > .tree-children > .tree-item
+  > .tree-row                                    { padding-left: 3rem; }
+.tree-children > .tree-item > .tree-children
+  > .tree-item > .tree-children > .tree-item
+  > .tree-children > .tree-item > .tree-row      { padding-left: 3.8rem; }
 
 /* ── Patent page top nav ──────────────────────────────── */
 .patent-nav {

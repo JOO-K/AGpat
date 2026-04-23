@@ -150,12 +150,7 @@
   <!-- ── RIGHT: Floating model panel ──────────────────── -->
   <aside class="model-panel" id="modelPanel">
 
-    <div class="model-tabs">
-      <button class="mtab active" data-src="models/rojas.glb" data-name="ROJAS v22">ROJAS v22</button>
-      <button class="mtab" data-src="models/alt.glb" data-name="ALT v47">ALT v47</button>
-      <button class="mtab" data-src="models/rebuild.glb" data-name="REBUILD v1">REBUILD v1</button>
-    </div>
-
+    <!-- Full-screen 3D viewer -->
     <div class="viewer-wrap">
       <model-viewer
         id="mainViewer"
@@ -163,8 +158,8 @@
         camera-orbit="30deg 65deg 90%"
         camera-controls
         interpolation-decay="200"
-        shadow-intensity="0.35"
-        exposure="1.1"
+        shadow-intensity="0.4"
+        exposure="1.15"
         environment-image="neutral"
         class="main-viewer">
 
@@ -200,6 +195,107 @@
       </model-viewer>
     </div>
 
+    <!-- Part tree panel — top right, Fusion-style -->
+    <div class="part-tree-panel">
+
+      <!-- Model selector tabs as panel header -->
+      <div class="model-tabs">
+        <button class="mtab active" data-src="models/rojas.glb" data-name="ROJAS v22">ROJAS v22</button>
+        <button class="mtab" data-src="models/alt.glb" data-name="ALT v47">ALT v47</button>
+        <button class="mtab" data-src="models/rebuild.glb" data-name="REBUILD v1">REBUILD v1</button>
+      </div>
+
+      <div class="tree-header">PARTS</div>
+
+      <ul class="tree-list">
+        <li class="tree-item">
+          <div class="tree-row" data-orbit="40deg 65deg 105%" data-label="Speculum Assembly" data-src="models/rojas.glb">
+            <span class="tree-toggle">▼</span><span class="tree-name">Speculum Assembly</span><span class="tree-rn">10</span>
+          </div>
+          <ul class="tree-children">
+
+            <li class="tree-item">
+              <div class="tree-row" data-orbit="-20deg 60deg 135%" data-label="Applicator" data-src="models/rojas.glb">
+                <span class="tree-toggle">▼</span><span class="tree-name">Applicator</span><span class="tree-rn">14</span>
+              </div>
+              <ul class="tree-children">
+                <li class="tree-item">
+                  <div class="tree-row" data-orbit="40deg 65deg 105%" data-label="Outer Tube" data-src="models/rojas.glb">
+                    <span class="tree-dot">·</span><span class="tree-name">Outer Tube</span><span class="tree-rn">28</span>
+                  </div>
+                </li>
+                <li class="tree-item">
+                  <div class="tree-row" data-orbit="-20deg 60deg 135%" data-label="Plunger" data-src="models/rojas.glb">
+                    <span class="tree-dot">·</span><span class="tree-name">Plunger</span><span class="tree-rn">26</span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+
+            <li class="tree-item">
+              <div class="tree-row" data-orbit="30deg 65deg 90%" data-label="Speculum" data-src="models/rojas.glb">
+                <span class="tree-toggle">▼</span><span class="tree-name">Speculum</span><span class="tree-rn">12</span>
+              </div>
+              <ul class="tree-children">
+
+                <li class="tree-item">
+                  <div class="tree-row" data-orbit="30deg 65deg 90%" data-label="Expansor" data-src="models/rojas.glb">
+                    <span class="tree-toggle">▼</span><span class="tree-name">Expansor</span><span class="tree-rn">16</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item">
+                      <div class="tree-row" data-orbit="0deg 3deg 90%" data-label="Distal Transitions (peaks)" data-src="models/rojas.glb">
+                        <span class="tree-dot">·</span><span class="tree-name">Distal Transitions</span><span class="tree-rn">38</span>
+                      </div>
+                    </li>
+                    <li class="tree-item">
+                      <div class="tree-row" data-orbit="30deg 65deg 90%" data-label="Longitudinal Sections" data-src="models/rojas.glb">
+                        <span class="tree-dot">·</span><span class="tree-name">Longitudinal Sections</span><span class="tree-rn">44</span>
+                      </div>
+                    </li>
+                    <li class="tree-item">
+                      <div class="tree-row" data-orbit="30deg 65deg 68%" data-label="Proximal Transitions (valleys)" data-src="models/rojas.glb">
+                        <span class="tree-toggle">▼</span><span class="tree-name">Proximal Transitions</span><span class="tree-rn">40</span>
+                      </div>
+                      <ul class="tree-children">
+                        <li class="tree-item">
+                          <div class="tree-row" data-orbit="85deg 88deg 52%" data-label="Loops / Coils" data-src="models/rojas.glb">
+                            <span class="tree-dot">·</span><span class="tree-name">Loops / Coils</span><span class="tree-rn">42</span>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="tree-item">
+                  <div class="tree-row" data-orbit="90deg 90deg 90%" data-label="Extraction Mechanism" data-src="models/rojas.glb">
+                    <span class="tree-toggle">▼</span><span class="tree-name">Extraction Mechanism</span><span class="tree-rn">18</span>
+                  </div>
+                  <ul class="tree-children">
+                    <li class="tree-item">
+                      <div class="tree-row" data-orbit="85deg 88deg 52%" data-label="Drawstring" data-src="models/rojas.glb">
+                        <span class="tree-dot">·</span><span class="tree-name">Drawstring</span><span class="tree-rn">20</span>
+                      </div>
+                    </li>
+                    <li class="tree-item">
+                      <div class="tree-row" data-orbit="85deg 88deg 52%" data-label="Loop / Ring" data-src="models/rojas.glb">
+                        <span class="tree-dot">·</span><span class="tree-name">Loop / Ring</span><span class="tree-rn">22</span>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+
+              </ul>
+            </li>
+
+          </ul>
+        </li>
+      </ul>
+
+    </div><!-- /.part-tree-panel -->
+
+    <!-- View controls — bottom right -->
     <div class="view-section">
       <p class="view-label">VIEWPOINT</p>
       <div class="view-btns">
