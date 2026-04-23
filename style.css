@@ -165,17 +165,14 @@ a:hover { text-decoration: underline; }
   text-align: center;
 }
 
-/* ── MAIN DOC — text left fixed width, model takes remaining space ── */
+/* ── MAIN DOC — text full width, model floats as overlay ── */
 .doc-grid {
-  display: grid;
-  grid-template-columns: var(--text-col) 1fr;
-  align-items: start;
+  display: block;
 }
 
-/* ── PATENT BODY — constrained text column ────────────────────────── */
+/* ── PATENT BODY — full-width text column ────────────────────────── */
 .patent-body {
   min-height: 100vh;
-  border-right: 1px solid var(--rule);
 }
 
 /* Page separator — spans both columns, three-part like the real patent */
@@ -392,10 +389,12 @@ section p,
   font-size: 0.9rem;
 }
 
-/* ── MODEL PANEL — sticky, fills 1fr column, transparent canvas ───── */
+/* ── MODEL PANEL — fixed transparent overlay on the right ───────── */
 .model-panel {
-  position: sticky;
+  position: fixed;
+  right: 0;
   top: 0;
+  width: 400px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -403,6 +402,16 @@ section p,
   gap: 0.6rem;
   overflow: hidden;
   background: transparent;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Re-enable pointer events on all interactive children */
+.model-tabs,
+.viewer-wrap,
+.view-section,
+.fig-display {
+  pointer-events: auto;
 }
 
 /* Model selector tabs */
@@ -568,6 +577,7 @@ section.in-view > h2 { color: var(--ink); }
     border-top: 1px solid var(--rule);
     background: #fff;
     pointer-events: auto;
+    z-index: auto;
   }
   .viewer-wrap { height: 320px; }
 }
