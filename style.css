@@ -389,36 +389,25 @@ section p,
   font-size: 0.9rem;
 }
 
-/* ── MODEL PANEL — fixed transparent overlay on the right ───────── */
+/* ── MODEL PANEL — full-screen transparent overlay ───────────────── */
 .model-panel {
   position: fixed;
-  right: 0;
-  top: 0;
-  width: 400px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 1.2rem 0.8rem 1rem;
-  gap: 0.6rem;
-  overflow: hidden;
+  inset: 0;
   background: transparent;
   pointer-events: none;
   z-index: 10;
 }
 
-/* Re-enable pointer events on all interactive children */
-.model-tabs,
-.viewer-wrap,
-.view-section,
-.fig-display {
-  pointer-events: auto;
-}
-
-/* Model selector tabs */
+/* Model selector tabs — pinned top-right */
 .model-tabs {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  width: 260px;
   display: flex;
   gap: 0.3rem;
   flex-wrap: wrap;
+  pointer-events: auto;
 }
 
 .mtab {
@@ -441,11 +430,10 @@ section p,
 .mtab:hover { border-color: var(--accent); color: var(--accent); }
 .mtab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* Viewer — fills the panel, fully transparent canvas */
+/* Viewer — full screen, pointer-events active so 3D controls work */
 .viewer-wrap {
-  flex: 1;
-  min-height: 0;
-  position: relative;
+  position: absolute;
+  inset: 0;
   pointer-events: auto;
 }
 
@@ -504,8 +492,17 @@ section p,
 .hs:focus .hs-t { opacity: 1; transform: translateX(0); }
 .hs:hover .hs-n { background: var(--accent); color: #fff; }
 
-/* ── View preset buttons ────────────────────────────────── */
-.view-section { display: flex; flex-direction: column; gap: 0.35rem; }
+/* ── View preset buttons — pinned bottom-right ──────────── */
+.view-section {
+  position: absolute;
+  bottom: 3.5rem;
+  right: 1.2rem;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  pointer-events: auto;
+}
 
 .view-label {
   font-family: var(--mono);
@@ -536,8 +533,12 @@ section p,
 .vbtn:hover { border-color: var(--accent); color: var(--accent); }
 .vbtn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* ── Fig label display ──────────────────────────────────── */
+/* ── Fig label display — pinned very bottom-right ────────── */
 .fig-display {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.2rem;
+  width: 260px;
   font-family: var(--mono);
   font-size: 0.6rem;
   color: var(--accent);
@@ -545,6 +546,7 @@ section p,
   border-top: 1px solid var(--rule);
   min-height: 1.4em;
   transition: color 0.2s;
+  pointer-events: auto;
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
@@ -573,11 +575,24 @@ section.in-view > h2 { color: var(--ink); }
   .model-panel {
     position: relative;
     width: 100%;
-    height: auto;
+    height: 420px;
     border-top: 1px solid var(--rule);
     background: #fff;
     pointer-events: auto;
     z-index: auto;
   }
-  .viewer-wrap { height: 320px; }
+
+  .model-tabs,
+  .viewer-wrap,
+  .view-section,
+  .fig-display {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    pointer-events: auto;
+  }
+
+  .viewer-wrap { height: 260px; }
+  .view-section { bottom: auto; right: auto; }
+  .fig-display  { bottom: auto; right: auto; }
 }
