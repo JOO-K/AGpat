@@ -1,0 +1,573 @@
+/* ── Reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:     #111;
+  --dim:     #888;
+  --rule:    #d0d0d0;
+  --bg:      #fff;
+  --serif:   'Times New Roman', Times, serif;
+  --mono:    'IBM Plex Mono', 'Courier New', monospace;
+  /* accent palette — deep scientific blue */
+  --accent:  #1d4ed8;
+  --acc-mid: #3b82f6;
+  --acc-bg:  #eff6ff;
+  /* text column fixed width */
+  --text-col: 712px;
+  /* PDF-exact values */
+  --col-w:   295px;
+  --pt-size: 12px;
+  --pt-lh:   1.205;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--body-size);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── COVER PAGE ─────────────────────────────────────────── */
+.cover-page {
+  padding: 3.5rem 4rem 2.5rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.cover-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.cover-seal { font-size: 1.6rem; color: var(--dim); }
+
+.cover-motto {
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--dim);
+  letter-spacing: 0.02em;
+}
+
+.cover-grid {
+  display: grid;
+  grid-template-columns: 1fr var(--panel);
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Cover info block */
+.cover-id-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+}
+
+.cover-type { font-family: var(--mono); font-size: 0.72rem; color: var(--dim); }
+.cover-pnum { font-family: var(--mono); font-size: 1rem; font-weight: 500; }
+
+.cover-name-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.2rem;
+}
+
+.cover-inventor-surname {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cover-date { font-size: 0.8rem; color: var(--dim); font-family: var(--mono); }
+
+.cover-divider {
+  height: 1px;
+  background: var(--rule);
+  margin: 1rem 0;
+}
+
+/* Patent fields table */
+.cover-fields {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.cover-fields td { padding: 0.15rem 0.5rem 0.15rem 0; vertical-align: top; }
+
+.field-code {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--dim);
+  white-space: nowrap;
+  width: 2.5rem;
+  padding-top: 0.22rem;
+}
+
+.field-label {
+  color: var(--dim);
+  white-space: nowrap;
+  width: 5rem;
+  font-size: 0.82rem;
+}
+
+.cover-fields tr.spacer td { height: 0.4rem; }
+.claim-count { font-family: var(--mono); font-size: 0.75em; color: var(--dim); }
+
+.cover-examiner {
+  font-size: 0.78rem;
+  color: var(--dim);
+  margin-top: 0.6rem;
+}
+
+.cover-uspto {
+  font-size: 0.78rem;
+  margin-top: 0.3rem;
+}
+
+.cover-uspto a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Cover model */
+.cover-model-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 2rem;
+}
+
+.cover-viewer {
+  width: 100%;
+  height: 60vh;
+  background: transparent !important;
+  --poster-color: transparent !important;
+}
+
+.model-tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--dim);
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* ── MAIN DOC — text left fixed width, model takes remaining space ── */
+.doc-grid {
+  display: grid;
+  grid-template-columns: var(--text-col) 1fr;
+  align-items: start;
+}
+
+/* ── PATENT BODY — constrained text column ────────────────────────── */
+.patent-body {
+  min-height: 100vh;
+  border-right: 1px solid var(--rule);
+}
+
+/* Page separator — spans both columns, three-part like the real patent */
+.page-sep {
+  column-span: all;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.3rem 0;
+  margin: 1rem 0 0.9rem;
+  font-family: var(--serif);
+  font-size: var(--pt-size);
+  color: var(--ink);
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
+}
+
+.page-sep span:nth-child(2) {
+  /* center the patent number */
+  text-align: center;
+}
+
+/* Page 21 title row — spans both columns */
+.body-title {
+  column-span: all;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: var(--pt-size);
+}
+
+.body-title-text {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.body-title-num {
+  font-family: var(--serif);
+  font-size: 0.82rem;
+  font-weight: 400;
+}
+
+/* Two-column text area — PDF-exact column width, font, leading */
+.two-col {
+  /* left padding = 32px for line numbers, right = 20px */
+  padding: 1.5rem 20px 2rem 32px;
+  /* column-width drives layout; NO column-count so it doesn't override width */
+  column-width: var(--col-w);
+  column-gap: 30px;
+  column-rule: none;
+  /* constrain container so browser fits exactly 2 × 295px columns:
+     32 + 295 + 30 + 295 + 20 = 672px */
+  max-width: 672px;
+}
+
+section {
+  margin-bottom: 1.4rem;
+}
+
+/* Section headings match PDF exactly: centered, bold, same serif, caps */
+section h2 {
+  font-family: var(--serif);
+  font-size: var(--pt-size);
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: var(--pt-lh);
+  margin-bottom: 0.4em;
+  margin-top: 0.3em;
+  break-after: avoid;
+  break-before: avoid;
+}
+
+section p,
+.fig-list li {
+  font-size: var(--pt-size);
+  line-height: var(--pt-lh);
+  text-align: justify;
+  hyphens: auto;
+  margin-bottom: 0;
+  /* match PDF word spacing exactly */
+  word-spacing: 0;
+  letter-spacing: 0;
+}
+
+/* Line numbers — same font/size as PDF body, in left margin of each column */
+.ln {
+  font-family: var(--serif);
+  font-size: var(--pt-size);
+  color: var(--ink);
+  display: inline-block;
+  width: 20px;
+  margin-left: -28px;
+  text-align: right;
+  padding-right: 5px;
+  vertical-align: baseline;
+  user-select: none;
+}
+
+/* ── FIG reference links ────────────────────────────────── */
+.fig-ref {
+  cursor: pointer;
+  font-style: italic;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--acc-mid);
+  transition: text-decoration-color 0.12s, background 0.12s;
+  position: relative;
+  white-space: nowrap;
+  border-radius: 2px;
+}
+
+.fig-ref:hover { text-decoration-color: var(--accent); }
+.fig-ref:active { background: var(--acc-bg); }
+
+.fig-ref::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 5px);
+  right: 0;
+  left: auto;
+  transform: none;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-style: normal;
+  white-space: nowrap;
+  padding: 0.25rem 0.45rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s;
+  z-index: 50;
+}
+
+.fig-ref:hover::after { opacity: 1; }
+
+/* ── Reference numbers ──────────────────────────────────── */
+.rn {
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 0.75em;
+  color: #555;
+}
+
+/* ── Figure list ────────────────────────────────────────── */
+.fig-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  break-inside: auto;
+}
+
+.fig-list li {
+  margin-bottom: 0.45rem;
+  padding-left: 0;
+  break-inside: avoid;
+}
+
+/* ── Inline figure ──────────────────────────────────────── */
+.inline-fig {
+  break-inside: avoid;
+  margin: 1.2rem 0;
+  text-align: center;
+}
+
+.inline-fig img {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.inline-fig figcaption {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--dim);
+  margin-top: 0.4rem;
+}
+
+/* ── Claims ─────────────────────────────────────────────── */
+.what-is-claimed { font-style: italic; margin-bottom: 0.4rem; }
+
+.claims-list {
+  padding-left: 1.2rem;
+  font-size: var(--pt-size);
+}
+
+.claims-list li {
+  margin-bottom: 0.6rem;
+  text-align: justify;
+  line-height: 1.65;
+  break-inside: avoid;
+  font-size: 0.84rem;
+}
+
+.claims-list li::marker {
+  font-family: var(--mono);
+  font-size: 0.72em;
+  color: var(--dim);
+}
+
+.end-mark {
+  text-align: center;
+  letter-spacing: 0.5em;
+  color: var(--dim);
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* ── MODEL PANEL — sticky, fills 1fr column, transparent canvas ───── */
+.model-panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.2rem 0.8rem 1rem;
+  gap: 0.6rem;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Model selector tabs */
+.model-tabs {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.mtab {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid var(--rule);
+  background: transparent;
+  cursor: pointer;
+  color: var(--dim);
+  transition: all 0.12s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mtab:hover { border-color: var(--accent); color: var(--accent); }
+.mtab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* Viewer — fills the panel, fully transparent canvas */
+.viewer-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  pointer-events: auto;
+}
+
+.main-viewer {
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  --poster-color: transparent !important;
+  --progress-bar-color: transparent;
+}
+
+/* ── Hotspot annotations ────────────────────────────────── */
+.hs {
+  border: none;
+  background: transparent;
+  cursor: default;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.hs-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background: rgba(255,255,255,0.9);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: background 0.12s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.hs-t {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid var(--rule);
+  padding: 0.18rem 0.35rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.12s, transform 0.12s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.hs:hover .hs-t,
+.hs:focus .hs-t { opacity: 1; transform: translateX(0); }
+.hs:hover .hs-n { background: var(--accent); color: #fff; }
+
+/* ── View preset buttons ────────────────────────────────── */
+.view-section { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.view-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+.view-btns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+}
+
+.vbtn {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--rule);
+  background: transparent;
+  padding: 0.22rem 0.3rem;
+  cursor: pointer;
+  color: var(--dim);
+  transition: all 0.12s;
+  text-align: center;
+}
+
+.vbtn:hover { border-color: var(--accent); color: var(--accent); }
+.vbtn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Fig label display ──────────────────────────────────── */
+.fig-display {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--accent);
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--rule);
+  min-height: 1.4em;
+  transition: color 0.2s;
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--dim);
+}
+
+.site-footer a:hover { text-decoration: underline; }
+
+/* ── Active section highlight ───────────────────────────── */
+section.in-view > h2 { color: var(--ink); }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .cover-grid { grid-template-columns: 1fr; }
+  .cover-model-col { display: none; }
+
+  .patent-body { padding-right: 1rem; }
+
+  .model-panel {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-top: 1px solid var(--rule);
+    background: #fff;
+    pointer-events: auto;
+  }
+  .viewer-wrap { height: 320px; }
+}

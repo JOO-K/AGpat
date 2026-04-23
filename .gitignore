@@ -1,0 +1,11 @@
+# Temp working directory
+AGTemp/
+
+# Large 3D source files not needed for web
+models/*.stl
+models/*.obj
+models/*.usdz
+
+# OS junk
+.DS_Store
+Thumbs.db
