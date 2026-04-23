@@ -5,22 +5,39 @@ const mTabs    = document.querySelectorAll('.mtab');
 
 /* ── Per-material color palette ───────────────────────── */
 const MAT_COLORS = [
-  [0.52, 0.74, 0.96, 1.0],  // steel blue  — applicator body
-  [0.96, 0.72, 0.32, 1.0],  // amber       — expansor spring
-  [0.50, 0.88, 0.62, 1.0],  // mint        — extraction mechanism
-  [0.90, 0.50, 0.50, 1.0],  // rose        — drawstring/loop
-  [0.78, 0.60, 0.94, 1.0],  // lavender    — extra parts
-  [0.94, 0.88, 0.44, 1.0],  // gold        — extra parts
+  [0.52, 0.74, 0.96, 1.0],  // steel blue
+  [0.96, 0.72, 0.32, 1.0],  // amber
+  [0.50, 0.88, 0.62, 1.0],  // mint
+  [0.90, 0.50, 0.50, 1.0],  // rose
+  [0.78, 0.60, 0.94, 1.0],  // lavender
+  [0.94, 0.88, 0.44, 1.0],  // gold
 ];
 
 function applyColors(mv) {
+  // Try GLTF materials API first
   const mats = mv.model?.materials;
-  if (!mats?.length) return;
-  mats.forEach((m, i) => {
-    m.pbrMetallicRoughness.setBaseColorFactor(MAT_COLORS[i % MAT_COLORS.length]);
-    m.pbrMetallicRoughness.roughnessFactor = 0.55;
-    m.pbrMetallicRoughness.metallicFactor  = 0.15;
-  });
+  if (mats?.length) {
+    mats.forEach((m, i) => {
+      m.pbrMetallicRoughness.setBaseColorFactor(MAT_COLORS[i % MAT_COLORS.length]);
+      m.pbrMetallicRoughness.roughnessFactor = 0.5;
+      m.pbrMetallicRoughness.metallicFactor  = 0.1;
+    });
+    return;
+  }
+  // Fallback: these models have no GLTF materials, apply color via Three.js scene
+  // NOTE: per-part colors require re-exporting the GLB with separate named meshes
+  try {
+    mv.model.scene.traverse(obj => {
+      if (!obj.isMesh) return;
+      const list = Array.isArray(obj.material) ? obj.material : [obj.material];
+      list.forEach((m, i) => {
+        if (m.color) m.color.setRGB(...MAT_COLORS[i % MAT_COLORS.length].slice(0, 3));
+        m.roughness = 0.5;
+        m.metalness = 0.1;
+        m.needsUpdate = true;
+      });
+    });
+  } catch (_) {}
 }
 
 /* ── Snap camera + optionally swap model ──────────── */
@@ -111,6 +128,9 @@ document.querySelectorAll('.tree-row[data-orbit]').forEach(row => {
     snapTo(row.dataset.orbit, row.dataset.label, row.dataset.src);
     document.querySelectorAll('.tree-row.active').forEach(r => r.classList.remove('active'));
     row.classList.add('active');
+    const rn = row.querySelector('.tree-rn')?.textContent.trim();
+    document.querySelectorAll('.hs.hs-active').forEach(h => h.classList.remove('hs-active'));
+    if (rn) document.getElementById(`hs-${rn}`)?.classList.add('hs-active');
   });
 });
 

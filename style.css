@@ -170,11 +170,10 @@ a:hover { text-decoration: underline; }
   display: block;
 }
 
-/* ── PATENT BODY — full-width text column, above viewer so text stays clickable ── */
+/* ── PATENT BODY — transparent to pointer events so viewer works outside text ── */
 .patent-body {
   min-height: 100vh;
-  position: relative;
-  z-index: 15;
+  pointer-events: none; /* let events fall through to viewer */
 }
 
 /* Page separator — spans both columns, three-part like the real patent */
@@ -222,17 +221,16 @@ a:hover { text-decoration: underline; }
   font-weight: 400;
 }
 
-/* Two-column text area — PDF-exact column width, font, leading */
+/* Two-column text area — sits above viewer so text stays interactive */
 .two-col {
-  /* left padding = 32px for line numbers, right = 20px */
   padding: 1.5rem 20px 2rem 32px;
-  /* column-width drives layout; NO column-count so it doesn't override width */
   column-width: var(--col-w);
   column-gap: 30px;
   column-rule: none;
-  /* constrain container so browser fits exactly 2 × 295px columns:
-     32 + 295 + 30 + 295 + 20 = 672px */
   max-width: 672px;
+  position: relative;
+  z-index: 15;
+  pointer-events: auto; /* text column is interactive; viewer works outside it */
 }
 
 section {
@@ -489,8 +487,15 @@ section p,
   font-weight: 500;
   color: var(--accent);
   flex-shrink: 0;
-  transition: background 0.12s;
+  transition: background 0.15s, transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.hs.hs-active .hs-n {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.4);
+  box-shadow: 0 0 0 4px rgba(29,78,216,0.25), 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .hs-t {
