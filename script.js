@@ -68,6 +68,7 @@ function applyColors(mv) {
 function snapTo(orbit, label, src, target, fov) {
   if (!viewer) return;
   viewer.removeAttribute('auto-rotate');
+  viewer.resetTurntableRotation?.(0);
   if (target) {
     const parts = target.trim().split(/\s+/);
     viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
@@ -176,15 +177,23 @@ document.querySelectorAll('.tree-row[data-orbit]').forEach(row => {
 });
 
 /* ── IntersectionObserver: auto-update on scroll ──── */
+let scrollSnapTimer = null;
+let pendingSection  = null;
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     const s = entry.target;
-    if (s.dataset.orbit) snapTo(s.dataset.orbit, s.dataset.label, s.dataset.src);
     document.querySelectorAll('section.in-view').forEach(x => x.classList.remove('in-view'));
     s.classList.add('in-view');
+    pendingSection = s;
+    clearTimeout(scrollSnapTimer);
+    scrollSnapTimer = setTimeout(() => {
+      if (pendingSection?.dataset.orbit)
+        snapTo(pendingSection.dataset.orbit, pendingSection.dataset.label, pendingSection.dataset.src);
+    }, 350);
   });
-}, { threshold: 0.25 });
+}, { threshold: 0.4 });
 
 document.querySelectorAll('section[data-orbit]').forEach(s => observer.observe(s));
 
