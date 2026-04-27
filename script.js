@@ -72,8 +72,6 @@ function snapTo(orbit, label, src, target, fov, resetTurntable = false) {
   if (target) {
     const parts = target.trim().split(/\s+/);
     viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
-  } else {
-    viewer.cameraTarget = 'auto';
   }
   if (fov) viewer.fieldOfView = fov;
   viewer.cameraOrbit = orbit;
