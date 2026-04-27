@@ -65,10 +65,10 @@ function applyColors(mv) {
 }
 
 /* ── Snap camera + optionally swap model ──────────── */
-function snapTo(orbit, label, src, target, fov) {
+function snapTo(orbit, label, src, target, fov, resetTurntable = false) {
   if (!viewer) return;
   viewer.removeAttribute('auto-rotate');
-  viewer.resetTurntableRotation?.(0);
+  if (resetTurntable) viewer.resetTurntableRotation?.(0);
   if (target) {
     const parts = target.trim().split(/\s+/);
     viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
@@ -83,7 +83,7 @@ function snapTo(orbit, label, src, target, fov) {
 document.querySelectorAll('.fig-ref').forEach(el => {
   el.style.cursor = 'pointer';
   el.addEventListener('click', () => {
-    snapTo(el.dataset.orbit, el.dataset.label, el.dataset.src, el.dataset.target, el.dataset.fov);
+    snapTo(el.dataset.orbit, el.dataset.label, el.dataset.src, el.dataset.target, el.dataset.fov, true);
     // briefly flash the fig-display to confirm the change
     if (figDisp) {
       figDisp.style.color = 'var(--ink)';
