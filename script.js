@@ -65,35 +65,24 @@ function applyColors(mv) {
 }
 
 /* ── Snap camera + optionally swap model ──────────── */
-function snapTo(orbit, label, src) {
+function snapTo(orbit, label, src, target, fov) {
   if (!viewer) return;
-
-  const load = () => { viewer.cameraOrbit = orbit; };
-
-  if (src) {
-    const resolved = new URL(src, location.href).href;
-    if (viewer.src !== resolved) {
-      viewer.src = src;
-      viewer.addEventListener('load', load, { once: true });
-    } else {
-      load();
-    }
-  } else {
-    load();
+  viewer.removeAttribute('auto-rotate');
+  if (target) {
+    const parts = target.trim().split(/\s+/);
+    viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
   }
-
+  if (fov) viewer.fieldOfView = fov;
+  viewer.cameraOrbit = orbit;
   if (figDisp) figDisp.textContent = label || '';
-
-  vBtns.forEach(b => {
-    b.classList.toggle('active', b.dataset.orbit === orbit);
-  });
+  vBtns.forEach(b => b.classList.toggle('active', b.dataset.orbit === orbit));
 }
 
 /* ── FIG reference click in text ─────────────────── */
 document.querySelectorAll('.fig-ref').forEach(el => {
   el.style.cursor = 'pointer';
   el.addEventListener('click', () => {
-    snapTo(el.dataset.orbit, el.dataset.label, el.dataset.src);
+    snapTo(el.dataset.orbit, el.dataset.label, el.dataset.src, el.dataset.target, el.dataset.fov);
     // briefly flash the fig-display to confirm the change
     if (figDisp) {
       figDisp.style.color = 'var(--ink)';
@@ -146,15 +135,43 @@ document.querySelectorAll('.tree-toggle').forEach(toggle => {
   });
 });
 
+/* ── Per-part highlight (dims unselected materials) ── */
+const HIGHLIGHT_COLORS = [
+  [0.18, 0.55, 1.00, 1.0],  // vivid blue
+  [1.00, 0.60, 0.05, 1.0],  // vivid amber
+  [0.10, 0.85, 0.42, 1.0],  // vivid green
+];
+
+function highlightPart(matIdx) {
+  const mats = viewer.model?.materials;
+  if (!mats?.length) return;
+  mats.forEach((m, i) => {
+    const color = i === matIdx
+      ? HIGHLIGHT_COLORS[i % HIGHLIGHT_COLORS.length]
+      : [0.60, 0.60, 0.60, 1.0];
+    m.pbrMetallicRoughness.setBaseColorFactor(color);
+  });
+}
+
+/* ── Auto-rotate: stop permanently on first interaction ── */
+viewer.addEventListener('pointerdown', () => viewer.removeAttribute('auto-rotate'), { once: true });
+
 /* ── Part tree navigation ─────────────────────────── */
 document.querySelectorAll('.tree-row[data-orbit]').forEach(row => {
   row.addEventListener('click', () => {
-    snapTo(row.dataset.orbit, row.dataset.label, row.dataset.src);
+    const wasActive = row.classList.contains('active');
+    const matIdx    = row.dataset.matIdx !== undefined ? parseInt(row.dataset.matIdx) : -1;
+
     document.querySelectorAll('.tree-row.active').forEach(r => r.classList.remove('active'));
-    row.classList.add('active');
     const rn = row.querySelector('.tree-rn')?.textContent.trim();
     document.querySelectorAll('.hs.hs-active').forEach(h => h.classList.remove('hs-active'));
-    if (rn) document.getElementById(`hs-${rn}`)?.classList.add('hs-active');
+    if (wasActive) {
+      applyColors(viewer);
+    } else {
+      row.classList.add('active');
+      if (rn) document.getElementById(`hs-${rn}`)?.classList.add('hs-active');
+      if (matIdx >= 0) highlightPart(matIdx); else applyColors(viewer);
+    }
   });
 });
 
@@ -303,57 +320,55 @@ if (coverViewer) {
     ctx.strokeStyle = 'rgba(110,135,195,0.65)'; ctx.lineWidth = 1.2; ctx.stroke();
   }
 
-  let theta = 45 * Math.PI/180;
-  let phi   = 54.74 * Math.PI/180;
-  draw(theta, phi);
-
-  // sync with camera
-  function syncFromCamera() {
+  // rAF loop — always in sync with camera including auto-rotate
+  let theta = 45 * Math.PI/180, phi = 54.74 * Math.PI/180;
+  const camText = document.getElementById('camText');
+  (function loop() {
     try {
       const o = viewer.getCameraOrbit();
       theta = o.theta; phi = o.phi;
-      draw(theta, phi);
+      if (camText) {
+        const td  = (o.theta * 180 / Math.PI).toFixed(1);
+        const pd  = (o.phi   * 180 / Math.PI).toFixed(1);
+        const r   = o.radius.toFixed(3);
+        const t   = viewer.getCameraTarget();
+        const tx  = t.x.toFixed(3), ty = t.y.toFixed(3), tz = t.z.toFixed(3);
+        const fov = viewer.getFieldOfView?.()?.toFixed(1) ?? '—';
+        camText.textContent =
+          `orbit  ${td}deg ${pd}deg ${r}m\n` +
+          `target ${tx} ${ty} ${tz}\n` +
+          `fov    ${fov}deg`;
+      }
     } catch(_) {}
-  }
-  viewer.addEventListener('camera-change', syncFromCamera);
-  viewer.addEventListener('load', syncFromCamera);
+    draw(theta, phi);
+    requestAnimationFrame(loop);
+  })();
 
-  // drag to rotate model
+  // drag to orbit camera
   let dragging = false, lastX = 0, lastY = 0;
 
-  canvas.addEventListener('mousedown', e => {
-    e.preventDefault(); e.stopPropagation();
-    dragging = true; lastX = e.clientX; lastY = e.clientY;
-  });
-  document.addEventListener('mousemove', e => {
+  function startDrag(x, y) {
+    dragging = true; lastX = x; lastY = y;
+    viewer.removeAttribute('auto-rotate');
+  }
+  function moveDrag(x, y) {
     if (!dragging) return;
-    const dx = e.clientX - lastX, dy = e.clientY - lastY;
-    lastX = e.clientX; lastY = e.clientY;
+    const dx = x - lastX, dy = y - lastY;
+    lastX = x; lastY = y;
     try {
-      const o = viewer.getCameraOrbit();
-      const newPhi = Math.max(0.01, Math.min(Math.PI - 0.01, o.phi + dy * 0.013));
-      viewer.cameraOrbit = `${o.theta - dx * 0.013}rad ${newPhi}rad ${o.radius}m`;
+      const o   = viewer.getCameraOrbit();
+      const phi2 = Math.max(0.01, Math.min(Math.PI - 0.01, o.phi + dy * 0.013));
+      viewer.cameraOrbit = `${o.theta - dx * 0.013}rad ${phi2}rad ${o.radius}m`;
     } catch(_) {}
-  });
-  document.addEventListener('mouseup', () => { dragging = false; });
+  }
 
-  // touch support
-  let lastTouch = null;
-  canvas.addEventListener('touchstart', e => {
-    e.preventDefault(); lastTouch = e.touches[0];
-  }, { passive: false });
-  document.addEventListener('touchmove', e => {
-    if (!lastTouch) return;
-    const t = e.touches[0];
-    const dx = t.clientX - lastTouch.clientX, dy = t.clientY - lastTouch.clientY;
-    lastTouch = t;
-    try {
-      const o = viewer.getCameraOrbit();
-      const newPhi = Math.max(0.01, Math.min(Math.PI - 0.01, o.phi + dy * 0.013));
-      viewer.cameraOrbit = `${o.theta - dx * 0.013}rad ${newPhi}rad ${o.radius}m`;
-    } catch(_) {}
-  }, { passive: true });
-  document.addEventListener('touchend', () => { lastTouch = null; });
+  canvas.addEventListener('mousedown',  e => { e.preventDefault(); e.stopPropagation(); startDrag(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
+  document.addEventListener('mouseup',   () => { dragging = false; });
+
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); startDrag(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+  document.addEventListener('touchmove', e => { if (dragging) moveDrag(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  document.addEventListener('touchend',  () => { dragging = false; });
 })();
 
 /* ── Model/text pointer-events partition ─────────────── */
