@@ -13,7 +13,62 @@ new p5(function(p) {
   let formation   = [];
   let accentR = 29, accentG = 78, accentB = 216;
 
+  // Voronoi — 22 slow-drifting agents define the cells
+  const N_VOR = 22;
+  let vorAgents = [];
+
   const SWITCH_INTERVAL = 300; // auto-advance every 5 s at 60 fps
+
+  class VorAgent {
+    constructor() {
+      this.x    = p.random(p.width);
+      this.y    = p.random(p.height);
+      this.vx   = p.random(-0.4, 0.4);
+      this.vy   = p.random(-0.4, 0.4);
+      this.seed = p.random(1000);
+      this.baseHue = 195 + p.random(70);
+    }
+    update() {
+      const t = p.frameCount * 0.0014;
+      this.vx += (p.noise(this.x * 0.0009, this.y * 0.0009, t + this.seed)     - 0.5) * 0.12;
+      this.vy += (p.noise(this.x * 0.0009, this.y * 0.0009, t + this.seed + 8) - 0.5) * 0.12;
+      this.vx = Math.max(-1.4, Math.min(1.4, this.vx * 0.96));
+      this.vy = Math.max(-1.4, Math.min(1.4, this.vy * 0.96));
+      this.x += this.vx;  this.y += this.vy;
+      if (this.x < -60)           this.x = p.width  + 60;
+      if (this.x > p.width  + 60) this.x = -60;
+      if (this.y < -60)           this.y = p.height + 60;
+      if (this.y > p.height + 60) this.y = -60;
+    }
+  }
+
+  function drawVoronoi() {
+    if (typeof d3 === 'undefined' || !d3.Delaunay) return;
+    try {
+      for (const a of vorAgents) a.update();
+      const delaunay = d3.Delaunay.from(vorAgents, a => a.x, a => a.y);
+      const vor = delaunay.voronoi([0, 0, p.width, p.height]);
+      const ctx = p.drawingContext;
+      ctx.save();
+      for (let i = 0; i < vorAgents.length; i++) {
+        const cell = vor.cellPolygon(i);
+        if (!cell || cell.length < 3) continue;
+        const hue = (vorAgents[i].baseHue + p.frameCount * 0.018) % 360;
+        ctx.fillStyle = `hsla(${hue},52%,94%,0.36)`;
+        ctx.beginPath();
+        ctx.moveTo(cell[0][0], cell[0][1]);
+        for (let j = 1; j < cell.length; j++) ctx.lineTo(cell[j][0], cell[j][1]);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},0.14)`;
+      ctx.lineWidth = 0.75;
+      ctx.beginPath();
+      vor.render(ctx);
+      ctx.stroke();
+      ctx.restore();
+    } catch(_) {}
+  }
 
   function readAccent() {
     const hex = (getComputedStyle(document.documentElement)
@@ -173,6 +228,7 @@ new p5(function(p) {
 
     readAccent();
     for (let i = 0; i < N; i++) dots.push(new Dot(i));
+    for (let i = 0; i < N_VOR; i++) vorAgents.push(new VorAgent());
     allFormations = [buildSideView(), buildTopView(), buildIsoCoil()];
     formation     = allFormations[0];
 
@@ -202,6 +258,7 @@ new p5(function(p) {
   // ── Draw ──────────────────────────────────────────────────
   p.draw = function() {
     p.clear();
+    drawVoronoi();
     scrollVel *= 0.86;
     idleFrames++;
     switchTimer++;
