@@ -1096,6 +1096,25 @@ section.in-view > h2 { color: var(--ink); }
   flex-shrink: 0;
 }
 
+.tree-vis-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.3rem;
+  padding: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--dim);
+  flex-shrink: 0;
+  border-radius: 2px;
+  opacity: 0.7;
+  transition: opacity 0.15s, color 0.15s;
+}
+.tree-vis-btn:hover { opacity: 1; color: var(--accent); }
+.tree-vis-btn.vis-hidden { opacity: 0.3; color: var(--dim); }
+.tree-vis-btn.vis-hidden svg ellipse { stroke-dasharray: 3 2; }
+
 /* Depth indentation */
 .tree-children > .tree-item > .tree-row          { padding-left: 1.4rem; }
 .tree-children > .tree-item > .tree-children

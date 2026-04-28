@@ -27,6 +27,10 @@ const figDisp  = document.getElementById('figDisplay');
 const vBtns    = document.querySelectorAll('.vbtn');
 const mTabs    = document.querySelectorAll('.mtab');
 
+/* ── Per-part visibility state ────────────────────────── */
+const visState = {};  // matIdx → false means hidden (default: visible)
+function isVisible(i) { return visState[i] !== false; }
+
 /* ── Per-material color palette ───────────────────────── */
 const MAT_COLORS = [
   [0.52, 0.74, 0.96, 1.0],  // steel blue
@@ -38,10 +42,15 @@ const MAT_COLORS = [
 ];
 
 function applyColors(mv) {
-  // Try GLTF materials API first
   const mats = mv.model?.materials;
   if (mats?.length) {
     mats.forEach((m, i) => {
+      if (!isVisible(i)) {
+        m.setAlphaMode?.('BLEND');
+        m.pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, 0]);
+        return;
+      }
+      m.setAlphaMode?.('OPAQUE');
       m.pbrMetallicRoughness.setBaseColorFactor(MAT_COLORS[i % MAT_COLORS.length]);
       m.pbrMetallicRoughness.roughnessFactor = 0.5;
       m.pbrMetallicRoughness.metallicFactor  = 0.1;
@@ -84,7 +93,12 @@ document.querySelectorAll('.fig-ref').forEach(el => {
   el.style.cursor = 'pointer';
   el.addEventListener('click', () => {
     snapTo(el.dataset.orbit, el.dataset.label, el.dataset.src, el.dataset.target, el.dataset.fov, true);
-    // briefly flash the fig-display to confirm the change
+    if (el.dataset.highlight !== undefined) {
+      // give model-viewer one frame to settle before touching materials
+      requestAnimationFrame(() => dimExceptPart(parseInt(el.dataset.highlight)));
+    } else {
+      requestAnimationFrame(() => applyColors(viewer));
+    }
     if (figDisp) {
       figDisp.style.color = 'var(--ink)';
       setTimeout(() => figDisp.style.color = '', 600);
@@ -147,12 +161,65 @@ function highlightPart(matIdx) {
   const mats = viewer.model?.materials;
   if (!mats?.length) return;
   mats.forEach((m, i) => {
+    m.setAlphaMode?.('OPAQUE');
     const color = i === matIdx
       ? HIGHLIGHT_COLORS[i % HIGHLIGHT_COLORS.length]
       : [0.60, 0.60, 0.60, 1.0];
     m.pbrMetallicRoughness.setBaseColorFactor(color);
   });
 }
+
+function dimExceptPart(matIdx) {
+  const mats = viewer.model?.materials;
+  if (!mats?.length) return;
+  mats.forEach((m, i) => {
+    if (!isVisible(i)) {
+      m.setAlphaMode?.('BLEND');
+      m.pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, 0]);
+      return;
+    }
+    if (i === matIdx) {
+      m.setAlphaMode?.('OPAQUE');
+      m.pbrMetallicRoughness.setBaseColorFactor(MAT_COLORS[i % MAT_COLORS.length]);
+      m.pbrMetallicRoughness.roughnessFactor = 0.5;
+      m.pbrMetallicRoughness.metallicFactor  = 0.1;
+    } else {
+      m.setAlphaMode?.('BLEND');
+      const c = MAT_COLORS[i % MAT_COLORS.length];
+      m.pbrMetallicRoughness.setBaseColorFactor([c[0], c[1], c[2], 0.22]);
+      m.pbrMetallicRoughness.roughnessFactor = 0.5;
+      m.pbrMetallicRoughness.metallicFactor  = 0.1;
+    }
+  });
+}
+
+function setPartVisibility(matIdx, visible) {
+  visState[matIdx] = visible;
+  const mats = viewer.model?.materials;
+  if (!mats?.length) return;
+  const m = mats[matIdx];
+  if (!m) return;
+  if (visible) {
+    m.setAlphaMode?.('OPAQUE');
+    m.pbrMetallicRoughness.setBaseColorFactor(MAT_COLORS[matIdx % MAT_COLORS.length]);
+    m.pbrMetallicRoughness.roughnessFactor = 0.5;
+    m.pbrMetallicRoughness.metallicFactor  = 0.1;
+  } else {
+    m.setAlphaMode?.('BLEND');
+    m.pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, 0]);
+  }
+}
+
+/* ── Visibility toggle buttons ────────────────────────── */
+document.querySelectorAll('.tree-vis-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const idx = parseInt(btn.dataset.matIdx);
+    const nowVisible = !isVisible(idx);
+    setPartVisibility(idx, nowVisible);
+    btn.classList.toggle('vis-hidden', !nowVisible);
+  });
+});
 
 /* ── Auto-rotate: stop permanently on first interaction ── */
 viewer.addEventListener('pointerdown', () => viewer.removeAttribute('auto-rotate'), { once: true });
@@ -189,8 +256,10 @@ const observer = new IntersectionObserver(entries => {
     pendingSection = s;
     clearTimeout(scrollSnapTimer);
     scrollSnapTimer = setTimeout(() => {
-      if (pendingSection?.dataset.orbit)
+      if (pendingSection?.dataset.orbit) {
         snapTo(pendingSection.dataset.orbit, pendingSection.dataset.label, pendingSection.dataset.src);
+        applyColors(viewer);
+      }
     }, 350);
   });
 }, { threshold: 0.4 });
