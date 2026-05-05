@@ -41,6 +41,14 @@ const MAT_COLORS = [
   [0.94, 0.88, 0.44, 1.0],  // gold
 ];
 
+/* ── Shift model right so it clears the text column ──── */
+function applyModelOffset() {
+  try {
+    const t = viewer.getCameraTarget();
+    viewer.cameraTarget = `${(t.x - 38).toFixed(1)}m ${t.y.toFixed(1)}m ${t.z.toFixed(1)}m`;
+  } catch(_) {}
+}
+
 function applyColors(mv) {
   const mats = mv.model?.materials;
   if (mats?.length) {
@@ -128,6 +136,7 @@ mTabs.forEach(tab => {
       if (figDisp) figDisp.textContent = `${name} — Perspective`;
       applyColors(viewer);
       buildPartTree(viewer, src);
+      requestAnimationFrame(applyModelOffset);
     }, { once: true });
 
     vBtns.forEach(b => b.classList.remove('active'));
@@ -139,6 +148,7 @@ mTabs.forEach(tab => {
 viewer.addEventListener('load', () => {
   applyColors(viewer);
   buildPartTree(viewer);
+  requestAnimationFrame(applyModelOffset);
 }, { once: true });
 
 /* ── Part tree collapse / expand ──────────────────── */

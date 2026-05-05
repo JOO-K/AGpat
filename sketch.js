@@ -78,6 +78,8 @@ new p5(function(p) {
     accentB = parseInt(hex.substr(4, 2), 16);
   }
 
+  window.updateSketchAccent = function(r, g, b) { accentR = r; accentG = g; accentB = b; };
+
   // ── Formation 0 — FIG. 6A side view ──────────────────────
   // Outer cylinder rails + top dome cap + sinusoidal spring coil + extraction loop
   function buildSideView() {
@@ -308,6 +310,7 @@ new p5(function(p) {
         p.circle(d.x, d.y, d.r * 2);
       }
     }
+
   };
 
   p.windowResized = function() {

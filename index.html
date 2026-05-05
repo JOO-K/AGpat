@@ -32,7 +32,7 @@
 <main class="landing">
 
   <header class="landing-header">
-    <div class="landing-logo">RL3T</div>
+    <a href="index.html" class="landing-logo landing-logo-link">RL3T</a>
     <div class="landing-header-right">
       <span class="landing-tagline">RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
       <div class="landing-scheme-row">
@@ -105,6 +105,9 @@
 
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script src="sketch.js"></script>
 <script>
   /* ── Landing color schemes ─────────────────────────────── */
   const L_SCHEMES = {
@@ -155,6 +158,8 @@
       sw.classList.toggle('active', sw.dataset.scheme === name);
     });
     applyModelColor(s.model);
+    if (typeof window.updateSketchAccent === 'function')
+      window.updateSketchAccent(s.ar, s.ag, s.ab);
     if (lv) lv.style.filter =
       'drop-shadow(0 20px 60px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.20)) ' +
       'drop-shadow(0 4px 18px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.10))';

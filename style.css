@@ -1028,17 +1028,17 @@ section.in-view > h2 { color: var(--ink); }
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   transition: background 0.25s, box-shadow 0.25s;
 }
-/* Primary: dark navy-blue tinted glass */
-.cta-primary .cta-glass          { background: rgba(10, 18, 52, 0.52); }
-.cta-primary.hovered .cta-glass  { background: rgba(29, 78, 216, 0.58); }
-/* Secondary: light blue-tinted glass + inner glow for soft edge visibility */
+/* Primary: dark glass — hover adopts scheme accent */
+.cta-primary .cta-glass          { background: rgba(0, 0, 0, 0.44); }
+.cta-primary.hovered .cta-glass  { background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.58); }
+/* Secondary: scheme-tinted light glass */
 .cta-secondary .cta-glass {
-  background: rgba(195, 215, 255, 0.30);
-  box-shadow: inset 0 0 22px 4px rgba(29, 78, 216, 0.14);
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.10);
+  box-shadow: inset 0 0 22px 4px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
 }
 .cta-secondary.hovered .cta-glass {
-  background: rgba(195, 215, 255, 0.46);
-  box-shadow: inset 0 0 28px 6px rgba(29, 78, 216, 0.22);
+  background: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.20);
+  box-shadow: inset 0 0 28px 6px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.20);
 }
 
 .cta-svg {
@@ -1058,8 +1058,8 @@ section.in-view > h2 { color: var(--ink); }
   fill: none;
   stroke: none;
 }
-.cta-primary         { filter: drop-shadow(0 4px 12px rgba(10, 18, 52, 0.60)); }
-.cta-primary.hovered { filter: drop-shadow(0 4px 12px rgba(29, 78, 216, 0.60)); }
+.cta-primary         { filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.50)); }
+.cta-primary.hovered { filter: drop-shadow(0 4px 16px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.60)); }
 
 /* ── Secondary (Patent & 3D Model): light glass ── */
 .cta-secondary {
@@ -1084,8 +1084,8 @@ section.in-view > h2 { color: var(--ink); }
 
 .cta-hitarea { cursor: pointer; }
 
-.cta-secondary         { filter: drop-shadow(0 4px 14px rgba(29, 78, 216, 0.42)) drop-shadow(0 1px 3px rgba(29, 78, 216, 0.22)); }
-.cta-secondary.hovered { filter: drop-shadow(0 5px 18px rgba(29, 78, 216, 0.58)) drop-shadow(0 1px 4px rgba(29, 78, 216, 0.28)); }
+.cta-secondary         { filter: drop-shadow(0 4px 14px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.42)) drop-shadow(0 1px 3px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.22)); }
+.cta-secondary.hovered { filter: drop-shadow(0 5px 18px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.58)) drop-shadow(0 1px 4px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.28)); }
 
 /* ── Text overlays ── */
 .cta-text {
