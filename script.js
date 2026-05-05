@@ -124,9 +124,10 @@ mTabs.forEach(tab => {
 
     viewer.src = src;
     viewer.addEventListener('load', () => {
-      viewer.cameraOrbit = '45deg 54.74deg 90%';
+      viewer.cameraOrbit = '45deg 54.74deg 120%';
       if (figDisp) figDisp.textContent = `${name} — Perspective`;
       applyColors(viewer);
+      buildPartTree(viewer, src);
     }, { once: true });
 
     vBtns.forEach(b => b.classList.remove('active'));
@@ -134,8 +135,11 @@ mTabs.forEach(tab => {
   });
 });
 
-/* ── Initial material colors ──────────────────────── */
-viewer.addEventListener('load', () => applyColors(viewer), { once: true });
+/* ── Initial model load ──────────────────────────── */
+viewer.addEventListener('load', () => {
+  applyColors(viewer);
+  buildPartTree(viewer);
+}, { once: true });
 
 /* ── Part tree collapse / expand ──────────────────── */
 document.querySelectorAll('.tree-toggle').forEach(toggle => {
@@ -210,38 +214,76 @@ function setPartVisibility(matIdx, visible) {
   }
 }
 
-/* ── Visibility toggle buttons ────────────────────────── */
-document.querySelectorAll('.tree-vis-btn').forEach(btn => {
-  btn.addEventListener('click', e => {
+/* ── Dynamic part tree ─────────────────────────────────── */
+const PART_ORBIT_MAP = {
+  'Expansor': '30deg 65deg 90%', 'Body': '30deg 65deg 90%',
+  'Drawstring': '85deg 88deg 52%', 'Drawstring & Knot': '85deg 88deg 52%', 'Knot': '85deg 88deg 52%',
+  'Ring': '85deg 88deg 52%', 'Loop': '85deg 88deg 52%',
+  'Plunger': '-20deg 60deg 130%', 'Outer Tube': '-20deg 60deg 130%',
+};
+const PART_RN_MAP = {
+  'Expansor': '16', 'Body': '16',
+  'Drawstring': '20', 'Drawstring & Knot': '20', 'Knot': '20',
+  'Ring': '22', 'Loop': '22',
+  'Plunger': '26', 'Outer Tube': '28',
+};
+
+function buildPartTree(mv, activeSrc) {
+  const treeList = document.querySelector('.tree-list');
+  if (!treeList) return;
+  const mats = mv.model?.materials;
+  if (!mats?.length) return;
+  const src = activeSrc || document.querySelector('.mtab.active')?.dataset.src || 'models/rojas.glb';
+
+  treeList.innerHTML = mats.map((mat, i) => {
+    const name   = mat.name || `Part ${i + 1}`;
+    const rn     = PART_RN_MAP[name] || '';
+    const orbit  = PART_ORBIT_MAP[name] || '30deg 65deg 90%';
+    return `<li class="tree-item">
+      <div class="tree-row" data-orbit="${orbit}" data-label="${name}" data-src="${src}" data-mat-idx="${i}">
+        <span class="tree-dot">·</span>
+        <span class="tree-name">${name}</span>${rn ? `<span class="tree-rn">${rn}</span>` : ''}
+        <button class="tree-vis-btn" data-mat-idx="${i}" title="Toggle visibility">
+          <svg width="11" height="8" viewBox="0 0 11 8" fill="none">
+            <ellipse cx="5.5" cy="4" rx="4.5" ry="3" stroke="currentColor" stroke-width="1.1"/>
+            <circle cx="5.5" cy="4" r="1.4" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </li>`;
+  }).join('');
+}
+
+/* ── Tree event delegation (handles dynamically-built rows) ── */
+document.querySelector('.tree-list')?.addEventListener('click', e => {
+  const visBtn = e.target.closest('.tree-vis-btn');
+  if (visBtn) {
     e.stopPropagation();
-    const idx = parseInt(btn.dataset.matIdx);
+    const idx = parseInt(visBtn.dataset.matIdx);
     const nowVisible = !isVisible(idx);
     setPartVisibility(idx, nowVisible);
-    btn.classList.toggle('vis-hidden', !nowVisible);
-  });
+    visBtn.classList.toggle('vis-hidden', !nowVisible);
+    return;
+  }
+  const row = e.target.closest('.tree-row[data-orbit]');
+  if (!row) return;
+  const wasActive = row.classList.contains('active');
+  const matIdx    = row.dataset.matIdx !== undefined ? parseInt(row.dataset.matIdx) : -1;
+  document.querySelectorAll('.tree-row.active').forEach(r => r.classList.remove('active'));
+  const rn = row.querySelector('.tree-rn')?.textContent.trim();
+  document.querySelectorAll('.hs.hs-active').forEach(h => h.classList.remove('hs-active'));
+  if (wasActive) {
+    applyColors(viewer);
+  } else {
+    row.classList.add('active');
+    if (rn) document.getElementById(`hs-${rn}`)?.classList.add('hs-active');
+    if (matIdx >= 0) highlightPart(matIdx); else applyColors(viewer);
+  }
 });
 
 /* ── Auto-rotate: stop permanently on first interaction ── */
 viewer.addEventListener('pointerdown', () => viewer.removeAttribute('auto-rotate'), { once: true });
 
-/* ── Part tree navigation ─────────────────────────── */
-document.querySelectorAll('.tree-row[data-orbit]').forEach(row => {
-  row.addEventListener('click', () => {
-    const wasActive = row.classList.contains('active');
-    const matIdx    = row.dataset.matIdx !== undefined ? parseInt(row.dataset.matIdx) : -1;
-
-    document.querySelectorAll('.tree-row.active').forEach(r => r.classList.remove('active'));
-    const rn = row.querySelector('.tree-rn')?.textContent.trim();
-    document.querySelectorAll('.hs.hs-active').forEach(h => h.classList.remove('hs-active'));
-    if (wasActive) {
-      applyColors(viewer);
-    } else {
-      row.classList.add('active');
-      if (rn) document.getElementById(`hs-${rn}`)?.classList.add('hs-active');
-      if (matIdx >= 0) highlightPart(matIdx); else applyColors(viewer);
-    }
-  });
-});
 
 /* ── IntersectionObserver: auto-update on scroll ──── */
 let scrollSnapTimer = null;
