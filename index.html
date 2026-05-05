@@ -6,14 +6,42 @@
   <title>RL3T — Adaptive and Radially Expanding Speculum</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body class="landing-body">
+
+<div class="landing-bg">
+  <model-viewer
+    id="landingViewer"
+    src="models/rojas.glb"
+    camera-orbit="35deg 62deg 115%"
+    field-of-view="7deg"
+    min-field-of-view="7deg"
+    max-field-of-view="7deg"
+    auto-rotate
+    rotation-per-second="9deg"
+    auto-rotate-delay="0"
+    shadow-intensity="0.18"
+    exposure="1.2"
+    environment-image="neutral"
+    interaction-prompt="none"
+    class="landing-viewer">
+  </model-viewer>
+</div>
 
 <main class="landing">
 
   <header class="landing-header">
     <div class="landing-logo">RL3T</div>
-    <span class="landing-tagline">RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
+    <div class="landing-header-right">
+      <span class="landing-tagline">RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
+      <div class="landing-scheme-row">
+        <button class="l-swatch active" data-scheme="blueprint" style="background:#1d4ed8" title="Blueprint"></button>
+        <button class="l-swatch" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
+        <button class="l-swatch" data-scheme="ember"     style="background:#c2410c" title="Ember"></button>
+        <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
+      </div>
+    </div>
   </header>
 
   <section class="landing-hero">
@@ -77,20 +105,75 @@
 
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
-<script src="sketch.js"></script>
 <script>
+  /* ── Landing color schemes ─────────────────────────────── */
+  const L_SCHEMES = {
+    blueprint: { accent:'#1d4ed8', mid:'#3b82f6', bg:'#eff6ff', ar:29,  ag:78,  ab:216, model:[0.42,0.62,0.95] },
+    teal:      { accent:'#0d9488', mid:'#2dd4bf', bg:'#f0fdfa', ar:13,  ag:148, ab:136, model:[0.30,0.82,0.74] },
+    ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28] },
+    plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94] },
+  };
+  let currentScheme = 'blueprint';
+  const lv = document.getElementById('landingViewer');
+
+  function applyModelColor(rgb) {
+    if (!lv?.model) return;
+    const mats = lv.model?.materials;
+    if (mats?.length) {
+      mats.forEach(function(m) {
+        m.setAlphaMode?.('OPAQUE');
+        m.pbrMetallicRoughness.setBaseColorFactor([rgb[0], rgb[1], rgb[2], 1.0]);
+        m.pbrMetallicRoughness.roughnessFactor = 0.38;
+        m.pbrMetallicRoughness.metallicFactor  = 0.18;
+      });
+      return;
+    }
+    try {
+      lv.model.scene.traverse(function(obj) {
+        if (!obj.isMesh) return;
+        var list = Array.isArray(obj.material) ? obj.material : [obj.material];
+        list.forEach(function(m) {
+          if (m.color) m.color.setRGB(rgb[0], rgb[1], rgb[2]);
+          m.roughness = 0.38; m.metalness = 0.18; m.needsUpdate = true;
+        });
+      });
+    } catch(_) {}
+  }
+
+  function applyLandingScheme(name) {
+    var s = L_SCHEMES[name];
+    if (!s) return;
+    currentScheme = name;
+    var r = document.documentElement.style;
+    r.setProperty('--accent',   s.accent);
+    r.setProperty('--acc-mid',  s.mid);
+    r.setProperty('--acc-bg',   s.bg);
+    r.setProperty('--accent-r', s.ar);
+    r.setProperty('--accent-g', s.ag);
+    r.setProperty('--accent-b', s.ab);
+    document.querySelectorAll('.l-swatch').forEach(function(sw) {
+      sw.classList.toggle('active', sw.dataset.scheme === name);
+    });
+    applyModelColor(s.model);
+    if (lv) lv.style.filter =
+      'drop-shadow(0 20px 60px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.20)) ' +
+      'drop-shadow(0 4px 18px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.10))';
+  }
+
+  if (lv) lv.addEventListener('load', function() { applyLandingScheme(currentScheme); });
+
+  document.querySelectorAll('.l-swatch').forEach(function(sw) {
+    sw.addEventListener('click', function() { applyLandingScheme(sw.dataset.scheme); });
+  });
+
+  /* ── SVG hover + draw animation ────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
-    // SVG-shaped hover: transparent fill path detects shape-accurate events,
-    // then toggles .hovered on the parent button for all CSS effects.
     document.querySelectorAll('.cta-hitarea').forEach(function (hitarea) {
       var btn = hitarea.closest('.cta-btn');
       hitarea.addEventListener('mouseenter', function () { btn.classList.add('hovered'); });
       hitarea.addEventListener('mouseleave', function () { btn.classList.remove('hovered'); });
     });
 
-    // Draw animation on secondary button
     var drawPath = document.querySelector('.cta-path-draw');
     var hitarea  = document.querySelector('.cta-secondary .cta-hitarea');
     if (!drawPath || !hitarea) return;
