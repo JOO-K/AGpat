@@ -228,6 +228,10 @@ new p5(function(p) {
     cnv.style('pointer-events', 'none');
     cnv.style('z-index',        '0');
 
+    // Insert before .landing-bg so model-viewer (later in DOM) paints on top
+    const landingBg = document.querySelector('.landing-bg');
+    if (landingBg) document.body.insertBefore(cnv.elt, landingBg);
+
     readAccent();
     for (let i = 0; i < N; i++) dots.push(new Dot(i));
     for (let i = 0; i < N_VOR; i++) vorAgents.push(new VorAgent());
