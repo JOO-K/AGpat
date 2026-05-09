@@ -456,9 +456,9 @@
   <defs>
     <filter id="model-outline" color-interpolation-filters="sRGB" x="-8%" y="-8%" width="116%" height="116%">
       <!-- expand alpha mask outward -->
-      <feMorphology in="SourceAlpha" operator="dilate" radius="0.7" result="dilated"/>
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.6" result="dilated"/>
       <!-- color the expanded ring dark -->
-      <feFlood flood-color="#000" flood-opacity="0.38" result="outline-color"/>
+      <feFlood flood-color="#000" flood-opacity="0.20" result="outline-color"/>
       <feComposite in="outline-color" in2="dilated" operator="in" result="outline"/>
       <!-- layer original model on top of outline -->
       <feComposite in="SourceGraphic" in2="outline" operator="over"/>
