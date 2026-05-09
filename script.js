@@ -1,18 +1,21 @@
 /* ── Color scheme switcher ────────────────────────────── */
 const SCHEMES = {
-  blueprint: { accent: '#1d4ed8', mid: '#3b82f6', bg: '#eff6ff' },
-  teal:      { accent: '#0d9488', mid: '#2dd4bf', bg: '#f0fdfa' },
-  ember:     { accent: '#c2410c', mid: '#f97316', bg: '#fff7ed' },
-  plum:      { accent: '#7c3aed', mid: '#a78bfa', bg: '#f5f3ff' },
+  blueprint: { accent: '#1d4ed8', mid: '#3b82f6', bg: '#eff6ff', ar: 29,  ag: 78,  ab: 216 },
+  teal:      { accent: '#0d9488', mid: '#2dd4bf', bg: '#f0fdfa', ar: 13,  ag: 148, ab: 136 },
+  ember:     { accent: '#c2410c', mid: '#f97316', bg: '#fff7ed', ar: 194, ag: 65,  ab: 12  },
+  plum:      { accent: '#7c3aed', mid: '#a78bfa', bg: '#f5f3ff', ar: 124, ag: 58,  ab: 237 },
 };
 
 function applyScheme(name) {
   const s = SCHEMES[name];
   if (!s) return;
   const r = document.documentElement.style;
-  r.setProperty('--accent',  s.accent);
-  r.setProperty('--acc-mid', s.mid);
-  r.setProperty('--acc-bg',  s.bg);
+  r.setProperty('--accent',   s.accent);
+  r.setProperty('--acc-mid',  s.mid);
+  r.setProperty('--acc-bg',   s.bg);
+  r.setProperty('--accent-r', s.ar);
+  r.setProperty('--accent-g', s.ag);
+  r.setProperty('--accent-b', s.ab);
   document.querySelectorAll('.swatch').forEach(sw => {
     sw.classList.toggle('active', sw.dataset.scheme === name);
   });
@@ -24,8 +27,12 @@ document.querySelectorAll('.swatch').forEach(sw => {
 
 const viewer   = document.getElementById('mainViewer');
 const figDisp  = document.getElementById('figDisplay');
-const vBtns    = document.querySelectorAll('.vbtn');
+const vBtns    = document.querySelectorAll('.vbtn, .vc-btn');
 const mTabs    = document.querySelectorAll('.mtab');
+
+let topMode = false;
+const TOP_FOV    = 10.0;
+const NORMAL_FOV = 26.2;
 
 /* ── Per-part visibility state ────────────────────────── */
 const visState = {};  // matIdx → false means hidden (default: visible)
@@ -89,6 +96,8 @@ function snapTo(orbit, label, src, target, fov, resetTurntable = false) {
   if (target) {
     const parts = target.trim().split(/\s+/);
     viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
+  } else {
+    viewer.cameraTarget = 'auto';
   }
   if (fov) viewer.fieldOfView = fov;
   viewer.cameraOrbit = orbit;
@@ -117,9 +126,41 @@ document.querySelectorAll('.fig-ref').forEach(el => {
 /* ── View preset buttons ──────────────────────────── */
 vBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    snapTo(btn.dataset.orbit, btn.dataset.label, btn.dataset.src);
+    topMode = btn.dataset.label === 'Top View';
+    snapTo(btn.dataset.orbit, btn.dataset.label, btn.dataset.src, btn.dataset.target, btn.dataset.fov);
   });
 });
+
+/* ── Hotspot labels: click to zoom to part ────────── */
+document.querySelectorAll('.hs').forEach(hs => {
+  hs.addEventListener('click', () => {
+    topMode = false;
+    document.querySelectorAll('.hs.hs-active').forEach(h => h.classList.remove('hs-active'));
+    hs.classList.add('hs-active');
+    snapTo(hs.dataset.orbit, hs.dataset.label, null, hs.dataset.target, hs.dataset.fov);
+  });
+});
+
+/* ── Top mode: exit on rotation, restore normal FOV ── */
+viewer.addEventListener('camera-change', e => {
+  if (!topMode || e.detail?.source !== 'user-interaction') return;
+  try {
+    const o = viewer.getCameraOrbit();
+    if (Math.abs(o.phi) > 0.26) {
+      topMode = false;
+      const scale = Math.tan(TOP_FOV / 2 * Math.PI / 180) / Math.tan(NORMAL_FOV / 2 * Math.PI / 180);
+      viewer.cameraOrbit = `${o.theta}rad ${o.phi}rad ${(o.radius * scale).toFixed(3)}m`;
+      viewer.fieldOfView = NORMAL_FOV + 'deg';
+    }
+  } catch(_) {}
+});
+
+/* ── Per-model default camera positions ───────────── */
+const MODEL_CAM = {
+  'models/rojas.glb':   { orbit: '40.4deg 71.9deg 53.153m',  target: null,                    fov: '26.2deg' },
+  'models/alt.glb':     { orbit: '30.5deg 66.5deg 128.400m', target: '-2.043 -1.926 -2.963',  fov: '20.1deg' },
+  'models/rebuild.glb': { orbit: '45deg 54.74deg 120%',      target: null,                    fov: '30deg'   },
+};
 
 /* ── Model selector tabs ──────────────────────────── */
 mTabs.forEach(tab => {
@@ -132,12 +173,23 @@ mTabs.forEach(tab => {
 
     viewer.src = src;
     viewer.addEventListener('load', () => {
-      viewer.cameraOrbit = '45deg 54.74deg 120%';
+      const cam = MODEL_CAM[src] || MODEL_CAM['models/rebuild.glb'];
+      if (cam.target) {
+        const parts = cam.target.trim().split(/\s+/);
+        viewer.cameraTarget = parts.map(v => v + 'm').join(' ');
+      } else {
+        viewer.cameraTarget = 'auto';
+      }
+      viewer.fieldOfView  = cam.fov;
+      viewer.cameraOrbit  = cam.orbit;
+      viewer.jumpCameraToGoal();
       if (figDisp) figDisp.textContent = `${name} — Perspective`;
       applyColors(viewer);
       buildPartTree(viewer, src);
-      requestAnimationFrame(applyModelOffset);
     }, { once: true });
+
+    const showHotspots = src === 'models/rojas.glb';
+    document.querySelectorAll('.hs').forEach(h => h.style.display = showHotspots ? '' : 'none');
 
     vBtns.forEach(b => b.classList.remove('active'));
     vBtns[0]?.classList.add('active');
@@ -148,7 +200,9 @@ mTabs.forEach(tab => {
 viewer.addEventListener('load', () => {
   applyColors(viewer);
   buildPartTree(viewer);
-  requestAnimationFrame(applyModelOffset);
+  viewer.cameraOrbit = '40.4deg 71.9deg 53.153m';
+  viewer.fieldOfView = '26.2deg';
+  viewer.jumpCameraToGoal();
 }, { once: true });
 
 /* ── Part tree collapse / expand ──────────────────── */
@@ -295,28 +349,6 @@ document.querySelector('.tree-list')?.addEventListener('click', e => {
 viewer.addEventListener('pointerdown', () => viewer.removeAttribute('auto-rotate'), { once: true });
 
 
-/* ── IntersectionObserver: auto-update on scroll ──── */
-let scrollSnapTimer = null;
-let pendingSection  = null;
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const s = entry.target;
-    document.querySelectorAll('section.in-view').forEach(x => x.classList.remove('in-view'));
-    s.classList.add('in-view');
-    pendingSection = s;
-    clearTimeout(scrollSnapTimer);
-    scrollSnapTimer = setTimeout(() => {
-      if (pendingSection?.dataset.orbit) {
-        snapTo(pendingSection.dataset.orbit, pendingSection.dataset.label, pendingSection.dataset.src);
-        applyColors(viewer);
-      }
-    }, 350);
-  });
-}, { threshold: 0.4 });
-
-document.querySelectorAll('section[data-orbit]').forEach(s => observer.observe(s));
 
 /* ── Cover viewer: stop auto-rotate on first touch ── */
 const coverViewer = document.getElementById('coverViewer');
@@ -464,10 +496,14 @@ if (coverViewer) {
         const t   = viewer.getCameraTarget();
         const tx  = t.x.toFixed(3), ty = t.y.toFixed(3), tz = t.z.toFixed(3);
         const fov = viewer.getFieldOfView?.()?.toFixed(1) ?? '—';
+        const rx  = document.getElementById('rotX')?.value ?? '0';
+        const ry  = document.getElementById('rotY')?.value ?? '0';
+        const rz  = document.getElementById('rotZ')?.value ?? '0';
         camText.textContent =
           `orbit  ${td}deg ${pd}deg ${r}m\n` +
           `target ${tx} ${ty} ${tz}\n` +
-          `fov    ${fov}deg`;
+          `fov    ${fov}deg\n` +
+          `rot    X:${rx} Y:${ry} Z:${rz}`;
       }
     } catch(_) {}
     draw(theta, phi);
@@ -514,4 +550,107 @@ if (coverViewer) {
     });
     vw.style.pointerEvents = over ? 'none' : 'auto';
   }, { passive: true });
+})();
+
+/* ── Zoom bar (tracks orbit radius, same axis as scroll wheel) ── */
+(function() {
+  const track = document.getElementById('zoomTrack');
+  const fill  = document.getElementById('zoomFill');
+  const thumb = document.getElementById('zoomThumb');
+  if (!track || !viewer) return;
+
+  let minR = null, maxR = null, dragging = false;
+
+  function setUI(r) {
+    if (minR === null) return;
+    const t = 1 - Math.max(0, Math.min(1, (r - minR) / (maxR - minR)));
+    fill.style.height  = (t * 100).toFixed(1) + '%';
+    thumb.style.bottom = (t * 100).toFixed(1) + '%';
+  }
+
+  viewer.addEventListener('load', () => {
+    try {
+      const r = viewer.getCameraOrbit().radius;
+      minR = r * 0.25;
+      maxR = r * 5;
+      viewer.setAttribute('max-camera-orbit', `Infinity 180deg ${maxR.toFixed(1)}m`);
+      setUI(r);
+    } catch(_) {}
+  });
+
+  viewer.addEventListener('camera-change', () => {
+    if (!dragging) {
+      try { setUI(viewer.getCameraOrbit().radius); } catch(_) {}
+    }
+  });
+
+  function applyFromEvent(e) {
+    if (minR === null) return;
+    const y    = e.touches ? e.touches[0].clientY : e.clientY;
+    const rect = track.getBoundingClientRect();
+    const t    = Math.max(0, Math.min(1, (y - rect.top) / rect.height));
+    const r    = minR + t * (maxR - minR);
+    const o    = viewer.getCameraOrbit();
+    viewer.cameraOrbit = `${o.theta}rad ${o.phi}rad ${r.toFixed(3)}m`;
+    setUI(r);
+  }
+
+  track.addEventListener('mousedown',  e => { dragging = true;  applyFromEvent(e); e.preventDefault(); });
+  track.addEventListener('touchstart', e => { dragging = true;  applyFromEvent(e); }, { passive: true });
+  document.addEventListener('mousemove',  e => { if (dragging) applyFromEvent(e); });
+  document.addEventListener('touchmove',  e => { if (dragging) applyFromEvent(e); }, { passive: true });
+  document.addEventListener('mouseup',   () => { dragging = false; });
+  document.addEventListener('touchend',  () => { dragging = false; });
+})();
+
+/* ── Model rotation panel ─────────────────────────────── */
+(function() {
+  const sliders = {
+    x: document.getElementById('rotX'),
+    y: document.getElementById('rotY'),
+    z: document.getElementById('rotZ'),
+  };
+  const vals = {
+    x: document.getElementById('rotXVal'),
+    y: document.getElementById('rotYVal'),
+    z: document.getElementById('rotZVal'),
+  };
+  const resetBtn = document.getElementById('rotReset');
+  if (!sliders.x || !viewer) return;
+
+  function applyRotation() {
+    const xDeg = parseFloat(sliders.x.value);
+    const yDeg = parseFloat(sliders.y.value);
+    const zDeg = parseFloat(sliders.z.value);
+    viewer.orientation = `${xDeg}deg ${yDeg}deg ${zDeg}deg`;
+    vals.x.textContent = xDeg.toFixed(1) + '°';
+    vals.y.textContent = yDeg.toFixed(1) + '°';
+    vals.z.textContent = zDeg.toFixed(1) + '°';
+  }
+
+  function resetRotation() {
+    sliders.x.value = 0; sliders.y.value = 0; sliders.z.value = 0;
+    vals.x.textContent = '0°'; vals.y.textContent = '0°'; vals.z.textContent = '0°';
+    viewer.orientation = '0deg 0deg 0deg';
+  }
+
+  ['x', 'y', 'z'].forEach(axis => sliders[axis].addEventListener('input', applyRotation));
+  resetBtn?.addEventListener('click', resetRotation);
+
+  // Reset sliders when a new model loads
+  viewer.addEventListener('load', resetRotation);
+})();
+
+/* ── Scroll wheel: manual zoom in top mode only ── */
+(function() {
+  viewer.addEventListener('wheel', e => {
+    if (!topMode) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    try {
+      const o = viewer.getCameraOrbit();
+      const newR = Math.max(5, Math.min(500, o.radius * (1 + e.deltaY * 0.001)));
+      viewer.cameraOrbit = `${o.theta}rad ${o.phi}rad ${newR.toFixed(3)}m`;
+    } catch(_) {}
+  }, { passive: false, capture: true });
 })();

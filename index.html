@@ -14,17 +14,23 @@
   <model-viewer
     id="landingViewer"
     src="models/rojas.glb"
-    camera-orbit="35deg 62deg 115%"
+    camera-orbit="35.0deg 62.0deg 167.397m"
+    min-camera-orbit="auto 0deg auto"
+    max-camera-orbit="auto 180deg auto"
     field-of-view="7deg"
     min-field-of-view="7deg"
     max-field-of-view="7deg"
+    camera-controls
+    disable-pan
+    disable-zoom
     auto-rotate
-    rotation-per-second="9deg"
-    auto-rotate-delay="0"
+    rotation-per-second="20deg"
+    auto-rotate-delay="3000"
+    interpolation-decay="800"
+    interaction-prompt="none"
     shadow-intensity="0.18"
     exposure="1.2"
     environment-image="neutral"
-    interaction-prompt="none"
     class="landing-viewer">
   </model-viewer>
 </div>
@@ -59,14 +65,7 @@
       <div class="cta-outer-wrap">
         <a href="patent.html" class="cta-btn cta-primary">
           <svg class="cta-svg" viewBox="0 0 535 347" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <clipPath id="clip-primary">
-                <path d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z"/>
-              </clipPath>
-            </defs>
-            <foreignObject x="0" y="0" width="535" height="347" clip-path="url(#clip-primary)">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="cta-glass"></div>
-            </foreignObject>
+            <path class="cta-fill" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z"/>
             <path class="cta-path" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z" fill="none"/>
             <path class="cta-hitarea" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z" fill="transparent" stroke="none"/>
           </svg>
@@ -77,14 +76,7 @@
         </a>
         <a href="patent.html" class="cta-btn cta-secondary">
           <svg class="cta-svg" viewBox="0 0 534 238" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <clipPath id="clip-secondary">
-                <path d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z"/>
-              </clipPath>
-            </defs>
-            <foreignObject x="0" y="0" width="534" height="238" clip-path="url(#clip-secondary)">
-              <div xmlns="http://www.w3.org/1999/xhtml" class="cta-glass"></div>
-            </foreignObject>
+            <path class="cta-fill" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z"/>
             <!-- draw path: full perimeter, animated on hover -->
             <path class="cta-path-draw" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z" fill="none"/>
             <path class="cta-hitarea" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z" fill="transparent" stroke="none"/>
@@ -97,6 +89,11 @@
       </div>
     </div>
   </section>
+
+  <div class="landing-cam-info" id="landingCamInfo">
+    <pre id="landingCamText">loading…</pre>
+    <button id="landingCamCopy" onclick="navigator.clipboard.writeText(document.getElementById('landingCamText').textContent).then(()=>{this.textContent='copied!';setTimeout(()=>this.textContent='copy',1200)})">copy</button>
+  </div>
 
   <footer class="landing-footer">
     <span>Inventor: Arlette Geller &nbsp;·&nbsp; Assignee: RL3T LLC</span>
@@ -196,6 +193,51 @@
       drawPath.style.strokeDashoffset = len;
     });
   });
+
+  /* ── Formation → camera sync ───────────────────────── */
+  var LANDING_ORBITS = [
+    { orbit: '49.2deg 70.9deg 167.397m',    fov: '7.0deg' },  // large cylinder
+    { orbit: '145.1deg 0.0deg 167.397m',    fov: '7.0deg' },  // flower (top)
+    { orbit: '-220.2deg 154.9deg 167.397m', fov: '7.0deg' },  // small cylinder
+  ];
+
+  var lastUserInteraction = 0;
+  if (lv) {
+    lv.addEventListener('camera-change', function(e) {
+      if (e.detail && e.detail.source === 'user-interaction') {
+        lastUserInteraction = Date.now();
+      }
+    });
+  }
+
+  window.onFormationChange = function(idx) {
+    if (!lv) return;
+    if (Date.now() - lastUserInteraction < 3000) return;
+    var preset = LANDING_ORBITS[idx];
+    if (!preset) return;
+    lv.removeAttribute('auto-rotate');
+    lv.cameraOrbit = preset.orbit;
+    lv.fieldOfView = preset.fov;
+    setTimeout(function() { lv.setAttribute('auto-rotate', ''); }, 1400);
+  };
+
+  /* ── Landing camera readout ─────────────────────────── */
+  var landingCamText = document.getElementById('landingCamText');
+  (function camLoop() {
+    if (lv && landingCamText) {
+      try {
+        var o   = lv.getCameraOrbit();
+        var td  = (o.theta * 180 / Math.PI).toFixed(1);
+        var pd  = (o.phi   * 180 / Math.PI).toFixed(1);
+        var r   = o.radius.toFixed(3);
+        var fov = lv.getFieldOfView ? lv.getFieldOfView().toFixed(1) : '—';
+        landingCamText.textContent =
+          'orbit  ' + td + 'deg ' + pd + 'deg ' + r + 'm\n' +
+          'fov    ' + fov + 'deg';
+      } catch(_) {}
+    }
+    requestAnimationFrame(camLoop);
+  })();
 </script>
 </body>
 </html>

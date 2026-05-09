@@ -16,8 +16,9 @@ new p5(function(p) {
   // Voronoi — 22 slow-drifting agents define the cells
   const N_VOR = 22;
   let vorAgents = [];
+  let wanderer  = null;
 
-  const SWITCH_INTERVAL = 300; // auto-advance every 5 s at 60 fps
+  const SWITCH_INTERVAL = 660; // auto-advance every ~11 s at 60 fps
 
   class VorAgent {
     constructor() {
@@ -25,15 +26,17 @@ new p5(function(p) {
       this.y    = p.random(p.height);
       this.vx   = p.random(-0.4, 0.4);
       this.vy   = p.random(-0.4, 0.4);
-      this.seed = p.random(1000);
+      this.seed    = p.random(1000);
       this.baseHue = 195 + p.random(70);
+      this.r       = p.random(24, 58);
+      this.shapeA  = p.random(0.06, 0.16);
     }
     update() {
       const t = p.frameCount * 0.0014;
-      this.vx += (p.noise(this.x * 0.0009, this.y * 0.0009, t + this.seed)     - 0.5) * 0.12;
-      this.vy += (p.noise(this.x * 0.0009, this.y * 0.0009, t + this.seed + 8) - 0.5) * 0.12;
-      this.vx = Math.max(-1.4, Math.min(1.4, this.vx * 0.96));
-      this.vy = Math.max(-1.4, Math.min(1.4, this.vy * 0.96));
+      this.vx += (p.noise(this.x * 0.0009, this.y * 0.0009, t + this.seed)     - 0.5) * 0.055;
+      this.vy += (p.noise(this.x * 0.0009, this.y * 0.0009, t + this.seed + 8) - 0.5) * 0.055;
+      this.vx = Math.max(-0.7, Math.min(0.7, this.vx * 0.97));
+      this.vy = Math.max(-0.7, Math.min(0.7, this.vy * 0.97));
       this.x += this.vx;  this.y += this.vy;
       if (this.x < -60)           this.x = p.width  + 60;
       if (this.x > p.width  + 60) this.x = -60;
@@ -49,23 +52,91 @@ new p5(function(p) {
       const delaunay = d3.Delaunay.from(vorAgents, a => a.x, a => a.y);
       const vor = delaunay.voronoi([0, 0, p.width, p.height]);
       const ctx = p.drawingContext;
+      const ft  = p.frameCount;
       ctx.save();
+
+      // ── Cells: state-cycling fill / outline / dashed ──────
       for (let i = 0; i < vorAgents.length; i++) {
         const cell = vor.cellPolygon(i);
         if (!cell || cell.length < 3) continue;
-        const hue = (vorAgents[i].baseHue + p.frameCount * 0.018) % 360;
-        ctx.fillStyle = `hsla(${hue},52%,94%,0.36)`;
+        const a     = vorAgents[i];
+        const pulse = 0.5 + 0.5 * Math.sin(ft * 0.007 + a.seed);
+        // Each cell slowly cycles through states on its own rhythm
+        const stateF = (Math.sin(ft * 0.0025 + a.seed * 3.7) + 1) / 2;
+        const state  = stateF < 0.42 ? 0 : stateF < 0.74 ? 1 : 2;
+        const hue    = (a.baseHue + ft * 0.012) % 360;
+
         ctx.beginPath();
         ctx.moveTo(cell[0][0], cell[0][1]);
         for (let j = 1; j < cell.length; j++) ctx.lineTo(cell[j][0], cell[j][1]);
         ctx.closePath();
+
+        if (state === 1) {
+          // Filled — soft accent-tinted wash
+          ctx.fillStyle = `hsla(${hue},48%,94%,${(0.10 + pulse * 0.16).toFixed(3)})`;
+          ctx.fill();
+        }
+
+        ctx.lineWidth = state === 1 ? 0.9 : 0.55;
+        if (state === 2) {
+          ctx.setLineDash([3, 8]);
+        } else {
+          ctx.setLineDash([]);
+        }
+        ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},${(0.055 + pulse * 0.085).toFixed(3)})`;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // ── Neighbor connections between close agents ─────────
+      const MAX_CONN = 130;
+      ctx.lineWidth = 0.4;
+      for (let i = 0; i < vorAgents.length; i++) {
+        for (let j = i + 1; j < vorAgents.length; j++) {
+          const dx = vorAgents[i].x - vorAgents[j].x;
+          const dy = vorAgents[i].y - vorAgents[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < MAX_CONN) {
+            const alpha = ((1 - d / MAX_CONN) * 0.13).toFixed(3);
+            ctx.beginPath();
+            ctx.moveTo(vorAgents[i].x, vorAgents[i].y);
+            ctx.lineTo(vorAgents[j].x, vorAgents[j].y);
+            ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},${alpha})`;
+            ctx.setLineDash([]);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // ── Dashed circles at each agent ─────────────────────
+      for (let i = 0; i < vorAgents.length; i++) {
+        const a     = vorAgents[i];
+        const hue   = (a.baseHue + ft * 0.012) % 360;
+        const pulse = 0.5 + 0.5 * Math.sin(ft * 0.007 + a.seed * 1.3);
+        ctx.setLineDash([5, 6]);
+        ctx.lineWidth   = 0.7;
+        ctx.strokeStyle = `hsla(${hue},42%,55%,${(0.07 + pulse * 0.09).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // ── Slow wanderer circle ──────────────────────────────
+      if (wanderer) { wanderer.update(); wanderer.draw(ctx, ft); }
+
+      // ── Centroid dots — pulsing ───────────────────────────
+      for (let i = 0; i < vorAgents.length; i++) {
+        const a     = vorAgents[i];
+        const pulse = 0.5 + 0.5 * Math.sin(ft * 0.009 + a.seed * 1.8);
+        const r     = 1.4 + pulse * 1.8;
+        const alpha = (0.18 + pulse * 0.28).toFixed(3);
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${accentR},${accentG},${accentB},${alpha})`;
         ctx.fill();
       }
-      ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},0.14)`;
-      ctx.lineWidth = 0.75;
-      ctx.beginPath();
-      vor.render(ctx);
-      ctx.stroke();
+
       ctx.restore();
     } catch(_) {}
   }
@@ -162,6 +233,37 @@ new p5(function(p) {
     return pts;
   }
 
+  class WandererCircle {
+    constructor() {
+      this.x    = p.random(p.width  * 0.2, p.width  * 0.8);
+      this.y    = p.random(p.height * 0.2, p.height * 0.8);
+      this.r    = p.random(52, 88);
+      this.vx   = p.random(0.08, 0.15) * (p.random() < 0.5 ? 1 : -1);
+      this.vy   = p.random(0.08, 0.15) * (p.random() < 0.5 ? 1 : -1);
+      this.seed = p.random(1000);
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x - this.r < 0)        { this.x = this.r;            this.vx =  Math.abs(this.vx); }
+      if (this.x + this.r > p.width)  { this.x = p.width  - this.r; this.vx = -Math.abs(this.vx); }
+      if (this.y - this.r < 0)        { this.y = this.r;            this.vy =  Math.abs(this.vy); }
+      if (this.y + this.r > p.height) { this.y = p.height - this.r; this.vy = -Math.abs(this.vy); }
+    }
+    draw(ctx, ft) {
+      const pulse = 0.5 + 0.5 * Math.sin(ft * 0.006 + this.seed);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${accentR},${accentG},${accentB},${(0.02 + pulse * 0.025).toFixed(3)})`;
+      ctx.fill();
+      ctx.setLineDash([5, 7]);
+      ctx.lineWidth = 0.85;
+      ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},${(0.09 + pulse * 0.09).toFixed(3)})`;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
   function advanceFormation(wasCut) {
     formIdx   = (formIdx + 1) % allFormations.length;
     formation = allFormations[formIdx];
@@ -170,6 +272,9 @@ new p5(function(p) {
       cutEffect   = 1.0;
       cutCooldown = 90; // ~1.5 s before next cut
     }
+    if (typeof window.onFormationChange === 'function') {
+      window.onFormationChange(formIdx);
+    }
   }
 
   // ── Particle ──────────────────────────────────────────────
@@ -177,8 +282,8 @@ new p5(function(p) {
     constructor(i) {
       this.x     = p.random(p.width);
       this.y     = p.random(p.height);
-      this.vx    = p.random(-0.22, 0.22);
-      this.vy    = p.random(-0.14, 0.08);
+      this.vx    = p.random(-0.13, 0.13);
+      this.vy    = p.random(-0.09, 0.05);
       this.layer = p.floor(p.random(3));
       this.r     = [1.1, 2.0, 3.2][this.layer];
       this.pf    = [0.10, 0.24, 0.44][this.layer];
@@ -189,8 +294,8 @@ new p5(function(p) {
     update(sv, strength, repR) {
       // Perlin noise — always-on gentle drift keeps particles alive in formation
       const ns = 0.0025, nt = p.frameCount * 0.005;
-      this.vx += (p.noise(this.x * ns,      this.y * ns,      nt + this.seed) - 0.5) * 0.18;
-      this.vy += (p.noise(this.x * ns + 40, this.y * ns + 40, nt + this.seed) - 0.5) * 0.18;
+      this.vx += (p.noise(this.x * ns,      this.y * ns,      nt + this.seed) - 0.5) * 0.10;
+      this.vy += (p.noise(this.x * ns + 40, this.y * ns + 40, nt + this.seed) - 0.5) * 0.10;
 
       // Formation attraction
       if (strength > 0 && this.hi < formation.length) {
@@ -235,6 +340,7 @@ new p5(function(p) {
     readAccent();
     for (let i = 0; i < N; i++) dots.push(new Dot(i));
     for (let i = 0; i < N_VOR; i++) vorAgents.push(new VorAgent());
+    wanderer = new WandererCircle();
     allFormations = [buildSideView(), buildTopView(), buildIsoCoil()];
     formation     = allFormations[0];
 
