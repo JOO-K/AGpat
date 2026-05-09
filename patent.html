@@ -452,6 +452,20 @@
   <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank">USPTO ↗</a>
 </footer>
 
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="model-outline" color-interpolation-filters="sRGB" x="-8%" y="-8%" width="116%" height="116%">
+      <!-- expand alpha mask outward -->
+      <feMorphology in="SourceAlpha" operator="dilate" radius="2.5" result="dilated"/>
+      <!-- color the expanded ring dark -->
+      <feFlood flood-color="#000" flood-opacity="0.72" result="outline-color"/>
+      <feComposite in="outline-color" in2="dilated" operator="in" result="outline"/>
+      <!-- layer original model on top of outline -->
+      <feComposite in="SourceGraphic" in2="outline" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+
 <script src="script.js"></script>
 </body>
 </html>
