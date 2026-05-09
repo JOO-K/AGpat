@@ -4,6 +4,10 @@ const SCHEMES = {
   teal:      { accent: '#0d9488', mid: '#2dd4bf', bg: '#f0fdfa', ar: 13,  ag: 148, ab: 136 },
   ember:     { accent: '#c2410c', mid: '#f97316', bg: '#fff7ed', ar: 194, ag: 65,  ab: 12  },
   plum:      { accent: '#7c3aed', mid: '#a78bfa', bg: '#f5f3ff', ar: 124, ag: 58,  ab: 237 },
+  // experimental
+  rose:      { accent: '#e11d48', mid: '#fb7185', bg: '#fff1f2', ar: 225, ag: 29,  ab: 72  },
+  forest:    { accent: '#16a34a', mid: '#4ade80', bg: '#f0fdf4', ar: 22,  ag: 163, ab: 74  },
+  gold:      { accent: '#d97706', mid: '#fcd34d', bg: '#fffbeb', ar: 217, ag: 119, ab: 6   },
 };
 
 function applyScheme(name) {

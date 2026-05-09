@@ -1510,6 +1510,19 @@ section.in-view > h2 { color: var(--ink); }
   user-select: none;
 }
 
+.scheme-divider {
+  width: 1px;
+  height: 10px;
+  background: var(--rule);
+  margin: 0 0.45rem;
+  flex-shrink: 0;
+}
+
+.scheme-exp-label {
+  opacity: 0.55;
+  font-style: italic;
+}
+
 .swatch {
   width: 11px;
   height: 11px;
