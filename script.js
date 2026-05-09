@@ -714,7 +714,7 @@ if (coverViewer) {
     e.stopImmediatePropagation();
     try {
       const o    = viewer.getCameraOrbit();
-      const step = topMode ? 0.00055 : 0.00030;
+      const step = topMode ? 0.00110 : 0.00060;
       const newR = o.radius * (1 + e.deltaY * step);
       // model-viewer's min/max-camera-orbit clamps the result automatically
       viewer.cameraOrbit = `${o.theta}rad ${o.phi}rad ${newR.toFixed(3)}m`;
