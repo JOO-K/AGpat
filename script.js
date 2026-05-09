@@ -614,8 +614,8 @@ if (coverViewer) {
   viewer.addEventListener('load', () => {
     try {
       const r = viewer.getCameraOrbit().radius;
-      minR = r * 0.25;
-      maxR = r * 5;
+      minR = r * 0.35;
+      maxR = r * 3.0;
       viewer.setAttribute('max-camera-orbit', `Infinity 180deg ${maxR.toFixed(1)}m`);
       setUI(r);
     } catch(_) {}
@@ -707,15 +707,16 @@ if (coverViewer) {
   viewer.addEventListener('load', resetRotation);
 })();
 
-/* ── Scroll wheel: manual zoom in top mode only ── */
+/* ── Scroll wheel: gentle zoom for all modes ────────────── */
 (function() {
   viewer.addEventListener('wheel', e => {
-    if (!topMode) return;
     e.preventDefault();
     e.stopImmediatePropagation();
     try {
-      const o = viewer.getCameraOrbit();
-      const newR = Math.max(5, Math.min(500, o.radius * (1 + e.deltaY * 0.001)));
+      const o    = viewer.getCameraOrbit();
+      const step = topMode ? 0.0006 : 0.00032;
+      const newR = o.radius * (1 + e.deltaY * step);
+      // model-viewer's min/max-camera-orbit clamps the result automatically
       viewer.cameraOrbit = `${o.theta}rad ${o.phi}rad ${newR.toFixed(3)}m`;
     } catch(_) {}
   }, { passive: false, capture: true });
