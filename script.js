@@ -603,7 +603,7 @@ if (coverViewer) {
   document.addEventListener('touchend',  () => { dragging = false; });
 })();
 
-/* ── Model rotation panel ─────────────────────────────── */
+/* ── Model rotation panel (lerp-smoothed) ─────────────── */
 (function() {
   const sliders = {
     x: document.getElementById('rotX'),
@@ -618,26 +618,49 @@ if (coverViewer) {
   const resetBtn = document.getElementById('rotReset');
   if (!sliders.x || !viewer) return;
 
-  function applyRotation() {
-    const xDeg = parseFloat(sliders.x.value);
-    const yDeg = parseFloat(sliders.y.value);
-    const zDeg = parseFloat(sliders.z.value);
-    viewer.orientation = `${xDeg}deg ${yDeg}deg ${zDeg}deg`;
-    vals.x.textContent = xDeg.toFixed(1) + '°';
-    vals.y.textContent = yDeg.toFixed(1) + '°';
-    vals.z.textContent = zDeg.toFixed(1) + '°';
+  const LERP = 0.15;
+  const target  = { x: 0, y: 0, z: 0 };
+  const current = { x: 0, y: 0, z: 0 };
+  let rafId = null;
+
+  function tick() {
+    const dx = target.x - current.x;
+    const dy = target.y - current.y;
+    const dz = target.z - current.z;
+    if (Math.abs(dx) + Math.abs(dy) + Math.abs(dz) < 0.01) {
+      current.x = target.x; current.y = target.y; current.z = target.z;
+      viewer.orientation = `${current.x}deg ${current.y}deg ${current.z}deg`;
+      rafId = null;
+      return;
+    }
+    current.x += dx * LERP;
+    current.y += dy * LERP;
+    current.z += dz * LERP;
+    viewer.orientation = `${current.x.toFixed(2)}deg ${current.y.toFixed(2)}deg ${current.z.toFixed(2)}deg`;
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function onSlider() {
+    target.x = parseFloat(sliders.x.value);
+    target.y = parseFloat(sliders.y.value);
+    target.z = parseFloat(sliders.z.value);
+    vals.x.textContent = target.x.toFixed(1) + '°';
+    vals.y.textContent = target.y.toFixed(1) + '°';
+    vals.z.textContent = target.z.toFixed(1) + '°';
+    if (!rafId) rafId = requestAnimationFrame(tick);
   }
 
   function resetRotation() {
+    target.x = 0; target.y = 0; target.z = 0;
+    current.x = 0; current.y = 0; current.z = 0;
     sliders.x.value = 0; sliders.y.value = 0; sliders.z.value = 0;
     vals.x.textContent = '0°'; vals.y.textContent = '0°'; vals.z.textContent = '0°';
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
     viewer.orientation = '0deg 0deg 0deg';
   }
 
-  ['x', 'y', 'z'].forEach(axis => sliders[axis].addEventListener('input', applyRotation));
+  ['x', 'y', 'z'].forEach(axis => sliders[axis].addEventListener('input', onSlider));
   resetBtn?.addEventListener('click', resetRotation);
-
-  // Reset sliders when a new model loads
   viewer.addEventListener('load', resetRotation);
 })();
 
