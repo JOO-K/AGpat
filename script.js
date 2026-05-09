@@ -5,12 +5,51 @@ const SCHEMES = {
   ember:     { accent: '#c2410c', mid: '#f97316', bg: '#fff7ed', ar: 194, ag: 65,  ab: 12  },
   plum:      { accent: '#7c3aed', mid: '#a78bfa', bg: '#f5f3ff', ar: 124, ag: 58,  ab: 237 },
   // experimental
-  rose:      { accent: '#e11d48', mid: '#fb7185', bg: '#fff1f2', ar: 225, ag: 29,  ab: 72  },
   forest:    { accent: '#16a34a', mid: '#4ade80', bg: '#f0fdf4', ar: 22,  ag: 163, ab: 74  },
   gold:      { accent: '#d97706', mid: '#fcd34d', bg: '#fffbeb', ar: 217, ag: 119, ab: 6   },
 };
 
+/* HSL → [r,g,b] 0-255 */
+function hslToRgb(h, s, l) {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    return Math.round((l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)))) * 255);
+  };
+  return [f(0), f(8), f(4)];
+}
+
+let _auroraRaf = null;
+function _stopAurora() {
+  if (_auroraRaf) { cancelAnimationFrame(_auroraRaf); _auroraRaf = null; }
+}
+
 function applyScheme(name) {
+  _stopAurora();
+
+  if (name === 'aurora') {
+    const t0 = performance.now();
+    (function tick(now) {
+      const h   = ((now - t0) / 18000 * 360) % 360;           // full cycle ~18 s
+      const lum = 44 + Math.sin((now - t0) / 2400) * 3;       // subtle ±3% brightness pulse
+      const [ar, ag, ab] = hslToRgb(h, 78, lum);
+      const [mr, mg, mb] = hslToRgb((h + 28) % 360, 68, lum + 16);
+      const css = document.documentElement.style;
+      css.setProperty('--accent',   `rgb(${ar},${ag},${ab})`);
+      css.setProperty('--acc-mid',  `rgb(${mr},${mg},${mb})`);
+      css.setProperty('--acc-bg',   `hsl(${h.toFixed(0)},90%,97%)`);
+      css.setProperty('--accent-r', ar);
+      css.setProperty('--accent-g', ag);
+      css.setProperty('--accent-b', ab);
+      _auroraRaf = requestAnimationFrame(tick);
+    })(t0);
+    document.querySelectorAll('.swatch').forEach(sw =>
+      sw.classList.toggle('active', sw.dataset.scheme === 'aurora')
+    );
+    return;
+  }
+
   const s = SCHEMES[name];
   if (!s) return;
   const r = document.documentElement.style;
