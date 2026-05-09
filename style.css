@@ -626,7 +626,10 @@ section p,
   background: transparent !important;
   --poster-color: transparent !important;
   --progress-bar-color: transparent;
-  filter: drop-shadow(0 0 2px rgba(90,90,90,0.45)) drop-shadow(0 0 6px rgba(60,60,60,0.18));
+  filter:
+    drop-shadow(0 2px 5px  rgba(0,0,0,0.65))
+    drop-shadow(0 8px 28px rgba(0,0,0,0.42))
+    drop-shadow(0 0  80px  rgba(0,0,0,0.20));
   transform: translateX(15vw);
 }
 
