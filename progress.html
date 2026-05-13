@@ -7,39 +7,652 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="landing-body">
+<body class="prog-outer">
 
-<main class="landing">
+<!-- ── Top nav ──────────────────────────────────────────── -->
+<header class="prog-nav">
+  <a href="index.html" class="landing-logo landing-logo-link prog-nav-logo">RL3T</a>
+  <span class="prog-nav-title">Development Updates</span>
+  <a href="patent.html" class="prog-nav-link">Patent &amp; 3D Model →</a>
+</header>
 
-  <header class="landing-header">
-    <a href="index.html" class="landing-logo landing-logo-link">RL3T</a>
-    <span class="landing-tagline">Development Updates</span>
-  </header>
+<!-- ── Sticky phase strip ───────────────────────────────── -->
+<div class="prog-strip" id="progStrip">
+  <div class="prog-strip-track">
+    <div class="prog-strip-fill" id="stripFill"></div>
 
-  <section class="landing-hero">
-    <p class="landing-badge">Patent Progress &amp; Commercialization</p>
-    <h1 class="landing-title" style="font-size: clamp(2rem, 5vw, 3.8rem);">From Provisional<br>to Grant — and Beyond</h1>
-    <p class="landing-sub">
-      Content coming soon. This page will document the development history,
-      prototype iterations, clinical feedback, and commercialization roadmap
-      for the Adaptive and Radially Expanding Speculum.
-    </p>
-    <div class="landing-ctas">
-      <a href="patent.html" class="cta-btn cta-secondary">
-        <span class="cta-label">View Patent &amp; 3D Model</span>
-        <span class="cta-desc">Full specification with interactive viewer</span>
-      </a>
+    <button class="prog-node" data-phase="0" data-active="true">
+      <div class="prog-node-dot"></div>
+      <div class="prog-node-label">
+        <span class="prog-node-date">Dec 2021</span>
+        <span class="prog-node-name">Concept</span>
+      </div>
+    </button>
+
+    <button class="prog-node" data-phase="1">
+      <div class="prog-node-dot"></div>
+      <div class="prog-node-label">
+        <span class="prog-node-date">Jan 2022</span>
+        <span class="prog-node-name">Provisional</span>
+      </div>
+    </button>
+
+    <button class="prog-node" data-phase="2">
+      <div class="prog-node-dot"></div>
+      <div class="prog-node-label">
+        <span class="prog-node-date">Jan 2023</span>
+        <span class="prog-node-name">Application</span>
+      </div>
+    </button>
+
+    <button class="prog-node" data-phase="3">
+      <div class="prog-node-dot"></div>
+      <div class="prog-node-label">
+        <span class="prog-node-date">Jul 2023</span>
+        <span class="prog-node-name">Publication</span>
+      </div>
+    </button>
+
+    <button class="prog-node" data-phase="4">
+      <div class="prog-node-dot"></div>
+      <div class="prog-node-label">
+        <span class="prog-node-date">Dec 2025</span>
+        <span class="prog-node-name">Grant</span>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- ── Main two-column layout ───────────────────────────── -->
+<div class="prog-main">
+
+  <!-- Left: sticky skeleton column -->
+  <div class="prog-skel-col">
+    <div class="prog-skel-wrap" id="skelContainer">
+      <!-- SVG injected by JS -->
     </div>
-  </section>
+    <div class="prog-skel-caption" id="skelCaption">
+      <span class="prog-skel-layer" id="skelLayerLabel">—</span>
+      <span class="prog-skel-hint">scroll to reveal</span>
+    </div>
+  </div>
 
-  <footer class="landing-footer">
-    <span>Inventor: Arlette Geller &nbsp;·&nbsp; Assignee: RL3T LLC</span>
+  <!-- Right: scrollable timeline -->
+  <div class="prog-events-col">
+
+    <!-- ── Phase 0: Concept ─────────────────────────────── -->
+    <section class="prog-phase" id="phase-0" data-phase="0">
+      <div class="prog-phase-spine">
+        <div class="prog-phase-dot"></div>
+        <div class="prog-phase-line"></div>
+      </div>
+      <div class="prog-phase-content">
+        <header class="prog-phase-head">
+          <span class="prog-phase-mono">Dec 2021</span>
+          <h2 class="prog-phase-title">Concept &amp; Prototype</h2>
+          <p class="prog-phase-sub">ROJAS v17 — first complete CAD model of the adaptive speculum</p>
+        </header>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">ROJAS v17 — First Full Prototype</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-stat-row">
+                <div class="prog-stat">
+                  <span class="prog-stat-val">65.78 mm</span>
+                  <span class="prog-stat-lbl">Collapsed height</span>
+                </div>
+                <div class="prog-stat-divider"></div>
+                <div class="prog-stat">
+                  <span class="prog-stat-val">93.22 mm</span>
+                  <span class="prog-stat-lbl">Deployed height</span>
+                </div>
+              </div>
+              <div class="prog-diagram">
+                <div class="prog-diagram-label">Component breakdown — ROJAS v17</div>
+                <div class="prog-parts-grid">
+                  <div class="prog-part"><span class="prog-part-num">①</span><span>Deployer</span></div>
+                  <div class="prog-part"><span class="prog-part-num">②</span><span>Push</span></div>
+                  <div class="prog-part"><span class="prog-part-num">③</span><span>Pole</span></div>
+                  <div class="prog-part"><span class="prog-part-num">④</span><span>Lid</span></div>
+                  <div class="prog-part"><span class="prog-part-num">⑤</span><span>Container</span></div>
+                  <div class="prog-part"><span class="prog-part-num">⑥</span><span>Expansion Structure</span></div>
+                  <div class="prog-part"><span class="prog-part-num">⑦</span><span>Ring</span></div>
+                  <div class="prog-part"><span class="prog-part-num">⑧</span><span>String</span></div>
+                  <div class="prog-part"><span class="prog-part-num">⑨</span><span>Knot</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">Design Goals</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <ul class="prog-goal-list">
+                <li>Radially expanding — no fixed blade sizes</li>
+                <li>Conforms to individual patient anatomy</li>
+                <li>Single-use, sterile by design</li>
+                <li>No second pair of hands required</li>
+                <li>Clear optical access during procedure</li>
+              </ul>
+              <div class="prog-quote">
+                <p>"A speculum that conforms to the patient — not the other way around."</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Phase 1: Provisional ─────────────────────────── -->
+    <section class="prog-phase" id="phase-1" data-phase="1">
+      <div class="prog-phase-spine">
+        <div class="prog-phase-dot"></div>
+        <div class="prog-phase-line"></div>
+      </div>
+      <div class="prog-phase-content">
+        <header class="prog-phase-head">
+          <span class="prog-phase-mono">Jan 5, 2022</span>
+          <h2 class="prog-phase-title">Provisional Application</h2>
+          <p class="prog-phase-sub">Priority date established with the US Patent &amp; Trademark Office</p>
+        </header>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">Provisional No. 63/296,836</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-stat-row">
+                <div class="prog-stat">
+                  <span class="prog-stat-val">Jan 5, 2022</span>
+                  <span class="prog-stat-lbl">Priority date</span>
+                </div>
+                <div class="prog-stat-divider"></div>
+                <div class="prog-stat">
+                  <span class="prog-stat-val">12 months</span>
+                  <span class="prog-stat-lbl">Window to full filing</span>
+                </div>
+              </div>
+              <div class="prog-timeline-mini">
+                <div class="prog-tmi-row">
+                  <span class="prog-tmi-dot prog-tmi-filled"></span>
+                  <span class="prog-tmi-label">Provisional 63/296,836 — Jan 5, 2022</span>
+                </div>
+                <div class="prog-tmi-row">
+                  <span class="prog-tmi-dot"></span>
+                  <span class="prog-tmi-label prog-tmi-future">Full application — Jan 5, 2023</span>
+                </div>
+              </div>
+              <p class="prog-block-note">A provisional establishes a priority date while the invention is refined. It does not become a patent on its own and is never examined or published.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Phase 2: Full Application ────────────────────── -->
+    <section class="prog-phase" id="phase-2" data-phase="2">
+      <div class="prog-phase-spine">
+        <div class="prog-phase-dot"></div>
+        <div class="prog-phase-line"></div>
+      </div>
+      <div class="prog-phase-content">
+        <header class="prog-phase-head">
+          <span class="prog-phase-mono">Jan 5, 2023</span>
+          <h2 class="prog-phase-title">Full Patent Application</h2>
+          <p class="prog-phase-sub">US Application 18/150,790 — complete specification and claims filed</p>
+        </header>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">Application 18/150,790</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-stat-row">
+                <div class="prog-stat">
+                  <span class="prog-stat-val mono">18/150,790</span>
+                  <span class="prog-stat-lbl">US Application No.</span>
+                </div>
+                <div class="prog-stat-divider"></div>
+                <div class="prog-stat">
+                  <span class="prog-stat-val mono">PCT/US23/60184</span>
+                  <span class="prog-stat-lbl">International filing</span>
+                </div>
+              </div>
+              <div class="prog-ipc-block">
+                <div class="prog-ipc-label">International Patent Classification</div>
+                <div class="prog-ipc-row">
+                  <span class="prog-ipc-code">A61B 1/303</span>
+                  <span class="prog-ipc-desc">Endoscopes — specula; Vaginal specula</span>
+                </div>
+                <div class="prog-ipc-row">
+                  <span class="prog-ipc-code">A61B 1/32</span>
+                  <span class="prog-ipc-desc">Dilating specula</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">Examination &amp; Prior Art</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-stat-row">
+                <div class="prog-stat">
+                  <span class="prog-stat-val">23</span>
+                  <span class="prog-stat-lbl">Prior art references cited</span>
+                </div>
+                <div class="prog-stat-divider"></div>
+                <div class="prog-stat">
+                  <span class="prog-stat-val">1970–2014</span>
+                  <span class="prog-stat-lbl">Date range of cited art</span>
+                </div>
+              </div>
+              <p class="prog-block-note">The ISR for PCT/US23/60184 identified 23 references across US, Canadian, and European prior art — none of which combined radial expansion with the single-operator, single-use design claimed in this application.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Phase 3: Publication ──────────────────────────── -->
+    <section class="prog-phase" id="phase-3" data-phase="3">
+      <div class="prog-phase-spine">
+        <div class="prog-phase-dot"></div>
+        <div class="prog-phase-line"></div>
+      </div>
+      <div class="prog-phase-content">
+        <header class="prog-phase-head">
+          <span class="prog-phase-mono">Jul 13, 2023</span>
+          <h2 class="prog-phase-title">Patent Publication</h2>
+          <p class="prog-phase-sub">US 2023/0218157 A1 published — invention enters public record</p>
+        </header>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">Published as US 2023/0218157 A1</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-stat-row">
+                <div class="prog-stat">
+                  <span class="prog-stat-val">Jul 13, 2023</span>
+                  <span class="prog-stat-lbl">Publication date</span>
+                </div>
+                <div class="prog-stat-divider"></div>
+                <div class="prog-stat">
+                  <span class="prog-stat-val">18 months</span>
+                  <span class="prog-stat-lbl">After priority date</span>
+                </div>
+              </div>
+              <p class="prog-block-note">Publication gives provisional protection — others are on notice that a patent application is pending. The published application is freely viewable through USPTO Patent Public Search.</p>
+              <a class="prog-ext-link" href="https://ppubs.uspto.gov/pubwebapp/external.html?q=(12507882).pn.&db=USPAT" target="_blank" rel="noopener">View on USPTO Patent Public Search ↗</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Phase 4: Grant ────────────────────────────────── -->
+    <section class="prog-phase prog-phase-last" id="phase-4" data-phase="4">
+      <div class="prog-phase-spine">
+        <div class="prog-phase-dot prog-phase-dot-granted"></div>
+      </div>
+      <div class="prog-phase-content">
+        <header class="prog-phase-head">
+          <span class="prog-phase-mono">Dec 30, 2025</span>
+          <h2 class="prog-phase-title">Patent Granted</h2>
+          <p class="prog-phase-sub">US 12,507,882 B2 — issued and in force</p>
+        </header>
+
+        <div class="prog-block prog-block-granted" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">US 12,507,882 B2 — Grant Details</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-stat-row">
+                <div class="prog-stat">
+                  <span class="prog-stat-val">Dec 30, 2025</span>
+                  <span class="prog-stat-lbl">Grant date</span>
+                </div>
+                <div class="prog-stat-divider"></div>
+                <div class="prog-stat">
+                  <span class="prog-stat-val">~20 years</span>
+                  <span class="prog-stat-lbl">From filing — expires ~2043</span>
+                </div>
+              </div>
+              <div class="prog-ipc-block">
+                <div class="prog-ipc-label">US Classification (CPC)</div>
+                <div class="prog-ipc-row">
+                  <span class="prog-ipc-code">A61B 1/303</span>
+                  <span class="prog-ipc-desc">(2013.01)</span>
+                </div>
+                <div class="prog-ipc-row">
+                  <span class="prog-ipc-code">A61B 1/32</span>
+                  <span class="prog-ipc-desc">(2013.01)</span>
+                </div>
+              </div>
+              <div class="prog-grant-names">
+                <div><span class="prog-dim">Inventor</span> Arlette Geller</div>
+                <div><span class="prog-dim">Assignee</span> RL3T LLC, Durham, NC</div>
+                <div><span class="prog-dim">Examiner</span> Amanda L Welles</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prog-block" data-expanded="false">
+          <button class="prog-block-trigger" aria-expanded="false">
+            <span class="prog-block-title">Commercialization Roadmap</span>
+            <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="prog-block-body">
+            <div class="prog-infographic">
+              <div class="prog-roadmap">
+                <div class="prog-rm-item prog-rm-done">
+                  <span class="prog-rm-dot"></span>
+                  <span>Patent granted — IP protection secured</span>
+                </div>
+                <div class="prog-rm-item">
+                  <span class="prog-rm-dot prog-rm-open"></span>
+                  <span>Manufacturing partner identification</span>
+                </div>
+                <div class="prog-rm-item">
+                  <span class="prog-rm-dot prog-rm-open"></span>
+                  <span>FDA 510(k) clearance process</span>
+                </div>
+                <div class="prog-rm-item">
+                  <span class="prog-rm-dot prog-rm-open"></span>
+                  <span>Clinical validation study</span>
+                </div>
+                <div class="prog-rm-item">
+                  <span class="prog-rm-dot prog-rm-open"></span>
+                  <span>Pilot market launch</span>
+                </div>
+              </div>
+              <p class="prog-block-note">RL3T LLC is actively seeking licensing partners and manufacturing collaborators. Contact: arlette@rl3t.com</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /prog-events-col -->
+</div><!-- /prog-main -->
+
+<footer class="prog-footer">
+  <span>Inventor: Arlette Geller &nbsp;·&nbsp; Assignee: RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
+  <div class="prog-footer-links">
     <a href="index.html">← Home</a>
-  </footer>
+    <a href="patent.html">Patent &amp; 3D Model</a>
+    <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank" rel="noopener">USPTO ↗</a>
+  </div>
+</footer>
 
-</main>
+<!-- anime.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+/* ── Constants ────────────────────────────────────────── */
+const NAV_H   = 52;   // px — prog-nav height
+const STRIP_H = 52;   // px — prog-strip height
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
-<script src="sketch.js"></script>
+/* Layer groups revealed per phase */
+const PHASE_LAYERS = [
+  ['head', 'ui'],            // Phase 0 — Concept
+  ['spine'],                 // Phase 1 — Provisional
+  ['ribs'],                  // Phase 2 — Application
+  ['heart'],                 // Phase 3 — Publication
+  ['arms', 'pelvis'],        // Phase 4 — Grant
+];
+
+const PHASE_CAPTIONS = [
+  'Visualizing the concept',
+  'Spine — the structural backbone',
+  'Ribs — radial expansion framework',
+  'Heart — the core mechanism',
+  'Arms & pelvis — form and function united',
+];
+
+/* State */
+let activePhase    = -1;
+let svgEl          = null;
+let layerAnimated  = [];  // which layers have been animated
+
+/* ── Load SVG inline ──────────────────────────────────── */
+fetch('images/skeleton.svg')
+  .then(r => r.text())
+  .then(txt => {
+    const parser = new DOMParser();
+    const doc    = parser.parseFromString(txt, 'image/svg+xml');
+    svgEl        = doc.querySelector('svg');
+
+    /* Size + style */
+    svgEl.setAttribute('width',  '100%');
+    svgEl.setAttribute('height', '100%');
+    svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svgEl.style.display = 'block';
+
+    /* Hide all paths/circles/lines initially */
+    svgEl.querySelectorAll('path, circle, line, polyline, ellipse, rect').forEach(el => {
+      el.style.opacity = '0';
+    });
+
+    document.getElementById('skelContainer').appendChild(svgEl);
+    initScrollTracking();
+  });
+
+/* ── Animate a layer group ────────────────────────────── */
+function animateLayer(groupId, isFirst) {
+  if (!svgEl) return;
+  const group = svgEl.querySelector('#' + groupId);
+  if (!group) return;
+
+  const elements = Array.from(group.querySelectorAll('path, circle, line, polyline, ellipse, rect'));
+  if (!elements.length) return;
+
+  /* Set up stroke-dasharray for draw-on effect */
+  elements.forEach(el => {
+    if (typeof el.getTotalLength === 'function') {
+      try {
+        const len = el.getTotalLength();
+        if (len > 0) {
+          el.style.strokeDasharray  = len;
+          el.style.strokeDashoffset = len;
+        }
+      } catch(_) {}
+    }
+    el.style.opacity = '1';
+  });
+
+  /* Accent color for current-phase layer */
+  group.style.setProperty('--skel-stroke', getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1d4ed8');
+
+  anime({
+    targets:          elements,
+    strokeDashoffset: [anime.setDashoffset, 0],
+    opacity:          [0, 1],
+    easing:           'easeInOutSine',
+    duration:         isFirst ? 900 : 700,
+    delay:            anime.stagger(isFirst ? 18 : 12),
+  });
+}
+
+/* ── Dim earlier layers to neutral ───────────────────── */
+function dimLayer(groupId) {
+  if (!svgEl) return;
+  const group = svgEl.querySelector('#' + groupId);
+  if (!group) return;
+  anime({
+    targets:  Array.from(group.querySelectorAll('path, circle, line, polyline, ellipse, rect')),
+    opacity:  0.22,
+    easing:   'easeOutSine',
+    duration: 600,
+  });
+}
+
+function restoreLayer(groupId) {
+  if (!svgEl) return;
+  const group = svgEl.querySelector('#' + groupId);
+  if (!group) return;
+  anime({
+    targets:  Array.from(group.querySelectorAll('path, circle, line, polyline, ellipse, rect')),
+    opacity:  1,
+    easing:   'easeOutSine',
+    duration: 400,
+  });
+}
+
+/* ── Switch to a phase ────────────────────────────────── */
+function setPhase(idx) {
+  if (idx === activePhase) return;
+  const prev = activePhase;
+  activePhase = idx;
+
+  /* Update strip nodes */
+  document.querySelectorAll('.prog-node').forEach(n => {
+    const ni = parseInt(n.dataset.phase);
+    n.dataset.active = ni <= idx ? 'true' : 'false';
+  });
+
+  /* Update strip fill */
+  const pct = idx / 4 * 100;
+  document.getElementById('stripFill').style.width = pct + '%';
+
+  /* Update skeleton caption */
+  document.getElementById('skelLayerLabel').textContent = PHASE_CAPTIONS[idx] || '—';
+  document.getElementById('skelCaption').dataset.phase = idx;
+
+  /* Animate new layers */
+  const layers = PHASE_LAYERS[idx];
+  if (layers) {
+    layers.forEach((lid, i) => {
+      if (!layerAnimated.includes(lid)) {
+        layerAnimated.push(lid);
+        setTimeout(() => animateLayer(lid, i === 0), i * 120);
+      } else {
+        restoreLayer(lid);
+      }
+    });
+  }
+
+  /* Dim layers from phases before prev */
+  if (prev > idx) {
+    /* Scrolled back up — dim layers that belong to phases > current */
+    for (let p = idx + 1; p <= 4; p++) {
+      (PHASE_LAYERS[p] || []).forEach(lid => {
+        if (layerAnimated.includes(lid)) dimLayer(lid);
+      });
+    }
+    /* Restore current phase layers */
+    (PHASE_LAYERS[idx] || []).forEach(lid => restoreLayer(lid));
+  }
+}
+
+/* ── IntersectionObserver for phase sections ─────────── */
+function initScrollTracking() {
+  const sections = document.querySelectorAll('.prog-phase');
+  const topOffset = NAV_H + STRIP_H;
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const p = parseInt(e.target.dataset.phase);
+        if (!isNaN(p)) setPhase(p);
+      }
+    });
+  }, {
+    rootMargin: `-${topOffset}px 0px -40% 0px`,
+    threshold:  0,
+  });
+
+  sections.forEach(s => io.observe(s));
+
+  /* Trigger phase 0 immediately */
+  setPhase(0);
+}
+
+/* ── Strip node click → scroll to phase ──────────────── */
+document.querySelectorAll('.prog-node').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const idx = parseInt(btn.dataset.phase);
+    const target = document.getElementById('phase-' + idx);
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY - (NAV_H + STRIP_H + 24);
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+/* ── Expandable blocks ────────────────────────────────── */
+document.querySelectorAll('.prog-block-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const block = btn.closest('.prog-block');
+    const body  = block.querySelector('.prog-block-body');
+    const open  = block.dataset.expanded === 'true';
+
+    if (open) {
+      /* Collapse */
+      anime({
+        targets:  body,
+        maxHeight: [body.scrollHeight, 0],
+        opacity:  [1, 0],
+        easing:   'easeInOutQuart',
+        duration: 320,
+        complete: () => {
+          body.style.maxHeight = '0';
+          body.style.overflow  = 'hidden';
+        },
+      });
+      block.dataset.expanded = 'false';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.classList.remove('is-open');
+    } else {
+      /* Expand */
+      body.style.maxHeight = '0';
+      body.style.overflow  = 'hidden';
+      body.style.opacity   = '0';
+      const target = body.scrollHeight;
+      anime({
+        targets:   body,
+        maxHeight: [0, target],
+        opacity:   [0, 1],
+        easing:    'easeInOutQuart',
+        duration:  380,
+        complete:  () => {
+          body.style.maxHeight = 'none';
+          body.style.overflow  = 'visible';
+        },
+      });
+      block.dataset.expanded = 'true';
+      btn.setAttribute('aria-expanded', 'true');
+      btn.classList.add('is-open');
+    }
+  });
+});
+</script>
 </body>
 </html>
