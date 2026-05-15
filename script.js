@@ -74,6 +74,7 @@ const vBtns    = document.querySelectorAll('.vbtn, .vc-btn');
 const mTabs    = document.querySelectorAll('.mtab');
 
 let topMode = false;
+let lastTextScrollY = 0;
 const TOP_FOV    = 10.0;
 const NORMAL_FOV = 26.2;
 
@@ -162,6 +163,12 @@ document.querySelectorAll('.fig-ref').forEach(el => {
     if (figDisp) {
       figDisp.style.color = 'var(--ink)';
       setTimeout(() => figDisp.style.color = '', 600);
+    }
+    if (window.innerWidth <= 768) {
+      lastTextScrollY = window.scrollY;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const backBtn = document.getElementById('backToText');
+      if (backBtn) backBtn.classList.add('visible');
     }
   });
 });
@@ -720,4 +727,14 @@ if (coverViewer) {
       viewer.cameraOrbit = `${o.theta}rad ${o.phi}rad ${newR.toFixed(3)}m`;
     } catch(_) {}
   }, { passive: false, capture: true });
+})();
+
+/* ── Back-to-text button (mobile) ──────────────────────── */
+(function() {
+  const backBtn = document.getElementById('backToText');
+  if (!backBtn) return;
+  backBtn.addEventListener('click', () => {
+    window.scrollTo({ top: lastTextScrollY, behavior: 'smooth' });
+    backBtn.classList.remove('visible');
+  });
 })();

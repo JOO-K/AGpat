@@ -13,6 +13,14 @@ new p5(function(p) {
   let formation   = [];
   let accentR = 29, accentG = 78, accentB = 216;
 
+  // Logo dispersion
+  let logoImage      = null;
+  let logoReady      = false;
+  let logoStartTime  = 0;
+  let curLogoStrength = 0;
+  const LOGO_HOLD    = 1400;  // ms: hold logo shape
+  const LOGO_FADE    = 1600;  // ms: disperse into background
+
   // Voronoi — 22 slow-drifting agents define the cells
   const N_VOR = 22;
   let vorAgents = [];
@@ -297,8 +305,11 @@ new p5(function(p) {
       this.vx += (p.noise(this.x * ns,      this.y * ns,      nt + this.seed) - 0.5) * 0.10;
       this.vy += (p.noise(this.x * ns + 40, this.y * ns + 40, nt + this.seed) - 0.5) * 0.10;
 
-      // Formation attraction
-      if (strength > 0 && this.hi < formation.length) {
+      // Logo phase overrides formation attraction
+      if (curLogoStrength > 0 && typeof this.logoX === 'number') {
+        this.vx += (this.logoX - this.x) * curLogoStrength;
+        this.vy += (this.logoY - this.y) * curLogoStrength;
+      } else if (strength > 0 && this.hi < formation.length) {
         this.vx += (formation[this.hi].x - this.x) * strength;
         this.vy += (formation[this.hi].y - this.y) * strength;
       }
@@ -312,7 +323,9 @@ new p5(function(p) {
         this.vy += (dy / d) * ((repR - d) / repR) * 2.6;
       }
 
-      this.vx *= 0.93; this.vy *= 0.93;
+      // Extra damping during logo hold keeps shape crisp
+      const damp = curLogoStrength > 0.10 ? 0.80 : 0.93;
+      this.vx *= damp; this.vy *= damp;
       this.x  += this.vx;
       this.y  += this.vy + sv * this.pf;
 
@@ -322,6 +335,15 @@ new p5(function(p) {
       if (this.y > p.height + 8) this.y = -8;
     }
   }
+
+  // ── Preload logo ──────────────────────────────────────────
+  p.preload = function() {
+    logoImage = p.loadImage(
+      'images/logo rl3t.png',
+      function() {},
+      function() { logoImage = null; }
+    );
+  };
 
   // ── Setup ─────────────────────────────────────────────────
   p.setup = function() {
@@ -343,6 +365,44 @@ new p5(function(p) {
     wanderer = new WandererCircle();
     allFormations = [buildSideView(), buildTopView(), buildIsoCoil()];
     formation     = allFormations[0];
+
+    // ── Sample logo pixels → set initial particle positions ──
+    if (logoImage) {
+      try {
+        logoImage.loadPixels();
+        const iw = logoImage.width, ih = logoImage.height;
+        const tW = p.width  * 0.25;
+        const tH = tW * (ih / iw);
+        const lx = p.width  * 0.05;
+        const ly = (p.height - tH) * 0.46; // slightly above center
+
+        const darkPx = [];
+        const step   = Math.max(2, Math.floor(iw / 100));
+        for (let ix = 0; ix < iw; ix += step) {
+          for (let iy = 0; iy < ih; iy += step) {
+            const idx = (ix + iy * iw) * 4;
+            const lum = (logoImage.pixels[idx] + logoImage.pixels[idx+1] + logoImage.pixels[idx+2]) / 3;
+            if (lum < 85) {
+              darkPx.push({ x: lx + (ix / iw) * tW, y: ly + (iy / ih) * tH });
+            }
+          }
+        }
+
+        if (darkPx.length > 0) {
+          for (let i = 0; i < N; i++) {
+            const dp = darkPx[Math.floor(p.random(darkPx.length))];
+            dots[i].logoX = dp.x;
+            dots[i].logoY = dp.y;
+            dots[i].x  = dp.x + p.random(-3, 3);
+            dots[i].y  = dp.y + p.random(-3, 3);
+            dots[i].vx = 0;
+            dots[i].vy = 0;
+          }
+          logoReady = true;
+        }
+      } catch(_) {}
+    }
+    logoStartTime = p.millis();
 
     let pmX = -9999, pmY = -9999;
 
@@ -375,9 +435,36 @@ new p5(function(p) {
     idleFrames++;
     switchTimer++;
     if (cutCooldown > 0) cutCooldown--;
-    cutEffect = Math.max(0, cutEffect - 0.028); // decays over ~36 frames
+    cutEffect = Math.max(0, cutEffect - 0.028);
 
-    // Auto-advance every 5 seconds
+    // ── Logo dispersion phase ──────────────────────────────
+    const elapsed = p.millis() - logoStartTime;
+    if (logoReady && elapsed < LOGO_HOLD + LOGO_FADE) {
+      if (elapsed < LOGO_HOLD) {
+        curLogoStrength = 0.15;
+        idleFrames  = 0;
+        switchTimer = 0;
+      } else {
+        const lt = (elapsed - LOGO_HOLD) / LOGO_FADE;
+        curLogoStrength = 0.15 * Math.pow(1 - lt, 1.8);
+      }
+      const lc = document.getElementById('logoCanvas');
+      if (lc) {
+        lc.style.opacity = elapsed < LOGO_HOLD
+          ? '0'
+          : Math.min(1, Math.pow((elapsed - LOGO_HOLD) / LOGO_FADE, 1.4)).toFixed(3);
+      }
+    } else {
+      curLogoStrength = 0;
+      if (logoReady) {
+        const lc = document.getElementById('logoCanvas');
+        if (lc) lc.style.opacity = '1';
+        logoReady = false;
+      }
+    }
+    // ──────────────────────────────────────────────────────
+
+    // Auto-advance every ~11 s
     if (switchTimer >= SWITCH_INTERVAL) advanceFormation(false);
 
     const formT    = Math.max(0, Math.min(1, (idleFrames - 120) / 200));
@@ -404,20 +491,24 @@ new p5(function(p) {
       const pts = layers[l];
       const a   = ALPHA[l];
 
-      p.strokeWeight(LW[l]);
-      for (let i = 0; i < pts.length; i++) {
-        for (let j = i + 1; j < pts.length; j++) {
-          const d = p.dist(pts[i].x, pts[i].y, pts[j].x, pts[j].y);
-          if (d < CDIST[l]) {
-            p.stroke(lr, lg, lb, a * (1 - d / CDIST[l]));
-            p.line(pts[i].x, pts[i].y, pts[j].x, pts[j].y);
+      // Skip connecting lines while particles form the logo (they'd create a solid blob)
+      if (curLogoStrength < 0.04) {
+        p.strokeWeight(LW[l]);
+        for (let i = 0; i < pts.length; i++) {
+          for (let j = i + 1; j < pts.length; j++) {
+            const d = p.dist(pts[i].x, pts[i].y, pts[j].x, pts[j].y);
+            if (d < CDIST[l]) {
+              p.stroke(lr, lg, lb, a * (1 - d / CDIST[l]));
+              p.line(pts[i].x, pts[i].y, pts[j].x, pts[j].y);
+            }
           }
         }
       }
       p.noStroke();
+      const logoBoost = curLogoStrength > 0.09 ? 1.8 : 1.0;
       for (const d of pts) {
-        p.fill(nr, ng, nb, a * 2.2);
-        p.circle(d.x, d.y, d.r * 2);
+        p.fill(nr, ng, nb, Math.min(255, a * 2.2 * logoBoost));
+        p.circle(d.x, d.y, d.r * (curLogoStrength > 0.09 ? 2.4 : 2));
       }
     }
 

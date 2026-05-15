@@ -38,103 +38,138 @@
     <!-- ── PATENT INTRO — front matter before body text ─── -->
     <div class="patent-intro">
 
-      <!-- USPTO-style top bar -->
-      <div class="pi-toprow">
-        <span>United States Patent</span>
-        <span class="pi-num">US 12,507,882 B2</span>
-      </div>
-
-      <!-- Inventor surname large + date -->
-      <div class="pi-hero">
-        <div class="pi-inventor-name">Geller</div>
-        <div class="pi-date-issued">Date of Patent:&ensp;Dec. 30, 2025</div>
+      <!-- Patent page header: left = doc type + inventor name, right = number + date -->
+      <div class="pi-header">
+        <div class="pi-header-l">
+          <div class="pi-doc-type"><span class="pi-fcode">(12)</span> United States Patent</div>
+          <div class="pi-inventor-name">Geller</div>
+        </div>
+        <div class="pi-header-r">
+          <div class="pi-patnum"><span class="pi-fcode">(10)</span> Patent No.:&ensp;<span class="pi-num">US 12,507,882 B2</span></div>
+          <div class="pi-date-issued"><span class="pi-fcode">(45)</span> Date of Patent:&ensp;Dec. 30, 2025</div>
+        </div>
       </div>
 
       <!-- Title -->
       <div class="pi-title-block">
-        <div class="pi-title-label">(54)&ensp;Title</div>
-        <div class="pi-title-text">Adaptive and Radially<br>Expanding Speculum</div>
+        <span class="pi-code pi-fcode">(54)</span>
+        <div class="pi-title-text">Adaptive and Radially Expanding Speculum</div>
       </div>
 
       <!-- Two-column metadata -->
       <div class="pi-meta-grid">
 
+        <!-- LEFT: bibliographic fields -->
         <div class="pi-meta-col">
           <table class="pi-fields">
             <tr>
+              <td class="pi-code">(71)</td>
+              <td class="pi-field-label">Applicant:</td>
+              <td>RL3T LLC, Milwaukee, WI (US)</td>
+            </tr>
+            <tr class="spacer"><td colspan="3"></td></tr>
+            <tr>
               <td class="pi-code">(72)</td>
-              <td class="pi-field-label">Inventor</td>
+              <td class="pi-field-label">Inventor:</td>
               <td>Arlette Geller, Milwaukee, WI (US)</td>
             </tr>
             <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(73)</td>
-              <td class="pi-field-label">Assignee</td>
+              <td class="pi-field-label">Assignee:</td>
               <td>RL3T LLC, Durham, NC (US)</td>
             </tr>
             <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
+              <td class="pi-code">(*)</td>
+              <td class="pi-field-label">Notice:</td>
+              <td class="pi-notice-cell">Subject to any disclaimer, the term of this patent is extended or adjusted under 35 U.S.C. 154(b) by 190 days.</td>
+            </tr>
+            <tr class="spacer"><td colspan="3"></td></tr>
+            <tr>
               <td class="pi-code">(21)</td>
-              <td class="pi-field-label">Appl. No.</td>
+              <td class="pi-field-label">Appl. No.:</td>
               <td><span class="pi-mono">18/150,790</span></td>
             </tr>
             <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(22)</td>
-              <td class="pi-field-label">Filed</td>
+              <td class="pi-field-label">Filed:</td>
               <td>Jan. 5, 2023</td>
             </tr>
-            <tr class="spacer"><td colspan="3"></td></tr>
-            <tr>
-              <td class="pi-code">(60)</td>
-              <td class="pi-field-label">Priority</td>
-              <td>Provisional Appl. No. 63/296,836<br>filed Jan. 5, 2022</td>
-            </tr>
-            <tr class="spacer"><td colspan="3"></td></tr>
+          </table>
+
+          <div class="pi-section-head">Prior Publication Data</div>
+
+          <table class="pi-fields">
             <tr>
               <td class="pi-code">(65)</td>
-              <td class="pi-field-label">Pub. Data</td>
-              <td><span class="pi-mono">US 2023/0218157 A1</span><br>Jul. 13, 2023</td>
+              <td colspan="2"><span class="pi-mono">US 2023/0218157 A1</span>&emsp;Jul. 13, 2023</td>
             </tr>
           </table>
-        </div>
 
-        <div class="pi-meta-col">
+          <div class="pi-section-head">Related U.S. Application Data</div>
+
           <table class="pi-fields">
+            <tr>
+              <td class="pi-code">(60)</td>
+              <td colspan="2">Provisional application No.&nbsp;<span class="pi-mono">63/296,836</span>, filed on Jan.&nbsp;5, 2022.</td>
+            </tr>
+            <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(51)</td>
               <td class="pi-field-label">Int. Cl.</td>
               <td>
-                <span class="pi-mono">A61B 1/303</span> (2006.01)<br>
-                <span class="pi-mono">A61B 1/32</span> (2006.01)
+                <span class="pi-mono">A61B 1/303</span>&ensp;(2006.01)<br>
+                <span class="pi-mono">A61B 1/32</span>&ensp;(2006.01)
               </td>
             </tr>
             <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(52)</td>
-              <td class="pi-field-label">CPC</td>
-              <td><span class="pi-mono">A61B 1/303</span> (2013.01)<br><span class="pi-mono">A61B 1/32</span> (2013.01)</td>
+              <td class="pi-field-label">U.S. Cl.</td>
+              <td>CPC:&ensp;<span class="pi-mono">A61B 1/303</span>&ensp;(2013.01);&ensp;<span class="pi-mono">A61B 1/32</span>&ensp;(2013.01)</td>
             </tr>
             <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(58)</td>
-              <td class="pi-field-label">Field</td>
-              <td><span class="pi-mono">A61B 1/303 · A61B 1/32<br>A61B 2017/0225</span></td>
-            </tr>
-            <tr class="spacer"><td colspan="3"></td></tr>
-            <tr>
-              <td class="pi-code"></td>
-              <td class="pi-field-label">Examiner</td>
-              <td>Julianna N Harvey</td>
-            </tr>
-            <tr class="spacer"><td colspan="3"></td></tr>
-            <tr>
-              <td class="pi-code"></td>
-              <td class="pi-field-label">Firm</td>
-              <td>Husch Blackwell LLP</td>
+              <td class="pi-field-label">Field of Classification Search</td>
+              <td>CPC:&ensp;<span class="pi-mono">A61B 1/303; A61B 1/32; A61B 2017/0225; A61B 17/12145; A61B 17/12172; A61F 2002/825</span><br>See application file for complete search history.</td>
             </tr>
           </table>
-        </div>
+        </div><!-- /.pi-meta-col left -->
+
+        <!-- RIGHT: references cited -->
+        <div class="pi-meta-col">
+          <div class="pi-section-head">(56)&ensp;References Cited</div>
+
+          <div class="pi-ref-cat">U.S. Patent Documents</div>
+          <table class="pi-refs">
+            <tr><td>5,342,385</td><td>A</td><td>&nbsp;8/1994</td><td>Norelli et al.</td></tr>
+            <tr><td>6,302,861</td><td>B2</td><td>10/2001</td><td>Tweddell, III et al.</td></tr>
+            <tr><td>6,902,530</td><td>B1</td><td>&nbsp;6/2005</td><td>Pianka</td></tr>
+            <tr><td>7,549,982</td><td>B2</td><td>&nbsp;6/2009</td><td>Carlin</td></tr>
+            <tr><td>7,744,556</td><td>B2</td><td>&nbsp;6/2010</td><td>Heuer et al.</td></tr>
+            <tr><td>7,963,934</td><td>B2</td><td>&nbsp;6/2011</td><td>Morrow</td></tr>
+            <tr><td>8,096,945</td><td>B2</td><td>&nbsp;1/2012</td><td>Buchok et al.</td></tr>
+          </table>
+          <div class="pi-ref-continued">(Continued)</div>
+
+          <div class="pi-ref-cat">Foreign Patent Documents</div>
+          <table class="pi-refs">
+            <tr><td>CA</td><td>2487103&nbsp;C</td><td>&nbsp;2/2008</td><td></td></tr>
+            <tr><td>EP</td><td>0221424&nbsp;A1</td><td>&nbsp;5/1987</td><td></td></tr>
+          </table>
+          <div class="pi-ref-continued">(Continued)</div>
+
+          <div class="pi-ref-cat">Other Publications</div>
+          <p class="pi-ref-other">International Search Report and Written Opinion for PCT/US23/60184, Jul. 10, 2023, 17 pages.</p>
+
+          <div class="pi-examiner">
+            <p>Primary Examiner — Julianna N Harvey</p>
+            <p>Attorney, Agent, or Firm — Husch Blackwell LLP</p>
+          </div>
+        </div><!-- /.pi-meta-col right -->
 
       </div><!-- /.pi-meta-grid -->
 
@@ -143,7 +178,7 @@
         <div class="pi-abstract-label">(57)&ensp;Abstract</div>
         <p>An adaptive and radially expanding speculum is provided. The speculum includes an expansor that is configured for being inserted into an orifice, exerting an outward force against an orifice wall, and retaining the orifice in an expanded state until it is removed. The expansor can take the form of a radial compression spring, and may be adapted for transitioning between at least a compressed state, a partially expanded (or partially compressed) state, and an equilibrium state. The expansor may include generally longitudinally extending members located between proximal transition portions and distal transition portions. The proximal and distal transition portions may include spring characteristics that cause the expansor to exert force on the orifice when it is inserted therein. The speculum may further comprise a drawstring which, when pulled, reduces a cross section of at least a portion of the expansor such that it may be removed from the orifice.</p>
         <div class="pi-claims-row">
-          <span>11 Claims · 16 Drawing Sheets</span>
+          <span>11 Claims, 16 Drawing Sheets</span>
           <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank">View full patent ↗</a>
         </div>
       </div>
@@ -471,6 +506,7 @@
   </defs>
 </svg>
 
+<button class="back-to-text-btn" id="backToText">↑ Back to text</button>
 <script src="script.js"></script>
 </body>
 </html>

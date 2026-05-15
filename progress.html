@@ -1,67 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Development Updates — RL3T</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body class="prog-outer">
 
-<!-- ── Top nav ──────────────────────────────────────────── -->
+<!-- ── Fixed top nav ────────────────────────────────────── -->
 <header class="prog-nav">
   <a href="index.html" class="landing-logo landing-logo-link prog-nav-logo">RL3T</a>
   <span class="prog-nav-title">Development Updates</span>
   <a href="patent.html" class="prog-nav-link">Patent &amp; 3D Model →</a>
 </header>
-
-<!-- ── Sticky phase strip ───────────────────────────────── -->
-<div class="prog-strip" id="progStrip">
-  <div class="prog-strip-track">
-    <div class="prog-strip-fill" id="stripFill"></div>
-
-    <button class="prog-node" data-phase="0" data-active="true">
-      <div class="prog-node-dot"></div>
-      <div class="prog-node-label">
-        <span class="prog-node-date">Dec 2021</span>
-        <span class="prog-node-name">Concept</span>
-      </div>
-    </button>
-
-    <button class="prog-node" data-phase="1">
-      <div class="prog-node-dot"></div>
-      <div class="prog-node-label">
-        <span class="prog-node-date">Jan 2022</span>
-        <span class="prog-node-name">Provisional</span>
-      </div>
-    </button>
-
-    <button class="prog-node" data-phase="2">
-      <div class="prog-node-dot"></div>
-      <div class="prog-node-label">
-        <span class="prog-node-date">Jan 2023</span>
-        <span class="prog-node-name">Application</span>
-      </div>
-    </button>
-
-    <button class="prog-node" data-phase="3">
-      <div class="prog-node-dot"></div>
-      <div class="prog-node-label">
-        <span class="prog-node-date">Jul 2023</span>
-        <span class="prog-node-name">Publication</span>
-      </div>
-    </button>
-
-    <button class="prog-node" data-phase="4">
-      <div class="prog-node-dot"></div>
-      <div class="prog-node-label">
-        <span class="prog-node-date">Dec 2025</span>
-        <span class="prog-node-name">Grant</span>
-      </div>
-    </button>
-  </div>
-</div>
 
 <!-- ── Main two-column layout ───────────────────────────── -->
 <div class="prog-main">
@@ -77,8 +31,147 @@
     </div>
   </div>
 
-  <!-- Right: scrollable timeline -->
+  <!-- Right: scrollable column (timeline + phases) -->
   <div class="prog-events-col">
+
+    <!-- ── Horizontal Gantt timeline ──────────────────────── -->
+    <section class="prog-tl-section">
+
+      <div class="prog-blob" aria-hidden="true"></div>
+
+      <!-- Section header -->
+      <div class="prog-tl-hd">
+        <span class="prog-tl-hd-label">Development Timeline</span>
+        <span class="prog-tl-hd-span">Dec 2021 — Dec 2025 &nbsp;·&nbsp; 48 months</span>
+      </div>
+
+      <!-- Chart -->
+      <div class="prog-tl-chart" id="tlChart">
+
+        <!-- Left label column -->
+        <div class="prog-tl-label-col">
+          <div class="prog-tl-lbl prog-tl-lbl-rd"    title="Research &amp; Development — continuous">R&amp;D</div>
+          <div class="prog-tl-lbl prog-tl-lbl-prov"  title="US Provisional 63/296,836">Provisional</div>
+          <div class="prog-tl-lbl prog-tl-lbl-pct"   title="PCT/US23/60184 international filing">PCT / Int'l</div>
+          <div class="prog-tl-lbl prog-tl-lbl-uspto prog-tl-lbl-main" title="US Application 18/150,790 — USPTO examination">USPTO</div>
+          <div class="prog-tl-lbl prog-tl-lbl-pub"   title="Publication US 2023/0218157 A1">Publication</div>
+        </div>
+
+        <!-- Right body -->
+        <div class="prog-tl-body">
+
+          <!-- Top milestone labels (MS 0, 2, 4) -->
+          <div class="prog-tl-ms-top">
+            <div class="prog-tl-ms-lbl" style="left:0%">
+              <span class="prog-tl-ms-date">Dec 2021</span>
+              <span class="prog-tl-ms-name">ROJAS v17</span>
+            </div>
+            <div class="prog-tl-ms-lbl" style="left:27.08%">
+              <span class="prog-tl-ms-date">Jan 2023</span>
+              <span class="prog-tl-ms-name">Full Application</span>
+            </div>
+            <div class="prog-tl-ms-lbl prog-tl-ms-lbl-r" style="left:100%">
+              <span class="prog-tl-ms-date">Dec 2025</span>
+              <span class="prog-tl-ms-name">Granted</span>
+            </div>
+          </div>
+
+          <!-- Year axis -->
+          <div class="prog-tl-yr-row">
+            <div class="prog-tl-yr-line"></div>
+            <span class="prog-tl-yr" style="left:0%">2021</span>
+            <span class="prog-tl-yr" style="left:27.08%">2023</span>
+            <span class="prog-tl-yr" style="left:52.08%">2024</span>
+            <span class="prog-tl-yr" style="left:77.08%">2025</span>
+          </div>
+
+          <!-- Track bars + milestone overlay -->
+          <div class="prog-tl-tracks" id="tlTracks">
+
+            <!-- Grid lines -->
+            <div class="prog-tl-vgrid" aria-hidden="true">
+              <div class="prog-tl-vg" style="left:27.08%"></div>
+              <div class="prog-tl-vg" style="left:52.08%"></div>
+              <div class="prog-tl-vg" style="left:77.08%"></div>
+            </div>
+
+            <!-- Track 1: R&D -->
+            <div class="prog-tl-tr prog-tl-tr-rd">
+              <div class="prog-tl-bar prog-tl-bar-rd" data-ms="0" style="left:0%;right:0%" title="ROJAS v17 — click to explore"></div>
+            </div>
+
+            <!-- Track 2: Provisional -->
+            <div class="prog-tl-tr prog-tl-tr-prov">
+              <div class="prog-tl-bar prog-tl-bar-prov" data-ms="1" style="left:2.08%;width:25%" title="Provisional 63/296,836 — click to explore"></div>
+            </div>
+
+            <!-- Track 3: PCT / International -->
+            <div class="prog-tl-tr prog-tl-tr-pct">
+              <div class="prog-tl-bar prog-tl-bar-pct" data-ms="2" style="left:27.08%;width:31.25%" title="Full Application — click to explore"></div>
+            </div>
+
+            <!-- Track 4: USPTO Prosecution -->
+            <div class="prog-tl-tr prog-tl-tr-uspto">
+              <div class="prog-tl-bar prog-tl-bar-uspto" data-ms="2" style="left:27.08%;right:0%" title="USPTO Prosecution — click to explore"></div>
+            </div>
+
+            <!-- Track 5: Publication -->
+            <div class="prog-tl-tr prog-tl-tr-pub">
+              <div class="prog-tl-bar prog-tl-bar-pub" data-ms="3" style="left:39.58%;right:0%" title="Published A1 — click to explore"></div>
+            </div>
+
+            <!-- Milestone markers -->
+            <div class="prog-tl-ms-layer" id="msLayer">
+
+              <button class="prog-ms" data-ms="0" style="left:0%" data-active="true" aria-label="ROJAS v17, Dec 2021">
+                <div class="prog-ms-guide"></div>
+                <div class="prog-ms-dot"></div>
+              </button>
+
+              <button class="prog-ms" data-ms="1" style="left:2.08%" aria-label="Provisional filed Jan 2022">
+                <div class="prog-ms-guide"></div>
+                <div class="prog-ms-dot"></div>
+              </button>
+
+              <button class="prog-ms" data-ms="2" style="left:27.08%" aria-label="Full Application Jan 2023">
+                <div class="prog-ms-guide"></div>
+                <div class="prog-ms-dot"></div>
+              </button>
+
+              <button class="prog-ms" data-ms="3" style="left:39.58%" aria-label="Published Jul 2023">
+                <div class="prog-ms-guide"></div>
+                <div class="prog-ms-dot"></div>
+              </button>
+
+              <button class="prog-ms prog-ms-grant" data-ms="4" style="left:100%" aria-label="Patent Granted Dec 2025">
+                <div class="prog-ms-guide"></div>
+                <div class="prog-ms-dot"></div>
+              </button>
+
+            </div><!-- /ms-layer -->
+          </div><!-- /tracks -->
+
+          <!-- Bottom milestone labels (MS 1, 3) -->
+          <div class="prog-tl-ms-bot">
+            <div class="prog-tl-ms-lbl" style="left:2.08%">
+              <span class="prog-tl-ms-date">Jan 2022</span>
+              <span class="prog-tl-ms-name">Provisional</span>
+            </div>
+            <div class="prog-tl-ms-lbl" style="left:39.58%">
+              <span class="prog-tl-ms-date">Jul 2023</span>
+              <span class="prog-tl-ms-name">Published A1</span>
+            </div>
+          </div>
+
+        </div><!-- /tl-body -->
+      </div><!-- /tl-chart -->
+
+      <!-- Detail panel (glass card) -->
+      <div class="prog-detail" id="detailPanel" style="display:none">
+        <div class="prog-detail-inner" id="detailInner"></div>
+      </div>
+
+    </section><!-- /prog-tl-section -->
 
     <!-- ── Phase 0: Concept ─────────────────────────────── -->
     <section class="prog-phase" id="phase-0" data-phase="0">
@@ -87,29 +180,28 @@
         <div class="prog-phase-line"></div>
       </div>
       <div class="prog-phase-content">
-        <header class="prog-phase-head">
+        <header class="prog-phase-head" data-num="01">
+          <div class="prog-phase-icon">
+            <svg class="prog-phase-icon-svg" viewBox="0 0 20 20"><circle cx="10" cy="8" r="4.5"/><path d="M7.5 12.5v1.5a2.5 2.5 0 0 0 5 0v-1.5"/><path d="M10 2v1M3.5 3.5l.8.8M2 10h1M17 10h1M15.7 4.3l-.8.8"/></svg>
+            <span class="prog-pill">Phase 01</span>
+          </div>
           <span class="prog-phase-mono">Dec 2021</span>
           <h2 class="prog-phase-title">Concept &amp; Prototype</h2>
+          <span class="prog-accent-rule"></span>
           <p class="prog-phase-sub">ROJAS v17 — first complete CAD model of the adaptive speculum</p>
         </header>
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10h6M10 7v6"/></svg>
             <span class="prog-block-title">ROJAS v17 — First Full Prototype</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <div class="prog-block-body">
             <div class="prog-infographic">
-              <div class="prog-stat-row">
-                <div class="prog-stat">
-                  <span class="prog-stat-val">65.78 mm</span>
-                  <span class="prog-stat-lbl">Collapsed height</span>
-                </div>
-                <div class="prog-stat-divider"></div>
-                <div class="prog-stat">
-                  <span class="prog-stat-val">93.22 mm</span>
-                  <span class="prog-stat-lbl">Deployed height</span>
-                </div>
+              <div class="prog-chart-wrap">
+                <div class="prog-chart-label">ROJAS v17 — collapsed vs deployed, 9-component assembly</div>
+                <canvas id="chartDimensions"></canvas>
               </div>
               <div class="prog-diagram">
                 <div class="prog-diagram-label">Component breakdown — ROJAS v17</div>
@@ -131,6 +223,7 @@
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 7v3l2 2"/></svg>
             <span class="prog-block-title">Design Goals</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -160,14 +253,20 @@
         <div class="prog-phase-line"></div>
       </div>
       <div class="prog-phase-content">
-        <header class="prog-phase-head">
+        <header class="prog-phase-head" data-num="02">
+          <div class="prog-phase-icon">
+            <svg class="prog-phase-icon-svg" viewBox="0 0 20 20"><path d="M5 3h10a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M7 7h6M7 10h6M7 13h4"/></svg>
+            <span class="prog-pill">Phase 02</span>
+          </div>
           <span class="prog-phase-mono">Jan 5, 2022</span>
           <h2 class="prog-phase-title">Provisional Application</h2>
+          <span class="prog-accent-rule"></span>
           <p class="prog-phase-sub">Priority date established with the US Patent &amp; Trademark Office</p>
         </header>
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><path d="M10 3v14M3 10h14"/></svg>
             <span class="prog-block-title">Provisional No. 63/296,836</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -209,14 +308,20 @@
         <div class="prog-phase-line"></div>
       </div>
       <div class="prog-phase-content">
-        <header class="prog-phase-head">
+        <header class="prog-phase-head" data-num="03">
+          <div class="prog-phase-icon">
+            <svg class="prog-phase-icon-svg" viewBox="0 0 20 20"><path d="M10 17V9"/><path d="M3 12l7-9 7 9"/><path d="M6 17h8"/></svg>
+            <span class="prog-pill">Phase 03</span>
+          </div>
           <span class="prog-phase-mono">Jan 5, 2023</span>
           <h2 class="prog-phase-title">Full Patent Application</h2>
+          <span class="prog-accent-rule"></span>
           <p class="prog-phase-sub">US Application 18/150,790 — complete specification and claims filed</p>
         </header>
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><path d="M4 4h12v12H4z" rx="1"/><path d="M8 8h4M8 11h4M8 14h2"/></svg>
             <span class="prog-block-title">Application 18/150,790</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -250,6 +355,7 @@
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5"/><path d="M14 14l3 3"/></svg>
             <span class="prog-block-title">Examination &amp; Prior Art</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -266,6 +372,10 @@
                   <span class="prog-stat-lbl">Date range of cited art</span>
                 </div>
               </div>
+              <div class="prog-chart-wrap">
+                <div class="prog-chart-label">Prior art references by decade</div>
+                <canvas id="chartPriorArt"></canvas>
+              </div>
               <p class="prog-block-note">The ISR for PCT/US23/60184 identified 23 references across US, Canadian, and European prior art — none of which combined radial expansion with the single-operator, single-use design claimed in this application.</p>
             </div>
           </div>
@@ -281,14 +391,20 @@
         <div class="prog-phase-line"></div>
       </div>
       <div class="prog-phase-content">
-        <header class="prog-phase-head">
+        <header class="prog-phase-head" data-num="04">
+          <div class="prog-phase-icon">
+            <svg class="prog-phase-icon-svg" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/></svg>
+            <span class="prog-pill">Phase 04</span>
+          </div>
           <span class="prog-phase-mono">Jul 13, 2023</span>
           <h2 class="prog-phase-title">Patent Publication</h2>
+          <span class="prog-accent-rule"></span>
           <p class="prog-phase-sub">US 2023/0218157 A1 published — invention enters public record</p>
         </header>
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><path d="M4 4h12v3H4z"/><path d="M4 10h12"/><path d="M4 14h8"/></svg>
             <span class="prog-block-title">Published as US 2023/0218157 A1</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -320,14 +436,21 @@
         <div class="prog-phase-dot prog-phase-dot-granted"></div>
       </div>
       <div class="prog-phase-content">
-        <header class="prog-phase-head">
+        <header class="prog-phase-head" data-num="05">
+          <div class="prog-phase-icon">
+            <svg class="prog-phase-icon-svg" viewBox="0 0 20 20"><path d="M10 3l2 5h5l-4 3 1.5 5L10 13l-4.5 3L7 11 3 8h5z"/></svg>
+            <span class="prog-pill">Phase 05</span>
+            <span class="prog-pill prog-pill-ink">Granted</span>
+          </div>
           <span class="prog-phase-mono">Dec 30, 2025</span>
           <h2 class="prog-phase-title">Patent Granted</h2>
+          <span class="prog-accent-rule"></span>
           <p class="prog-phase-sub">US 12,507,882 B2 — issued and in force</p>
         </header>
 
         <div class="prog-block prog-block-granted" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><path d="M10 3l2 5h5l-4 3 1.5 5L10 13l-4.5 3L7 11 3 8h5z"/></svg>
             <span class="prog-block-title">US 12,507,882 B2 — Grant Details</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -366,11 +489,21 @@
 
         <div class="prog-block" data-expanded="false">
           <button class="prog-block-trigger" aria-expanded="false">
+            <svg class="prog-block-trigger-icon" viewBox="0 0 20 20"><path d="M3 17l4-8 4 4 4-7"/><circle cx="17" cy="6" r="1.5"/></svg>
             <span class="prog-block-title">Commercialization Roadmap</span>
             <svg class="prog-block-icon" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <div class="prog-block-body">
             <div class="prog-infographic">
+              <div class="prog-chart-wrap" style="display:flex;gap:1.5rem;align-items:center;">
+                <div style="width:90px;flex-shrink:0;">
+                  <canvas id="chartRoadmap" style="max-height:90px;"></canvas>
+                </div>
+                <div>
+                  <div class="prog-chart-label" style="margin-bottom:0.5rem;">1 of 5 milestones secured</div>
+                  <div class="prog-block-note" style="font-size:0.78rem;">IP protection granted. Manufacturing, regulatory, and clinical phases ahead.</div>
+                </div>
+              </div>
               <div class="prog-roadmap">
                 <div class="prog-rm-item prog-rm-done">
                   <span class="prog-rm-dot"></span>
@@ -393,7 +526,7 @@
                   <span>Pilot market launch</span>
                 </div>
               </div>
-              <p class="prog-block-note">RL3T LLC is actively seeking licensing partners and manufacturing collaborators. Contact: arlette@rl3t.com</p>
+              <p class="prog-block-note">RL3T LLC is actively seeking licensing partners and manufacturing collaborators. Contact: <span class="prog-pill">arlette@rl3t.com</span></p>
             </div>
           </div>
         </div>
@@ -413,60 +546,107 @@
   </div>
 </footer>
 
-<!-- anime.js -->
+<!-- ─────────────────────────────────────────────────────────── -->
+
+<!-- ─────────────────────────────────────────────────────────── -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script>
-/* ── Constants ────────────────────────────────────────── */
-const NAV_H   = 52;   // px — prog-nav height
-const STRIP_H = 52;   // px — prog-strip height
+/* ── Constants ─────────────────────────────────────────────── */
+const NAV_H   = 52;
+const STRIP_H = 0;
 
-/* Layer groups revealed per phase */
+/*
+  Skeleton animation order (new):
+  - ON LOAD:  ribs animate in one by one (dramatic stagger)
+  - Phase 0:  spine + head (teeth/nose/eyes included)
+  - Phase 1:  ui
+  - Phase 2:  heart
+  - Phase 3:  arms + pelvis
+  - Phase 4:  (fully assembled — pulse glow)
+*/
 const PHASE_LAYERS = [
-  ['head', 'ui'],            // Phase 0 — Concept
-  ['spine'],                 // Phase 1 — Provisional
-  ['ribs'],                  // Phase 2 — Application
-  ['heart'],                 // Phase 3 — Publication
-  ['arms', 'pelvis'],        // Phase 4 — Grant
+  ['spine', 'head'],
+  ['ui'],
+  ['heart'],
+  ['arms', 'pelvis'],
+  [],
 ];
 
 const PHASE_CAPTIONS = [
-  'Visualizing the concept',
-  'Spine — the structural backbone',
-  'Ribs — radial expansion framework',
-  'Heart — the core mechanism',
-  'Arms & pelvis — form and function united',
+  'Spine & head — structural core',
+  'Instrument UI — the interface',
+  'Heart — core mechanism',
+  'Arms & pelvis — complete assembly',
+  'Fully assembled',
 ];
 
-/* State */
-let activePhase    = -1;
-let svgEl          = null;
-let layerAnimated  = [];  // which layers have been animated
+/* ── Gantt milestone data ───────────────────────────────────── */
+const MILESTONES = [
+  {
+    ms: 0, date: 'Dec 2021',
+    title: 'ROJAS v17 — First Prototype',
+    sub: 'Concept complete · dimensional specs established',
+    stats: [
+      { v: '65.78 mm', l: 'Collapsed height' },
+      { v: '93.22 mm', l: 'Deployed height'  },
+      { v: '9',        l: 'Component parts'  },
+    ],
+    body: 'The first complete CAD model of the adaptive speculum — nine-part assembly including Deployer, Push, Pole, Lid, Container, Expansion Structure, Ring, String, and Knot. This version established the radial expansion mechanism that became the core claim of the patent.',
+  },
+  {
+    ms: 1, date: 'Jan 5, 2022',
+    title: 'Provisional 63/296,836 Filed',
+    sub: 'Priority date secured · 12-month window opens',
+    stats: [
+      { v: 'Jan 5, 2022', l: 'Priority date'             },
+      { v: '12 months',   l: 'Window to full application' },
+      { v: 'USPTO',       l: 'Filed with'                 },
+    ],
+    body: 'A provisional application established the priority date without beginning examination. This gave the team one year to refine the specification and prototype before committing to full claims. The 12-month window ran concurrently with ongoing R&D.',
+  },
+  {
+    ms: 2, date: 'Jan 5, 2023',
+    title: 'Full Application 18/150,790',
+    sub: 'Complete specification filed · prosecution begins',
+    stats: [
+      { v: '18/150,790',     l: 'US Application No.'   },
+      { v: 'PCT/US23/60184', l: 'International filing'  },
+      { v: 'A61B 1/303',     l: 'IPC Classification'    },
+    ],
+    body: 'Filed exactly one year after the provisional — the maximum window. Simultaneously filed as PCT/US23/60184, establishing international coverage. The ISR identified 23 prior art references spanning 1970–2014, none of which anticipated the combined claims.',
+  },
+  {
+    ms: 3, date: 'Jul 13, 2023',
+    title: 'Published: US 2023/0218157 A1',
+    sub: 'Application enters the public record',
+    stats: [
+      { v: '23',        l: 'Prior art references' },
+      { v: '18 months', l: 'After priority date'  },
+      { v: '1970–2014', l: 'Prior art date range'  },
+    ],
+    body: 'Publication is automatic under US law 18 months after the priority date. From this point, prosecution and public disclosure ran in parallel — competitors were on notice while the examiner continued reviewing claims.',
+  },
+  {
+    ms: 4, date: 'Dec 30, 2025',
+    title: 'US 12,507,882 B2 — Patent Granted',
+    sub: 'Full IP protection issued · assignee RL3T LLC',
+    stats: [
+      { v: '~20 yrs',      l: 'Protection (expires ~2043)' },
+      { v: 'Dec 30, 2025', l: 'Issue date'                 },
+      { v: 'A. Welles',    l: 'USPTO Examiner'             },
+    ],
+    body: 'After examination by Amanda L Welles, the patent was allowed and granted with claims covering radially expanding speculum designs under A61B 1/303 and A61B 1/32. RL3T LLC now holds exclusive rights. Commercialization pathways include licensing partnerships and FDA 510(k) clearance.',
+  },
+];
 
-/* ── Load SVG inline ──────────────────────────────────── */
-fetch('images/skeleton.svg')
-  .then(r => r.text())
-  .then(txt => {
-    const parser = new DOMParser();
-    const doc    = parser.parseFromString(txt, 'image/svg+xml');
-    svgEl        = doc.querySelector('svg');
+/* ── State ─────────────────────────────────────────────────── */
+let activePhase   = -1;
+let svgEl         = null;
+let layerAnimated = [];
+let activeMsIdx   = -1;
 
-    /* Size + style */
-    svgEl.setAttribute('width',  '100%');
-    svgEl.setAttribute('height', '100%');
-    svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svgEl.style.display = 'block';
-
-    /* Hide all paths/circles/lines initially */
-    svgEl.querySelectorAll('path, circle, line, polyline, ellipse, rect').forEach(el => {
-      el.style.opacity = '0';
-    });
-
-    document.getElementById('skelContainer').appendChild(svgEl);
-    initScrollTracking();
-  });
-
-/* ── Animate a layer group ────────────────────────────── */
-function animateLayer(groupId, isFirst) {
+/* ── Animate individual elements in a skeleton layer ───────── */
+function animateLayer(groupId, isFirst, customStagger) {
   if (!svgEl) return;
   const group = svgEl.querySelector('#' + groupId);
   if (!group) return;
@@ -474,41 +654,73 @@ function animateLayer(groupId, isFirst) {
   const elements = Array.from(group.querySelectorAll('path, circle, line, polyline, ellipse, rect'));
   if (!elements.length) return;
 
-  /* Set up stroke-dasharray for draw-on effect */
   elements.forEach(el => {
     if (typeof el.getTotalLength === 'function') {
       try {
         const len = el.getTotalLength();
-        if (len > 0) {
-          el.style.strokeDasharray  = len;
-          el.style.strokeDashoffset = len;
-        }
+        if (len > 0) { el.style.strokeDasharray = len; el.style.strokeDashoffset = len; }
       } catch(_) {}
     }
     el.style.opacity = '1';
   });
 
-  /* Accent color for current-phase layer */
-  group.style.setProperty('--skel-stroke', getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#1d4ed8');
-
   anime({
     targets:          elements,
     strokeDashoffset: [anime.setDashoffset, 0],
-    opacity:          [0, 1],
+    opacity:          1,
     easing:           'easeInOutSine',
     duration:         isFirst ? 900 : 700,
-    delay:            anime.stagger(isFirst ? 18 : 12),
+    delay:            anime.stagger(customStagger !== undefined ? customStagger : (isFirst ? 18 : 12)),
   });
 }
 
-/* ── Dim earlier layers to neutral ───────────────────── */
+/* ── Ribs: animate one by one on page load ─────────────────── */
+function animateRibsOnLoad() {
+  if (!svgEl) return;
+  const group = svgEl.querySelector('#ribs');
+  if (!group) return;
+
+  // Get direct child groups or all rib elements
+  const children = Array.from(group.children).filter(c =>
+    c.tagName === 'g' || c.tagName === 'path' || c.tagName === 'polyline' || c.tagName === 'ellipse'
+  );
+
+  const targets = children.length > 1 ? children
+    : Array.from(group.querySelectorAll('path, circle, line, polyline, ellipse, rect'));
+
+  targets.forEach(el => {
+    const paths = el.querySelectorAll ? Array.from(el.querySelectorAll('path, polyline, ellipse, circle, line')) : [el];
+    const allEls = paths.length ? paths : [el];
+    allEls.forEach(p => {
+      if (typeof p.getTotalLength === 'function') {
+        try {
+          const len = p.getTotalLength();
+          if (len > 0) { p.style.strokeDasharray = len; p.style.strokeDashoffset = len; }
+        } catch(_) {}
+      }
+      p.style.opacity = '1';
+    });
+  });
+
+  anime({
+    targets:          targets,
+    opacity:          1,
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing:           'easeInOutQuart',
+    duration:         600,
+    delay:            anime.stagger(140, { start: 200 }),
+  });
+
+  layerAnimated.push('ribs');
+}
+
 function dimLayer(groupId) {
   if (!svgEl) return;
   const group = svgEl.querySelector('#' + groupId);
   if (!group) return;
   anime({
     targets:  Array.from(group.querySelectorAll('path, circle, line, polyline, ellipse, rect')),
-    opacity:  0.22,
+    opacity:  0.18,
     easing:   'easeOutSine',
     duration: 600,
   });
@@ -526,27 +738,18 @@ function restoreLayer(groupId) {
   });
 }
 
-/* ── Switch to a phase ────────────────────────────────── */
+/* ── Switch active skeleton phase ──────────────────────────── */
 function setPhase(idx) {
   if (idx === activePhase) return;
   const prev = activePhase;
   activePhase = idx;
 
-  /* Update strip nodes */
-  document.querySelectorAll('.prog-node').forEach(n => {
-    const ni = parseInt(n.dataset.phase);
-    n.dataset.active = ni <= idx ? 'true' : 'false';
-  });
+  const stripFill = document.getElementById('stripFill');
+  if (stripFill) stripFill.style.width = (idx / 4 * 100) + '%';
 
-  /* Update strip fill */
-  const pct = idx / 4 * 100;
-  document.getElementById('stripFill').style.width = pct + '%';
-
-  /* Update skeleton caption */
   document.getElementById('skelLayerLabel').textContent = PHASE_CAPTIONS[idx] || '—';
   document.getElementById('skelCaption').dataset.phase = idx;
 
-  /* Animate new layers */
   const layers = PHASE_LAYERS[idx];
   if (layers) {
     layers.forEach((lid, i) => {
@@ -559,22 +762,61 @@ function setPhase(idx) {
     });
   }
 
-  /* Dim layers from phases before prev */
   if (prev > idx) {
-    /* Scrolled back up — dim layers that belong to phases > current */
     for (let p = idx + 1; p <= 4; p++) {
       (PHASE_LAYERS[p] || []).forEach(lid => {
         if (layerAnimated.includes(lid)) dimLayer(lid);
       });
     }
-    /* Restore current phase layers */
     (PHASE_LAYERS[idx] || []).forEach(lid => restoreLayer(lid));
+  }
+
+  // Phase 4: pulse glow on granted dot if fully assembled
+  if (idx === 4) {
+    const dot = document.querySelector('.prog-phase-dot-granted');
+    if (dot) {
+      anime({
+        targets: dot,
+        boxShadow: [
+          '0 0 0 4px rgba(29,78,216,0.14)',
+          '0 0 0 10px rgba(29,78,216,0.0)',
+        ],
+        easing: 'easeOutExpo',
+        duration: 1000,
+        loop: false,
+      });
+    }
   }
 }
 
-/* ── IntersectionObserver for phase sections ─────────── */
+/* ── Load SVG + init ────────────────────────────────────────── */
+fetch('images/skeleton.svg')
+  .then(r => r.text())
+  .then(txt => {
+    const parser = new DOMParser();
+    const doc    = parser.parseFromString(txt, 'image/svg+xml');
+    svgEl        = doc.querySelector('svg');
+
+    svgEl.setAttribute('width',  '100%');
+    svgEl.setAttribute('height', '100%');
+    svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    svgEl.style.display = 'block';
+
+    svgEl.querySelectorAll('path, circle, line, polyline, ellipse, rect').forEach(el => {
+      el.style.opacity = '0.07';
+    });
+
+    document.getElementById('skelContainer').appendChild(svgEl);
+
+    // Animate ribs immediately on load
+    setTimeout(animateRibsOnLoad, 400);
+
+    initScrollTracking();
+  });
+
+/* ── IntersectionObserver for phase sections ──────────────── */
 function initScrollTracking() {
-  const sections = document.querySelectorAll('.prog-phase');
+  const sections  = document.querySelectorAll('.prog-phase');
   const topOffset = NAV_H + STRIP_H;
 
   const io = new IntersectionObserver(entries => {
@@ -590,24 +832,10 @@ function initScrollTracking() {
   });
 
   sections.forEach(s => io.observe(s));
-
-  /* Trigger phase 0 immediately */
   setPhase(0);
 }
 
-/* ── Strip node click → scroll to phase ──────────────── */
-document.querySelectorAll('.prog-node').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const idx = parseInt(btn.dataset.phase);
-    const target = document.getElementById('phase-' + idx);
-    if (target) {
-      const top = target.getBoundingClientRect().top + window.scrollY - (NAV_H + STRIP_H + 24);
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
-});
-
-/* ── Expandable blocks ────────────────────────────────── */
+/* ── Expandable blocks ──────────────────────────────────────── */
 document.querySelectorAll('.prog-block-trigger').forEach(btn => {
   btn.addEventListener('click', () => {
     const block = btn.closest('.prog-block');
@@ -615,44 +843,370 @@ document.querySelectorAll('.prog-block-trigger').forEach(btn => {
     const open  = block.dataset.expanded === 'true';
 
     if (open) {
-      /* Collapse */
-      anime({
-        targets:  body,
-        maxHeight: [body.scrollHeight, 0],
-        opacity:  [1, 0],
-        easing:   'easeInOutQuart',
-        duration: 320,
-        complete: () => {
-          body.style.maxHeight = '0';
-          body.style.overflow  = 'hidden';
-        },
-      });
-      block.dataset.expanded = 'false';
-      btn.setAttribute('aria-expanded', 'false');
-      btn.classList.remove('is-open');
-    } else {
-      /* Expand */
-      body.style.maxHeight = '0';
-      body.style.overflow  = 'hidden';
-      body.style.opacity   = '0';
-      const target = body.scrollHeight;
       anime({
         targets:   body,
-        maxHeight: [0, target],
-        opacity:   [0, 1],
+        maxHeight: [body.scrollHeight, 0],
+        opacity:   [1, 0],
         easing:    'easeInOutQuart',
-        duration:  380,
+        duration:  320,
         complete:  () => {
-          body.style.maxHeight = 'none';
-          body.style.overflow  = 'visible';
+          block.dataset.expanded = 'false';
+          btn.setAttribute('aria-expanded', 'false');
+          btn.classList.remove('is-open');
         },
       });
+    } else {
       block.dataset.expanded = 'true';
       btn.setAttribute('aria-expanded', 'true');
       btn.classList.add('is-open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      anime({
+        targets:  body,
+        maxHeight: [0, body.scrollHeight],
+        opacity:   [0, 1],
+        easing:    'easeInOutQuart',
+        duration:  360,
+        complete:  () => { body.style.maxHeight = 'none'; },
+      });
     }
   });
 });
+
+/* ── Gantt milestone click → detail + scroll ───────────────── */
+function renderDetail(idx) {
+  const m = MILESTONES[idx];
+  if (!m) return;
+  const inner = document.getElementById('detailInner');
+  if (!inner) return;
+
+  inner.innerHTML = `
+    <div class="prog-det-left">
+      <div class="prog-det-date">${m.date}</div>
+      <div class="prog-det-title">${m.title}</div>
+      <div class="prog-det-sub">${m.sub}</div>
+    </div>
+    <div class="prog-det-stats">
+      ${m.stats.map(s => `
+        <div class="prog-det-stat">
+          <span class="prog-det-stat-v">${s.v}</span>
+          <span class="prog-det-stat-l">${s.l}</span>
+        </div>`).join('')}
+    </div>
+    <div class="prog-det-right">
+      <div class="prog-det-body">${m.body}</div>
+    </div>`;
+
+  anime({
+    targets:  inner,
+    opacity:  [0, 1],
+    translateY: [-6, 0],
+    easing:   'easeOutQuart',
+    duration: 320,
+  });
+}
+
+function activateMilestone(idx) {
+  document.querySelectorAll('.prog-ms').forEach(btn => {
+    btn.dataset.active = btn.dataset.ms == idx ? 'true' : 'false';
+  });
+  document.querySelectorAll('.prog-tl-bar[data-ms]').forEach(bar => {
+    bar.classList.toggle('prog-tl-bar-active', bar.dataset.ms == idx);
+  });
+  activeMsIdx = idx;
+
+  const panel = document.getElementById('detailPanel');
+  if (panel) {
+    const wasHidden = panel.style.display === 'none';
+    panel.style.display = '';
+    if (wasHidden) {
+      anime({ targets: panel, opacity: [0, 1], translateY: [8, 0], easing: 'easeOutQuart', duration: 300 });
+    }
+  }
+
+  renderDetail(idx);
+
+  const target = document.getElementById('phase-' + idx);
+  if (target) {
+    const top = target.getBoundingClientRect().top + window.scrollY - (NAV_H + STRIP_H + 24);
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}
+
+document.querySelectorAll('.prog-ms').forEach(btn => {
+  btn.addEventListener('click', () => activateMilestone(parseInt(btn.dataset.ms)));
+});
+
+document.querySelectorAll('.prog-tl-bar[data-ms]').forEach(bar => {
+  bar.addEventListener('click', () => activateMilestone(parseInt(bar.dataset.ms)));
+});
+
+/* ── Gantt track bar reveal on scroll ──────────────────────── */
+(function () {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      anime({
+        targets:  '.prog-tl-bar',
+        scaleX:   [0, 1],
+        easing:   'easeOutExpo',
+        duration: 900,
+        delay:    anime.stagger(80),
+      });
+      io.disconnect();
+    });
+  }, { threshold: 0.3 });
+
+  const chart = document.getElementById('tlChart');
+  if (chart) io.observe(chart);
+})();
+
+/* ── Chart.js — animated fill graphs ───────────────────────── */
+function makeAccentRgb(a) {
+  const r = getComputedStyle(document.documentElement).getPropertyValue('--accent-r').trim();
+  const g = getComputedStyle(document.documentElement).getPropertyValue('--accent-g').trim();
+  const b = getComputedStyle(document.documentElement).getPropertyValue('--accent-b').trim();
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.font.size   = 11;
+Chart.defaults.color       = '#888';
+
+/* ── Isometric 3D viz — ROJAS v17 (Phase 0) ───────────────── */
+(function () {
+  var cv = document.getElementById('chartDimensions');
+  if (!cv) return;
+
+  var PARTS = ['Deployer','Push','Pole','Lid','Container','Expansion','Ring','String','Knot'];
+  var N = PARTS.length;
+  var C_MM = 65.78, D_MM = 93.22;
+  var LW = 420, LH = 210;
+  var DPR = window.devicePixelRatio || 1;
+
+  cv.width  = LW * DPR;
+  cv.height = LH * DPR;
+  cv.style.width    = LW + 'px';
+  cv.style.maxWidth = '100%';
+  cv.style.height   = LH + 'px';
+
+  var ctx2 = cv.getContext('2d');
+  ctx2.scale(DPR, DPR);
+
+  function acRGB() {
+    var cs = getComputedStyle(document.documentElement);
+    return [
+      parseInt(cs.getPropertyValue('--accent-r').trim()) || 29,
+      parseInt(cs.getPropertyValue('--accent-g').trim()) || 78,
+      parseInt(cs.getPropertyValue('--accent-b').trim()) || 216,
+    ];
+  }
+
+  function drawCol(x, y, cw, cd, fullH, prog) {
+    var h = fullH * Math.max(0, prog);
+    if (h < 0.5) return;
+    var ph = h / N;
+    var ac = acRGB();
+    var r = ac[0], g = ac[1], b = ac[2];
+
+    for (var i = 0; i < N; i++) {
+      var frac  = i / (N - 1);
+      var aFr   = 0.13 + frac * 0.40;
+      var aSide = aFr * 0.52;
+      var by = y - i * ph;
+      var ty = y - (i + 1) * ph;
+
+      ctx2.beginPath();
+      ctx2.moveTo(x, by); ctx2.lineTo(x + cw, by);
+      ctx2.lineTo(x + cw, ty); ctx2.lineTo(x, ty);
+      ctx2.closePath();
+      ctx2.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + aFr.toFixed(3) + ')';
+      ctx2.fill();
+
+      if (i > 0) {
+        ctx2.beginPath(); ctx2.moveTo(x, by); ctx2.lineTo(x + cw, by);
+        ctx2.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.10)';
+        ctx2.lineWidth = 0.5; ctx2.stroke();
+      }
+
+      ctx2.beginPath();
+      ctx2.moveTo(x + cw, by); ctx2.lineTo(x + cw + cd, by - cd * 0.5);
+      ctx2.lineTo(x + cw + cd, ty - cd * 0.5); ctx2.lineTo(x + cw, ty);
+      ctx2.closePath();
+      ctx2.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + aSide.toFixed(3) + ')';
+      ctx2.fill();
+    }
+
+    var topY = y - h;
+    ctx2.beginPath();
+    ctx2.moveTo(x, topY); ctx2.lineTo(x + cw, topY);
+    ctx2.lineTo(x + cw + cd, topY - cd * 0.5); ctx2.lineTo(x + cd, topY - cd * 0.5);
+    ctx2.closePath();
+    ctx2.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.72)';
+    ctx2.fill();
+
+    ctx2.lineWidth = 0.8;
+    ctx2.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.4)';
+    ctx2.beginPath();
+    ctx2.moveTo(x, y); ctx2.lineTo(x + cw, y); ctx2.lineTo(x + cw, topY); ctx2.lineTo(x, topY); ctx2.closePath();
+    ctx2.stroke();
+    ctx2.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.2)';
+    ctx2.beginPath();
+    ctx2.moveTo(x + cw, y); ctx2.lineTo(x + cw + cd, y - cd * 0.5);
+    ctx2.lineTo(x + cw + cd, topY - cd * 0.5); ctx2.lineTo(x + cw, topY); ctx2.closePath();
+    ctx2.stroke();
+    ctx2.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.45)';
+    ctx2.beginPath();
+    ctx2.moveTo(x, topY); ctx2.lineTo(x + cw, topY);
+    ctx2.lineTo(x + cw + cd, topY - cd * 0.5); ctx2.lineTo(x + cd, topY - cd * 0.5); ctx2.closePath();
+    ctx2.stroke();
+  }
+
+  function drawAnnotation(x, y, cw, cd, fullH, prog, mmLabel, colLabel) {
+    if (prog < 0.3) return;
+    var alpha = Math.min(1, (prog - 0.3) / 0.4);
+    var h = fullH * prog;
+    var topFr  = y - h;
+    var topDim = topFr - cd * 0.5;
+    var ac = acRGB();
+    var r = ac[0], g = ac[1], b = ac[2];
+    var dimX = x + cw + cd + 9;
+
+    ctx2.beginPath();
+    ctx2.moveTo(dimX, y); ctx2.lineTo(dimX, topDim);
+    ctx2.setLineDash([2, 2]);
+    ctx2.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.4 * alpha).toFixed(2) + ')';
+    ctx2.lineWidth = 0.8; ctx2.stroke(); ctx2.setLineDash([]);
+
+    ctx2.beginPath();
+    ctx2.moveTo(dimX - 3, y); ctx2.lineTo(dimX + 3, y);
+    ctx2.moveTo(dimX - 3, topDim); ctx2.lineTo(dimX + 3, topDim);
+    ctx2.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.55 * alpha).toFixed(2) + ')';
+    ctx2.lineWidth = 0.8; ctx2.stroke();
+
+    ctx2.font = '500 10px "DM Mono", monospace';
+    ctx2.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.9 * alpha).toFixed(2) + ')';
+    ctx2.textAlign = 'left';
+    ctx2.fillText(mmLabel, dimX + 7, (y + topDim) / 2 + 4);
+
+    ctx2.font = '300 9.5px "DM Mono", monospace';
+    ctx2.fillStyle = 'rgba(120,120,120,' + alpha.toFixed(2) + ')';
+    ctx2.textAlign = 'center';
+    ctx2.fillText(colLabel, x + cw * 0.5, y + 18);
+  }
+
+  function drawLegend(alpha) {
+    if (alpha <= 0) return;
+    var lx = LW * 0.725, ly = 22;
+    var itemH = (LH - ly - 20) / N;
+    var ac = acRGB();
+    var r = ac[0], g = ac[1], b = ac[2];
+
+    ctx2.font = '500 8.5px "DM Mono", monospace';
+    ctx2.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (0.6 * alpha).toFixed(2) + ')';
+    ctx2.textAlign = 'left';
+    ctx2.fillText('9 components', lx, ly - 5);
+
+    ctx2.font = '300 8.5px "DM Mono", monospace';
+    for (var i = 0; i < N; i++) {
+      var frac = i / (N - 1);
+      var a = (0.13 + frac * 0.42) * alpha;
+      var dotY = ly + i * itemH;
+      ctx2.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(2) + ')';
+      ctx2.fillRect(lx, dotY, 6, 6);
+      ctx2.fillStyle = 'rgba(108,108,108,' + alpha.toFixed(2) + ')';
+      ctx2.fillText(PARTS[i], lx + 11, dotY + 6);
+    }
+  }
+
+  var isoState = { c: 0, d: 0 };
+
+  function drawIso() {
+    ctx2.clearRect(0, 0, LW, LH);
+    var CW = 68, CD = 26;
+    var MAX_H = LH - 54;
+    var COL_H  = MAX_H;
+    var COLL_H = MAX_H * (C_MM / D_MM);
+    var baseY  = LH - 28;
+    var col1X  = LW * 0.048;
+    var col2X  = LW * 0.388;
+
+    drawCol(col1X, baseY, CW, CD, COLL_H, isoState.c);
+    drawCol(col2X, baseY, CW, CD, COL_H,  isoState.d);
+    drawAnnotation(col1X, baseY, CW, CD, COLL_H, isoState.c, '65.78 mm', 'Collapsed');
+    drawAnnotation(col2X, baseY, CW, CD, COL_H,  isoState.d, '93.22 mm', 'Deployed');
+    drawLegend(Math.max(isoState.c, isoState.d));
+  }
+
+  var isoAnimated = false;
+  var isoIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting || isoAnimated) return;
+      isoAnimated = true;
+      anime.timeline({ easing: 'easeOutQuart' })
+        .add({ targets: isoState, c: 1, duration: 950, update: drawIso })
+        .add({ targets: isoState, d: 1, duration: 1100, update: drawIso }, '-=450');
+    });
+  }, { threshold: 0.2 });
+
+  isoIO.observe(cv);
+  drawIso();
+})();
+
+// Chart: prior art age distribution (phase 2)
+const ctxPrior = document.getElementById('chartPriorArt');
+if (ctxPrior) {
+  new Chart(ctxPrior, {
+    type: 'bar',
+    data: {
+      labels: ['1970s', '1980s', '1990s', '2000s', '2010–14'],
+      datasets: [{
+        label: 'References',
+        data: [3, 5, 7, 6, 2],
+        backgroundColor: makeAccentRgb(0.35),
+        borderColor:     makeAccentRgb(0.7),
+        borderWidth: 1.5,
+        borderRadius: 4,
+      }],
+    },
+    options: {
+      responsive: true,
+      animation: { duration: 900, easing: 'easeOutQuart' },
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, border: { display: false } },
+        y: { grid: { color: 'rgba(0,0,0,0.06)' }, border: { display: false },
+             ticks: { stepSize: 2 } },
+      },
+    },
+  });
+}
+
+// Chart: commercialization progress (phase 4)
+const ctxRoad = document.getElementById('chartRoadmap');
+if (ctxRoad) {
+  new Chart(ctxRoad, {
+    type: 'doughnut',
+    data: {
+      labels: ['Secured', 'Remaining'],
+      datasets: [{
+        data: [1, 4],
+        backgroundColor: [makeAccentRgb(0.75), 'rgba(0,0,0,0.07)'],
+        borderColor:     [makeAccentRgb(1),    'transparent'],
+        borderWidth: 2,
+        hoverOffset: 4,
+      }],
+    },
+    options: {
+      responsive: true,
+      cutout: '68%',
+      animation: { duration: 1200, easing: 'easeOutQuart' },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ctx.label + ': ' + ctx.raw + ' / 5 steps' } },
+      },
+    },
+  });
+}
 </script>
 </body>
 </html>
