@@ -1331,7 +1331,7 @@ section.in-view > h2 { color: var(--ink); }
 
   /* Hero: no text, just holds CTAs */
   .landing-hero { position: static; flex: none; order: 1; padding: 0; }
-  .landing-logo-canvas { width: 55vw; left: 4vw; top: 40%; }
+  .landing-logo-lockup { width: 55vw; left: 4vw; top: 40%; transform: none; }
 
   .landing-header {
     order: 2;
@@ -1473,19 +1473,60 @@ section.in-view > h2 { color: var(--ink); }
   animation: l-fade-in 0.6s 0.28s ease both;
 }
 
-/* ── Logo canvas (fixed, left-of-center) ───────────────────── */
-.landing-logo-canvas {
+/* ── Logo lockup (fixed, left-of-center) ───────────────────── */
+.landing-logo-lockup {
   position: fixed;
   left: 5vw;
   top: 50%;
   transform: translateY(-52%);
   width: 25vw;
   max-width: 460px;
-  display: block;
   z-index: 10;
   pointer-events: none;
-  mix-blend-mode: multiply;
   animation: l-fade-in 1.1s 0.4s ease both;
+}
+
+.landing-logo-img-main {
+  width: 100%;
+  display: block;
+  mix-blend-mode: multiply;
+}
+
+.landing-logo-sub {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  margin-top: 0.55rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.landing-logo-caduceus {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.landing-logo-est {
+  margin: 0.4rem 0 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.landing-logo-geo {
+  margin: 0.2rem 0 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: var(--dim);
+  text-transform: uppercase;
+  opacity: 0.7;
 }
 
 .landing-hero {
