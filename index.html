@@ -194,6 +194,7 @@
     _logoRaw.onload = function() {
       var s = L_SCHEMES[currentScheme];
       renderLogo(s.ar, s.ag, s.ab);
+      setTimeout(function() { renderLogo(s.ar, s.ag, s.ab); }, 80);
     };
     _logoRaw.src = 'images/LOGO RL3T.png';
   }

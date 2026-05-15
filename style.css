@@ -1477,8 +1477,7 @@ section.in-view > h2 { color: var(--ink); }
 .landing-logo-canvas {
   position: fixed;
   left: 5vw;
-  top: 50%;
-  transform: translateY(-52%);
+  top: 10vh;
   width: 25vw;
   max-width: 460px;
   display: block;
