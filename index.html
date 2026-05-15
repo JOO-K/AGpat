@@ -38,7 +38,7 @@
 <main class="landing">
 
   <header class="landing-header">
-    <a href="index.html" class="landing-logo landing-logo-link">RL3T</a>
+    <a href="index.html" class="landing-logo landing-logo-link"><img src="images/LOGO RL3T.png" class="nav-logo-img" alt="RL3T"></a>
     <div class="landing-header-right">
       <span class="landing-tagline">RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
       <div class="landing-scheme-row">
@@ -191,12 +191,11 @@
 
   function initLogo() {
     _logoRaw = new Image();
-    _logoRaw.crossOrigin = 'anonymous';
     _logoRaw.onload = function() {
       var s = L_SCHEMES[currentScheme];
       renderLogo(s.ar, s.ag, s.ab);
     };
-    _logoRaw.src = 'images/logo rl3t.png';
+    _logoRaw.src = 'images/LOGO RL3T.png';
   }
 
   // Re-render logo whenever scheme changes — call after existing scheme code

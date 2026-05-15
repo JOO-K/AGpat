@@ -1435,12 +1435,9 @@ section.in-view > h2 { color: var(--ink); }
 }
 
 .landing-logo {
-  font-family: var(--mono);
-  font-size: 2.8rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--ink);
   position: relative;
+  display: flex;
+  align-items: center;
   animation: l-fade-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .landing-logo::after {
@@ -1455,10 +1452,18 @@ section.in-view > h2 { color: var(--ink); }
 
 .landing-logo-link {
   text-decoration: none;
-  color: var(--ink);
 }
 
-.landing-logo-link:hover { color: var(--accent); }
+/* ── Nav logo image (all pages) ─────────────────────────────── */
+.nav-logo-img {
+  height: 22px;
+  width: auto;
+  display: block;
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+  transition: opacity 0.2s ease;
+}
+.landing-logo-link:hover .nav-logo-img { opacity: 1; }
 
 .landing-tagline {
   font-family: var(--mono);
@@ -1479,7 +1484,7 @@ section.in-view > h2 { color: var(--ink); }
   display: block;
   z-index: 10;
   pointer-events: none;
-  opacity: 0;
+  animation: l-fade-in 1.1s 0.4s ease both;
   filter: drop-shadow(0 0 28px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.28))
           drop-shadow(0 0 8px  rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.14));
 }
@@ -1973,9 +1978,13 @@ body.patent-page {
   text-decoration: none;
   letter-spacing: 0.04em;
   transition: color 0.12s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
 }
 
 .patent-nav-back:hover { color: var(--accent); }
+.patent-nav-back:hover .nav-logo-img { opacity: 1; }
 
 .patent-nav-id {
   font-family: var(--mono);
@@ -2022,14 +2031,17 @@ body.patent-page {
 }
 
 .prog-nav-logo {
-  font-family: 'DM Mono', monospace;
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--accent);
   text-decoration: none;
   flex-shrink: 0;
-  text-shadow: 0 0 18px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.45);
+  display: flex;
+  align-items: center;
+}
+
+.prog-nav-logo .nav-logo-img {
+  height: 20px;
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
 }
 
 .prog-nav-title {
