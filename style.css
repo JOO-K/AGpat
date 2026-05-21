@@ -1,6 +1,6 @@
 ﻿/* â”€â”€ Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* testing cahnges */
 :root {
   --ink:     #111;
   --dim:     #888;
@@ -9,12 +9,12 @@
   --serif:   'Times New Roman', Times, serif;
   --mono:    'IBM Plex Mono', 'Courier New', monospace;
   /* accent palette â€” deep scientific blue */
-  --accent:    #1d4ed8;
-  --acc-mid:   #3b82f6;
-  --acc-bg:    #eff6ff;
-  --accent-r:  29;
-  --accent-g:  78;
-  --accent-b:  216;
+  --accent:    #0d9488;
+  --acc-mid:   #2dd4bf;
+  --acc-bg:    #f0fdfa;
+  --accent-r:  13;
+  --accent-g:  148;
+  --accent-b:  136;
   /* text column fixed width */
   --text-col: 712px;
   /* PDF-exact values */
@@ -2144,26 +2144,33 @@ body.patent-page {
   max-height: calc((100vh - 180px) * 0.8);
   max-width: 80%;
   flex-shrink: 0;
+  shape-rendering: geometricPrecision;
   filter:
-    blur(0.45px)
-    drop-shadow(0 0 5px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.20))
-    drop-shadow(0 0 18px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.09));
+    drop-shadow(0 0 2px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.45))
+    drop-shadow(0 0 8px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.18))
+    drop-shadow(0 0 22px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.07));
 }
 
 .prog-skel-wrap svg path,
 .prog-skel-wrap svg circle,
 .prog-skel-wrap svg line,
 .prog-skel-wrap svg polyline,
-.prog-skel-wrap svg ellipse {
+.prog-skel-wrap svg ellipse,
+.prog-skel-wrap svg rect {
   stroke: var(--ink);
   fill: none;
-  stroke-width: 1.6;
+  stroke-width: 1.0;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  shape-rendering: geometricPrecision;
+  vector-effect: non-scaling-stroke;
 }
 
 .prog-skel-wrap svg #head path,
 .prog-skel-wrap svg #ui   path,
 .prog-skel-wrap svg #ui   circle,
-.prog-skel-wrap svg #ui   line { stroke-width: 1.2; }
+.prog-skel-wrap svg #ui   rect,
+.prog-skel-wrap svg #ui   line { stroke-width: 0.75; }
 
 .prog-skel-caption {
   width: 100%;

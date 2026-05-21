@@ -9,7 +9,7 @@
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body class="landing-body">
-
+<!-- type -->
 <div class="landing-bg">
   <model-viewer
     id="landingViewer"
@@ -42,8 +42,8 @@
     <div class="landing-header-right">
       <span class="landing-tagline">RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
       <div class="landing-scheme-row">
-        <button class="l-swatch active" data-scheme="blueprint" style="background:#1d4ed8" title="Blueprint"></button>
-        <button class="l-swatch" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
+        <button class="l-swatch" data-scheme="blueprint" style="background:#1d4ed8" title="Blueprint"></button>
+        <button class="l-swatch active" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
         <button class="l-swatch" data-scheme="ember"     style="background:#c2410c" title="Ember"></button>
         <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
       </div>
@@ -113,7 +113,7 @@
     ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28] },
     plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94] },
   };
-  let currentScheme = 'blueprint';
+  let currentScheme = localStorage.getItem('ag-scheme') || 'teal';
   const lv = document.getElementById('landingViewer');
 
   function applyModelColor(rgb) {
@@ -144,6 +144,7 @@
     var s = L_SCHEMES[name];
     if (!s) return;
     currentScheme = name;
+    localStorage.setItem('ag-scheme', name);
     var r = document.documentElement.style;
     r.setProperty('--accent',   s.accent);
     r.setProperty('--acc-mid',  s.mid);

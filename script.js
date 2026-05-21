@@ -27,6 +27,7 @@ function _stopAurora() {
 
 function applyScheme(name) {
   _stopAurora();
+  if (name !== 'aurora') localStorage.setItem('ag-scheme', name);
 
   if (name === 'aurora') {
     const t0 = performance.now();
@@ -67,6 +68,7 @@ function applyScheme(name) {
 document.querySelectorAll('.swatch').forEach(sw => {
   sw.addEventListener('click', () => applyScheme(sw.dataset.scheme));
 });
+applyScheme(localStorage.getItem('ag-scheme') || 'teal');
 
 const viewer   = document.getElementById('mainViewer');
 const figDisp  = document.getElementById('figDisplay');
