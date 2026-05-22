@@ -1312,11 +1312,9 @@ section.in-view > h2 { color: var(--ink); }
     pointer-events: auto;
   }
 
-  /* â”€â”€ Landing: locked to viewport, SVGs nested upper-right (mobile) â”€â”€ */
+  /* Landing on mobile: allow scroll for below-fold section */
   .landing-body {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
+    min-height: 100vh;
   }
   .landing {
     position: relative;
@@ -3228,4 +3226,180 @@ body.patent-page {
   .prog-tl-section { margin: 0 -1.5rem; padding: 1.5rem 1.5rem; }
   .prog-tl-label-col { display: none; }
   .prog-footer { flex-direction: column; gap: 0.6rem; padding: 1rem 1.5rem; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   BELOW-FOLD SECTION (index.html)
+   ══════════════════════════════════════════════════════════════ */
+
+.below-fold {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  border-top: 1px solid var(--rule);
+}
+
+.bf-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── SVG column ─────────────────────────────────────── */
+.bf-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem 4rem 3.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.bf-pelvis-svg {
+  width: 100%;
+  max-height: 82vh;
+  display: block;
+  shape-rendering: geometricPrecision;
+  filter:
+    drop-shadow(0 0 3px  rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.50))
+    drop-shadow(0 0 12px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.20))
+    drop-shadow(0 0 30px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08));
+}
+
+.bf-pelvis-svg path {
+  stroke: var(--ink);
+  fill: none;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.bf-fig-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 1.2rem;
+  text-align: center;
+}
+
+/* ── Content column ─────────────────────────────────── */
+.bf-content {
+  padding: 5rem 3.5rem 5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid var(--rule);
+}
+
+.bf-pnum {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+}
+
+.bf-title {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+
+.bf-meta {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+}
+
+.bf-abstract-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 0.6rem;
+}
+
+.bf-abstract {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink);
+  margin-bottom: 2.5rem;
+}
+
+.bf-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.bf-stat-val {
+  font-family: 'EB Garamond', serif;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.bf-stat-key {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: 0.25rem;
+}
+
+.bf-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.bf-link {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: opacity 0.15s;
+}
+.bf-link:hover { opacity: 0.7; text-decoration: none; }
+
+/* ── Mobile ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .bf-container {
+    grid-template-columns: 1fr;
+  }
+  .bf-visual {
+    position: static;
+    height: auto;
+    padding: 3rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .bf-pelvis-svg { max-height: 55vw; }
+  .bf-content {
+    border-left: none;
+    padding: 2.5rem 2rem 4rem;
+  }
+  .bf-stats { gap: 1.5rem; }
 }
