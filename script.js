@@ -153,6 +153,7 @@ function snapTo(orbit, label, src, target, fov, resetTurntable = false) {
 
   const currentSrc = viewer.getAttribute('src');
   if (src && src !== currentSrc) {
+    mTabs.forEach(t => t.classList.toggle('active', t.dataset.src === src));
     viewer.src = src;
     viewer.addEventListener('load', () => {
       applyCamera();
@@ -225,6 +226,9 @@ viewer.addEventListener('camera-change', e => {
 
 /* ── Per-model default camera positions ───────────── */
 const MODEL_CAM = {
+  'models/agfigs/fig1.glb':    { orbit: '-20deg 60deg 120%', target: null, fov: '30deg' },
+  'models/agfigs/fig2.glb':    { orbit: '40deg 65deg 120%',  target: null, fov: '30deg' },
+  'models/agfigs/fig5a5b.glb': { orbit: '30deg 65deg 120%',  target: null, fov: '30deg' },
   'models/rojas.glb':   { orbit: '40.4deg 71.9deg 53.153m',  target: null,                    fov: '26.2deg' },
   'models/alt.glb':     { orbit: '30.5deg 66.5deg 128.400m', target: '-2.043 -1.926 -2.963',  fov: '20.1deg' },
   'models/rebuild.glb': { orbit: '45deg 54.74deg 120%',      target: null,                    fov: '30deg'   },
@@ -361,16 +365,25 @@ const PART_RN_MAP = {
 };
 
 function buildPartTree(mv, activeSrc) {
-  const treeList = document.querySelector('.tree-list');
+  const treeList   = document.querySelector('.tree-list');
+  const treeHeader = document.querySelector('.tree-header');
   if (!treeList) return;
+  const src       = activeSrc || document.querySelector('.mtab.active')?.dataset.src || 'models/rojas.glb';
+  const modelName = document.querySelector(`.mtab[data-src="${CSS.escape(src)}"]`)?.dataset.name || '';
+  if (treeHeader) treeHeader.textContent = modelName ? `PARTS · ${modelName}` : 'PARTS';
+
+  Object.keys(visState).forEach(k => delete visState[k]);
+
   const mats = mv.model?.materials;
-  if (!mats?.length) return;
-  const src = activeSrc || document.querySelector('.mtab.active')?.dataset.src || 'models/rojas.glb';
+  if (!mats?.length) {
+    treeList.innerHTML = `<li class="tree-item"><div class="tree-row tree-no-mats"><span class="tree-dot">·</span><span class="tree-name" style="color:var(--dim);font-style:italic">No named parts</span></div></li>`;
+    return;
+  }
 
   treeList.innerHTML = mats.map((mat, i) => {
-    const name   = mat.name || `Part ${i + 1}`;
-    const rn     = PART_RN_MAP[name] || '';
-    const orbit  = PART_ORBIT_MAP[name] || '30deg 65deg 90%';
+    const name  = mat.name || `Part ${i + 1}`;
+    const rn    = PART_RN_MAP[name] || '';
+    const orbit = PART_ORBIT_MAP[name] || '30deg 65deg 90%';
     return `<li class="tree-item">
       <div class="tree-row" data-orbit="${orbit}" data-label="${name}" data-src="${src}" data-mat-idx="${i}">
         <span class="tree-dot">·</span>
