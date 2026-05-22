@@ -11,7 +11,7 @@ new p5(function(p) {
   let formIdx     = 0;
   let allFormations = [];
   let formation   = [];
-  let accentR = 194, accentG = 65, accentB = 12; // ember default
+  let accentR = 29, accentG = 78, accentB = 216;
 
   // Voronoi — 22 slow-drifting agents define the cells
   const N_VOR = 22;
@@ -72,8 +72,8 @@ new p5(function(p) {
         ctx.closePath();
 
         if (state === 1) {
-          const fillA = 0.10 + pulse * 0.16;
-          ctx.fillStyle = `hsla(${hue},48%,94%,${fillA.toFixed(3)})`;
+          // Filled — soft accent-tinted wash
+          ctx.fillStyle = `hsla(${hue},48%,94%,${(0.10 + pulse * 0.16).toFixed(3)})`;
           ctx.fill();
         }
 
@@ -83,8 +83,7 @@ new p5(function(p) {
         } else {
           ctx.setLineDash([]);
         }
-        const lineA = 0.055 + pulse * 0.085;
-        ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},${lineA.toFixed(3)})`;
+        ctx.strokeStyle = `rgba(${accentR},${accentG},${accentB},${(0.055 + pulse * 0.085).toFixed(3)})`;
         ctx.stroke();
         ctx.setLineDash([]);
       }
@@ -331,7 +330,7 @@ new p5(function(p) {
     cnv.style('top',            '0');
     cnv.style('left',           '0');
     cnv.style('pointer-events', 'none');
-    cnv.style('z-index',        '-1');
+    cnv.style('z-index',        '0');
 
     // Insert before .landing-bg so model-viewer (later in DOM) paints on top
     const landingBg = document.querySelector('.landing-bg');
@@ -386,14 +385,12 @@ new p5(function(p) {
 
     // Blend line/dot color from cool grey toward accent as shape forms
     const t  = formT * 0.38;
-    const baseL = 148;
-    const baseN = 135;
-    const lr = Math.round(baseL + (accentR - baseL) * t);
-    const lg = Math.round(baseL + (accentG - baseL) * t);
-    const lb = Math.round(baseL + (accentB - baseL) * t);
-    const nr = Math.round(baseN + (accentR - baseN) * t);
-    const ng = Math.round(baseN + (accentG - baseN) * t);
-    const nb = Math.round(baseN + (accentB - baseN) * t);
+    const lr = Math.round(148 + (accentR - 148) * t);
+    const lg = Math.round(162 + (accentG - 162) * t);
+    const lb = Math.round(190 + (accentB - 190) * t);
+    const nr = Math.round(135 + (accentR - 135) * t);
+    const ng = Math.round(148 + (accentG - 148) * t);
+    const nb = Math.round(180 + (accentB - 180) * t);
 
     const layers = [[], [], []];
     for (const d of dots) { d.update(scrollVel, strength, repR); layers[d.layer].push(d); }
