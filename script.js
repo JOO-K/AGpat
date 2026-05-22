@@ -68,7 +68,7 @@ function applyScheme(name) {
 document.querySelectorAll('.swatch').forEach(sw => {
   sw.addEventListener('click', () => applyScheme(sw.dataset.scheme));
 });
-applyScheme(localStorage.getItem('ag-scheme') || 'teal');
+applyScheme(localStorage.getItem('ag-scheme') || 'ember');
 
 const viewer   = document.getElementById('mainViewer');
 const figDisp  = document.getElementById('figDisplay');
@@ -139,14 +139,30 @@ function snapTo(orbit, label, src, target, fov, resetTurntable = false) {
   if (!viewer) return;
   viewer.removeAttribute('auto-rotate');
   if (resetTurntable) viewer.resetTurntableRotation?.(0);
-  if (target) {
-    const parts = target.trim().split(/\s+/);
-    viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
-  } else {
-    viewer.cameraTarget = 'auto';
+
+  function applyCamera() {
+    if (target) {
+      const parts = target.trim().split(/\s+/);
+      viewer.cameraTarget = parts.map(v => v.replace(/m$/, '') + 'm').join(' ');
+    } else {
+      viewer.cameraTarget = 'auto';
+    }
+    if (fov) viewer.fieldOfView = fov;
+    viewer.cameraOrbit = orbit;
   }
-  if (fov) viewer.fieldOfView = fov;
-  viewer.cameraOrbit = orbit;
+
+  const currentSrc = viewer.getAttribute('src');
+  if (src && src !== currentSrc) {
+    viewer.src = src;
+    viewer.addEventListener('load', () => {
+      applyCamera();
+      applyColors(viewer);
+      buildPartTree(viewer, src);
+    }, { once: true });
+  } else {
+    applyCamera();
+  }
+
   if (figDisp) figDisp.textContent = label || '';
   vBtns.forEach(b => b.classList.toggle('active', b.dataset.orbit === orbit));
 }
