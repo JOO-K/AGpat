@@ -4,13 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RL3T — Adaptive and Radially Expanding Speculum</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body class="landing-body">
-<!-- type -->
-<div class="landing-bg">
+
+<!-- ── BG LAYER 0: Three.js orbital rings ─────────────── -->
+<canvas id="bgRings"></canvas>
+
+<!-- ── BG LAYER 1: p5.js particles (injected by sketch.js) -->
+
+<!-- ── BG LAYER 2: 3D model viewer ───────────────────── -->
+<div class="landing-bg" id="landingBg">
   <model-viewer
     id="landingViewer"
     src="models/rojas.glb"
@@ -18,227 +24,658 @@
     min-camera-orbit="auto 0deg auto"
     max-camera-orbit="auto 180deg auto"
     field-of-view="7deg"
-    min-field-of-view="7deg"
-    max-field-of-view="7deg"
+    min-field-of-view="3deg"
+    max-field-of-view="40deg"
     camera-controls
     disable-pan
-    disable-zoom
     auto-rotate
-    rotation-per-second="20deg"
+    rotation-per-second="14deg"
     auto-rotate-delay="3000"
-    interpolation-decay="800"
+    interpolation-decay="200"
     interaction-prompt="none"
-    shadow-intensity="0.18"
-    exposure="1.2"
+    shadow-intensity="0"
+    exposure="1.05"
     environment-image="neutral"
     class="landing-viewer">
   </model-viewer>
 </div>
 
-<main class="landing">
+<!-- ── SITE NAV ───────────────────────────────────────── -->
+<nav class="site-nav" id="siteNav">
+  <a href="index.html" class="site-nav-logo">
+    <img src="images/LOGO RL3T.png" alt="RL3T" class="nav-logo-img site-nav-logo-img">
+  </a>
+  <div class="site-nav-scheme">
+    <button class="l-swatch" data-scheme="blueprint" style="background:#1d4ed8" title="Blueprint"></button>
+    <button class="l-swatch" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
+    <button class="l-swatch active" data-scheme="ember" style="background:#c2410c" title="Ember"></button>
+    <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
+  </div>
+  <div class="site-nav-links">
+    <a href="patent.html" class="site-nav-link">Patent</a>
+    <a href="progress.html" class="site-nav-link">Progress</a>
+  </div>
+</nav>
 
-  <header class="landing-header">
-    <a href="index.html" class="landing-logo landing-logo-link"><img src="images/LOGO RL3T.png" class="nav-logo-img" alt="RL3T"></a>
-    <div class="landing-header-right">
-      <span class="landing-tagline">RL3T LLC &nbsp;·&nbsp; Durham, NC</span>
-      <div class="landing-scheme-row">
-        <button class="l-swatch" data-scheme="blueprint" style="background:#1d4ed8" title="Blueprint"></button>
-        <button class="l-swatch active" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
-        <button class="l-swatch" data-scheme="ember"     style="background:#c2410c" title="Ember"></button>
-        <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
-      </div>
+<!-- ── HERO ───────────────────────────────────────────── -->
+<section class="hero-section" id="heroSection">
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      <span class="hero-tag">RL3T LLC · Durham, NC</span>
+    </p>
+    <h1 class="hero-title">
+      <span class="hero-line">Adaptive.</span>
+      <span class="hero-line">Expanding.</span>
+      <span class="hero-line hero-line--dim">Precise.</span>
+    </h1>
+    <p class="hero-sub">The world's first radially expanding speculum — engineered for clarity without compromise.</p>
+    <div class="hero-actions">
+      <a href="patent.html" class="hero-btn hero-btn--primary">
+        Explore Patent
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 6.5h11M7 1.5l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="progress.html" class="hero-btn hero-btn--ghost">Development</a>
     </div>
-  </header>
-
-  <div class="landing-logo-lockup">
-    <img src="images/LOGO RL3T.png" class="landing-logo-img-main" alt="RL3T">
-    <div class="landing-logo-sub">
-      <span class="landing-logo-caduceus">⚕</span>
-      <span>Biomedical Engineering</span>
-    </div>
-    <p class="landing-logo-est">Est. 2024</p>
-    <p class="landing-logo-geo">PERU &nbsp;·&nbsp; USA</p>
   </div>
 
-  <section class="landing-hero">
-    <div class="landing-ctas">
-      <div class="cta-outer-wrap">
-        <a href="progress.html" class="cta-btn cta-primary">
-          <svg class="cta-svg" viewBox="0 0 535 347" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path class="cta-fill" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z"/>
-            <path class="cta-path" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z" fill="none"/>
-            <path class="cta-hitarea" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z" fill="transparent" stroke="none"/>
-          </svg>
-          <div class="cta-text">
-            <span class="cta-label">Development Updates</span>
-            <span class="cta-desc">Progress history &amp; commercialization roadmap</span>
-          </div>
-        </a>
-        <a href="patent.html" class="cta-btn cta-secondary">
-          <svg class="cta-svg" viewBox="0 0 534 238" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path class="cta-fill" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z"/>
-            <!-- draw path: full perimeter, animated on hover -->
-            <path class="cta-path-draw" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z" fill="none"/>
-            <path class="cta-hitarea" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z" fill="transparent" stroke="none"/>
-          </svg>
-          <div class="cta-text">
-            <span class="cta-label">Patent &amp; 3D Model</span>
-            <span class="cta-desc">Full specification with interactive viewer</span>
-          </div>
-        </a>
+  <div class="hero-badge">US&nbsp;12,507,882&nbsp;B2</div>
+
+  <div class="hero-scroll-hint" id="heroScrollHint">
+    <div class="scroll-line-wrap"><div class="scroll-line"></div></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ── STORY TRACK (scroll-pinned) ───────────────────── -->
+<div class="story-track" id="storyTrack">
+  <div class="story-sticky">
+
+    <div class="story-step" data-step="0">
+      <div class="step-inner">
+        <span class="step-chip">01 — Design</span>
+        <h2 class="step-hed">Designed<br>to adapt.</h2>
+        <p class="step-sub">A radial compression spring that transitions naturally between compressed, partial, and equilibrium states — following the body's own geometry.</p>
+        <div class="step-spec-row">
+          <span class="step-spec"><em>3</em> expansion states</span>
+          <span class="step-spec"><em>1</em> mechanism</span>
+        </div>
       </div>
     </div>
-  </section>
 
-  <div class="landing-cam-info" id="landingCamInfo">
-    <pre id="landingCamText">loading…</pre>
-    <button id="landingCamCopy" onclick="navigator.clipboard.writeText(document.getElementById('landingCamText').textContent).then(()=>{this.textContent='copied!';setTimeout(()=>this.textContent='copy',1200)})">copy</button>
+    <div class="story-step" data-step="1">
+      <div class="step-inner">
+        <span class="step-chip">02 — Mechanism</span>
+        <h2 class="step-hed">Open.<br>Gently.</h2>
+        <p class="step-sub">Calibrated outward force against the orifice wall — maintaining expansion without trauma, without rigid arms, without discomfort.</p>
+        <div class="step-spec-row">
+          <span class="step-spec"><em>Radial</em> force distribution</span>
+          <span class="step-spec"><em>No</em> rigid arms</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-step" data-step="2">
+      <div class="step-inner">
+        <span class="step-chip">03 — Procedure</span>
+        <h2 class="step-hed">Less discomfort.<br>More clarity.</h2>
+        <p class="step-sub">A drawstring extraction mechanism allows controlled, single-motion withdrawal — collapsing the expansor for effortless removal after the procedure.</p>
+        <div class="step-spec-row">
+          <span class="step-spec"><em>1-motion</em> withdrawal</span>
+          <span class="step-spec"><em>Full</em> visibility</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-step" data-step="3">
+      <div class="step-inner">
+        <span class="step-chip">04 — Patent</span>
+        <h2 class="step-hed">Granted.<br>Dec. 30, 2025.</h2>
+        <p class="step-sub">Inventor Arlette Geller · Assignee RL3T LLC · USPTO Patent No. US 12,507,882 B2. Four years of development, now protected.</p>
+        <div class="step-spec-row">
+          <span class="step-spec"><em>RL3T</em> LLC</span>
+          <span class="step-spec"><em>Dec 2025</em> granted</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-progress" id="storyProgress">
+      <div class="story-dot" data-dot="0"></div>
+      <div class="story-dot" data-dot="1"></div>
+      <div class="story-dot" data-dot="2"></div>
+      <div class="story-dot" data-dot="3"></div>
+    </div>
+
+    <div class="story-cam-hint" id="storyCamHint">
+      <pre id="landingCamText"></pre>
+      <button id="landingCamCopy">copy</button>
+    </div>
+
   </div>
+</div>
 
-  <footer class="landing-footer">
-    <span>Inventor: Arlette Geller &nbsp;·&nbsp; Assignee: RL3T LLC</span>
-    <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank">View on USPTO ↗</a>
-  </footer>
+<!-- ── SPECS STRIP ────────────────────────────────────── -->
+<div class="specs-strip">
+  <div class="specs-inner">
+    <div class="spec-item">
+      <span class="spec-val" data-target="3">3</span>
+      <span class="spec-key">Embodiments</span>
+    </div>
+    <div class="spec-rule"></div>
+    <div class="spec-item">
+      <span class="spec-val" data-target="16">16</span>
+      <span class="spec-key">Patent Drawings</span>
+    </div>
+    <div class="spec-rule"></div>
+    <div class="spec-item">
+      <span class="spec-val">48<span class="spec-unit">mo</span></span>
+      <span class="spec-key">Development</span>
+    </div>
+    <div class="spec-rule"></div>
+    <div class="spec-item">
+      <span class="spec-val">2025</span>
+      <span class="spec-key">Patent Granted</span>
+    </div>
+  </div>
+</div>
 
-</main>
+<!-- ── PATENT FIGURES ─────────────────────────────────── -->
+<section class="landing-info" id="landingInfo">
+  <div class="landing-info-inner">
 
+    <div class="landing-info-hd">
+      <div class="landing-info-pnum">US 12,507,882 B2</div>
+      <h2 class="landing-info-title">Adaptive and Radially<br>Expanding Speculum</h2>
+      <p class="landing-info-meta">Inventor: Arlette Geller &nbsp;·&nbsp; Assignee: RL3T LLC &nbsp;·&nbsp; Dec. 30, 2025</p>
+    </div>
+
+    <div class="landing-info-abstract">
+      <h3 class="landing-info-label">Abstract</h3>
+      <p>An adaptive and radially expanding speculum is provided. The speculum includes an expansor configured for being inserted into an orifice, exerting an outward force against an orifice wall, and retaining the orifice in an expanded state until removed. The expansor takes the form of a radial compression spring, adapted for transitioning between a compressed state, a partially expanded state, and an equilibrium state.</p>
+    </div>
+
+    <div class="landing-info-figs">
+      <h3 class="landing-info-label">Patent Drawings</h3>
+      <div class="landing-fig-grid">
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_01.png" alt="FIG. 1" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 1</span><p>Exploded perspective view — speculum assembly with applicator</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_02.png" alt="FIG. 2" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 2</span><p>Assembled perspective view — speculum and applicator combined</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_03.png" alt="FIG. 3A" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 3A</span><p>Plunger fully extended — speculum loaded within applicator</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_04.png" alt="FIG. 3B" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 3B</span><p>Plunger partially retracted — speculum partially deployed</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_05.png" alt="FIG. 3C" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 3C</span><p>Plunger fully retracted — speculum entirely within patient</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_06.png" alt="FIG. 3D" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 3D</span><p>Drawstring pulled to reduce expansor diameter for removal</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_07.png" alt="FIG. 4A" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 4A</span><p>Expansor in expanded orientation — perspective view</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_08.png" alt="FIG. 4B" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 4B</span><p>Top view of expansor in expanded orientation</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_09.png" alt="FIG. 5A" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 5A</span><p>Expansor in contracted orientation — perspective view</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_10.png" alt="FIG. 5B" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 5B</span><p>Top view of expansor in contracted orientation</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_11.png" alt="FIG. 6A" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 6A</span><p>Side view — speculum with expansor and extraction mechanism</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_12.png" alt="FIG. 6B" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 6B</span><p>Partial enlarged view of FIG. 6A</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_13.png" alt="FIG. 7A" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 7A</span><p>Alt. embodiment expansor — expanded orientation, perspective</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_14.png" alt="FIG. 7B" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 7B</span><p>Top view of alt. embodiment expansor</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_15.png" alt="FIG. 8A" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 8A</span><p>Alt. embodiment — speculum with expansor and extraction mechanism</p></div>
+        </div>
+
+        <div class="landing-fig-item fig-reveal">
+          <div class="landing-fig-img-wrap"><img src="images/figs/page_16.png" alt="FIG. 8B" loading="lazy"></div>
+          <div class="landing-fig-cap"><span class="landing-fig-num">FIG. 8B</span><p>Top view of alt. embodiment speculum</p></div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="landing-info-footer">
+      <span>US 12,507,882 B2 &nbsp;·&nbsp; Inventor: Arlette Geller &nbsp;·&nbsp; RL3T LLC</span>
+      <a href="patent.html">View Full Patent &amp; 3D Model →</a>
+    </footer>
+
+  </div>
+</section>
+
+<!-- ── SCRIPTS ────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
 <script src="sketch.js"></script>
 <script>
-  /* ── Landing color schemes ─────────────────────────────── */
-  const L_SCHEMES = {
-    blueprint: { accent:'#1d4ed8', mid:'#3b82f6', bg:'#eff6ff', ar:29,  ag:78,  ab:216, model:[0.42,0.62,0.95] },
-    teal:      { accent:'#0d9488', mid:'#2dd4bf', bg:'#f0fdfa', ar:13,  ag:148, ab:136, model:[0.30,0.82,0.74] },
-    ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28] },
-    plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94] },
-  };
-  let currentScheme = localStorage.getItem('ag-scheme') || 'teal';
-  const lv = document.getElementById('landingViewer');
+/* ─────────────────────────────────────────────────────────
+   COLOR SCHEME SYSTEM
+───────────────────────────────────────────────────────── */
+const L_SCHEMES = {
+  blueprint: { accent:'#1d4ed8', mid:'#3b82f6', bg:'#eff6ff', ar:29,  ag:78,  ab:216, model:[0.42,0.62,0.95], ring:0x1d4ed8 },
+  teal:      { accent:'#0d9488', mid:'#2dd4bf', bg:'#f0fdfa', ar:13,  ag:148, ab:136, model:[0.30,0.82,0.74], ring:0x0d9488 },
+  ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28], ring:0xc2410c },
+  plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94], ring:0x7c3aed },
+};
+let currentScheme = localStorage.getItem('ag-scheme') || 'ember';
+const lv = document.getElementById('landingViewer');
 
-  function applyModelColor(rgb) {
-    if (!lv?.model) return;
-    const mats = lv.model?.materials;
-    if (mats?.length) {
-      mats.forEach(function(m) {
-        m.setAlphaMode?.('OPAQUE');
-        m.pbrMetallicRoughness.setBaseColorFactor([rgb[0], rgb[1], rgb[2], 1.0]);
-        m.pbrMetallicRoughness.roughnessFactor = 0.38;
-        m.pbrMetallicRoughness.metallicFactor  = 0.18;
-      });
-      return;
-    }
-    try {
-      lv.model.scene.traverse(function(obj) {
-        if (!obj.isMesh) return;
-        var list = Array.isArray(obj.material) ? obj.material : [obj.material];
-        list.forEach(function(m) {
-          if (m.color) m.color.setRGB(rgb[0], rgb[1], rgb[2]);
-          m.roughness = 0.38; m.metalness = 0.18; m.needsUpdate = true;
-        });
-      });
-    } catch(_) {}
+function applyModelColor(rgb) {
+  if (!lv?.model) return;
+  const mats = lv.model?.materials;
+  if (mats?.length) {
+    mats.forEach(m => {
+      m.setAlphaMode?.('OPAQUE');
+      m.pbrMetallicRoughness.setBaseColorFactor([rgb[0], rgb[1], rgb[2], 1.0]);
+      m.pbrMetallicRoughness.roughnessFactor = 0.32;
+      m.pbrMetallicRoughness.metallicFactor  = 0.22;
+    });
+    return;
   }
-
-  function applyLandingScheme(name) {
-    var s = L_SCHEMES[name];
-    if (!s) return;
-    currentScheme = name;
-    localStorage.setItem('ag-scheme', name);
-    var r = document.documentElement.style;
-    r.setProperty('--accent',   s.accent);
-    r.setProperty('--acc-mid',  s.mid);
-    r.setProperty('--acc-bg',   s.bg);
-    r.setProperty('--accent-r', s.ar);
-    r.setProperty('--accent-g', s.ag);
-    r.setProperty('--accent-b', s.ab);
-    document.querySelectorAll('.l-swatch').forEach(function(sw) {
-      sw.classList.toggle('active', sw.dataset.scheme === name);
+  try {
+    lv.model.scene.traverse(obj => {
+      if (!obj.isMesh) return;
+      const list = Array.isArray(obj.material) ? obj.material : [obj.material];
+      list.forEach(m => { if (m.color) m.color.setRGB(rgb[0], rgb[1], rgb[2]); m.needsUpdate = true; });
     });
-    applyModelColor(s.model);
-    if (typeof window.updateSketchAccent === 'function')
-      window.updateSketchAccent(s.ar, s.ag, s.ab);
-    if (lv) lv.style.filter =
-      'drop-shadow(0 20px 60px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.20)) ' +
-      'drop-shadow(0 4px 18px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.10))';
+  } catch(_) {}
+}
+
+function applyLandingScheme(name) {
+  const s = L_SCHEMES[name];
+  if (!s) return;
+  currentScheme = name;
+  localStorage.setItem('ag-scheme', name);
+  const r = document.documentElement.style;
+  r.setProperty('--accent',   s.accent);
+  r.setProperty('--acc-mid',  s.mid);
+  r.setProperty('--acc-bg',   s.bg);
+  r.setProperty('--accent-r', s.ar);
+  r.setProperty('--accent-g', s.ag);
+  r.setProperty('--accent-b', s.ab);
+  document.querySelectorAll('.l-swatch').forEach(sw =>
+    sw.classList.toggle('active', sw.dataset.scheme === name));
+  applyModelColor(s.model);
+  if (typeof window.updateSketchAccent === 'function')
+    window.updateSketchAccent(s.ar, s.ag, s.ab);
+  // Glow on model
+  if (lv) lv.style.filter =
+    `drop-shadow(0 0 80px rgba(${s.ar},${s.ag},${s.ab},0.28))
+     drop-shadow(0 0 30px rgba(${s.ar},${s.ag},${s.ab},0.18))`;
+  // Recolor Three.js rings
+  if (window._ringMeshes) {
+    window._ringMeshes.forEach(m => m.material.color.setHex(s.ring));
   }
+}
 
-  if (lv) lv.addEventListener('load', function() { applyLandingScheme(currentScheme); });
+applyLandingScheme(currentScheme);
+if (lv) lv.addEventListener('load', () => applyLandingScheme(currentScheme));
+document.querySelectorAll('.l-swatch').forEach(sw =>
+  sw.addEventListener('click', () => applyLandingScheme(sw.dataset.scheme)));
 
-  document.querySelectorAll('.l-swatch').forEach(function(sw) {
-    sw.addEventListener('click', function() { applyLandingScheme(sw.dataset.scheme); });
-  });
 
-  /* ── SVG hover + draw animation ────────────────────────── */
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.cta-hitarea').forEach(function (hitarea) {
-      var btn = hitarea.closest('.cta-btn');
-      hitarea.addEventListener('mouseenter', function () { btn.classList.add('hovered'); });
-      hitarea.addEventListener('mouseleave', function () { btn.classList.remove('hovered'); });
-    });
+/* ─────────────────────────────────────────────────────────
+   THREE.JS — ORBITAL RINGS BACKGROUND
+───────────────────────────────────────────────────────── */
+(function initRings() {
+  const canvas = document.getElementById('bgRings');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
 
-    var drawPath = document.querySelector('.cta-path-draw');
-    var hitarea  = document.querySelector('.cta-secondary .cta-hitarea');
-    if (!drawPath || !hitarea) return;
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.1, 200);
+  camera.position.z = 9;
 
-    var len = drawPath.getTotalLength();
-    drawPath.style.strokeDasharray  = len;
-    drawPath.style.strokeDashoffset = len;
-
-    hitarea.addEventListener('mouseenter', function () {
-      drawPath.style.transition = 'stroke-dashoffset 1.9s cubic-bezier(0.76, 0, 0.24, 1)';
-      drawPath.style.strokeDashoffset = 0;
-    });
-    hitarea.addEventListener('mouseleave', function () {
-      drawPath.style.transition = 'stroke-dashoffset 1.1s ease-in';
-      drawPath.style.strokeDashoffset = len;
-    });
-  });
-
-  /* ── Formation → camera sync ───────────────────────── */
-  var LANDING_ORBITS = [
-    { orbit: '49.2deg 70.9deg 167.397m',    fov: '7.0deg' },  // large cylinder
-    { orbit: '145.1deg 0.0deg 167.397m',    fov: '7.0deg' },  // flower (top)
-    { orbit: '-220.2deg 154.9deg 167.397m', fov: '7.0deg' },  // small cylinder
+  const configs = [
+    { r: 5.2, tube: 0.007, opacity: 0.10, speed: [0.00055, 0.00080, 0] },
+    { r: 3.5, tube: 0.011, opacity: 0.08, speed: [-0.00040, 0,       0.00060] },
+    { r: 6.8, tube: 0.005, opacity: 0.05, speed: [0,        0.00045, -0.00030] },
+    { r: 2.2, tube: 0.014, opacity: 0.13, speed: [0.00070, -0.00055, 0] },
+    { r: 8.1, tube: 0.004, opacity: 0.04, speed: [-0.00025, 0.00035,  0.00050] },
+    { r: 4.3, tube: 0.006, opacity: 0.07, speed: [0.00030, 0,        -0.00040] },
   ];
 
-  var lastUserInteraction = 0;
-  if (lv) {
-    lv.addEventListener('camera-change', function(e) {
-      if (e.detail && e.detail.source === 'user-interaction') {
-        lastUserInteraction = Date.now();
-      }
+  const s0 = L_SCHEMES[currentScheme];
+  const meshes = configs.map((cfg, i) => {
+    const geo = new THREE.TorusGeometry(cfg.r, cfg.tube, 3, 180);
+    const mat = new THREE.MeshBasicMaterial({
+      color: s0.ring, transparent: true, opacity: cfg.opacity, side: THREE.DoubleSide,
     });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.rotation.x = (i * 1.3) % Math.PI;
+    mesh.rotation.y = (i * 0.9) % Math.PI;
+    mesh._spd = cfg.speed;
+    scene.add(mesh);
+    return mesh;
+  });
+  window._ringMeshes = meshes;
+
+  let mx = 0, my = 0;
+  window.addEventListener('mousemove', e => {
+    mx = (e.clientX / innerWidth  - 0.5) * 0.6;
+    my = (e.clientY / innerHeight - 0.5) * 0.6;
+  }, { passive: true });
+
+  (function loop() {
+    requestAnimationFrame(loop);
+    meshes.forEach(m => {
+      m.rotation.x += m._spd[0];
+      m.rotation.y += m._spd[1];
+      m.rotation.z += m._spd[2];
+    });
+    // Subtle mouse parallax on camera
+    camera.position.x += (mx - camera.position.x) * 0.03;
+    camera.position.y += (-my - camera.position.y) * 0.03;
+    camera.lookAt(scene.position);
+    renderer.render(scene, camera);
+  })();
+
+  window.addEventListener('resize', () => {
+    renderer.setSize(innerWidth, innerHeight);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  });
+})();
+
+
+/* ─────────────────────────────────────────────────────────
+   HERO — anime.js entrance
+───────────────────────────────────────────────────────── */
+anime.timeline({ easing: 'easeOutExpo' })
+  .add({ targets: '.hero-tag',      opacity:[0,1], translateY:[8,0],  duration:600, delay:200 })
+  .add({ targets: '.hero-line',     opacity:[0,1], translateY:[60,0], duration:900, delay:anime.stagger(120) }, '-=400')
+  .add({ targets: '.hero-sub',      opacity:[0,1], translateY:[20,0], duration:700 }, '-=400')
+  .add({ targets: '.hero-actions',  opacity:[0,1], translateY:[16,0], duration:600 }, '-=400')
+  .add({ targets: '.hero-badge',    opacity:[0,1], duration:800 }, '-=600')
+  .add({ targets: '.hero-scroll-hint', opacity:[0,1], duration:600 }, '-=200');
+
+// Nav slides down
+anime({ targets: '#siteNav', translateY: [-40,0], opacity:[0,1], duration:700, delay:100, easing:'easeOutExpo' });
+
+
+/* ─────────────────────────────────────────────────────────
+   STORY SCROLL TRACK
+───────────────────────────────────────────────────────── */
+const STORY_CAMS = [
+  { orbit:'35.0deg 62.0deg 167.397m', fov:'7deg',   target:null },
+  { orbit:'41.5deg 0.0deg  110.4m',   fov:'10.0deg', target:'-0.010 7.262 0.205' },
+  { orbit:'35.4deg 87.6deg 97.817m',  fov:'17.6deg', target:'-0.010 7.262 0.205' },
+  { orbit:'190.1deg 72.7deg 15.246m', fov:'12.0deg', target:'-0.202 7.526 -3.249' },
+];
+
+const storyTrack = document.getElementById('storyTrack');
+const steps      = document.querySelectorAll('.story-step');
+const dots       = document.querySelectorAll('.story-dot');
+const N_STEPS    = steps.length;
+let   activeStep = -1;
+
+// Initialise — show step 0 immediately
+function showStep(i, instant) {
+  if (i === activeStep) return;
+  activeStep = i;
+
+  steps.forEach((s, idx) => {
+    if (idx === i) {
+      anime.remove(s);
+      anime({
+        targets: s,
+        opacity: [0, 1],
+        translateY: instant ? 0 : [28, 0],
+        duration: instant ? 0 : 680,
+        easing: 'easeOutExpo',
+        begin: () => s.classList.add('active'),
+      });
+      // Stagger children
+      anime({
+        targets: s.querySelectorAll('.step-chip,.step-hed,.step-sub,.step-spec-row'),
+        opacity: [0, 1],
+        translateY: [18, 0],
+        delay: anime.stagger(80, { start: instant ? 0 : 120 }),
+        duration: 600,
+        easing: 'easeOutExpo',
+      });
+    } else {
+      anime.remove(s);
+      anime({
+        targets: s,
+        opacity: 0,
+        translateY: -16,
+        duration: 280,
+        easing: 'easeInQuad',
+        complete: () => s.classList.remove('active'),
+      });
+    }
+  });
+
+  dots.forEach((d, idx) => {
+    d.classList.toggle('active', idx === i);
+    anime({ targets: d, scale: idx === i ? [1,1.35,1] : 1, duration: 400, easing:'easeOutExpo' });
+  });
+
+  // Move camera
+  const cam = STORY_CAMS[i];
+  if (lv) {
+    lv.removeAttribute('auto-rotate');
+    lv.setAttribute('interpolation-decay', '150');
+    lv.cameraOrbit = cam.orbit;
+    lv.fieldOfView = cam.fov;
+    if (cam.target) lv.cameraTarget = cam.target;
+    else if (lv.cameraTarget !== undefined) lv.cameraTarget = '0 0 0';
+    if (i === 0) setTimeout(() => lv.setAttribute('auto-rotate',''), 800);
+  }
+}
+
+showStep(0, true);
+
+let prevScrollY  = window.scrollY;
+let ticking = false;
+
+function onScroll() {
+  if (!ticking) {
+    requestAnimationFrame(updateAll);
+    ticking = true;
+  }
+}
+
+function updateAll() {
+  ticking = false;
+  const sy = window.scrollY;
+  const vh = window.innerHeight;
+
+  /* ── Story step ── */
+  if (storyTrack) {
+    const rect     = storyTrack.getBoundingClientRect();
+    const scrolled = -rect.top;
+    const total    = storyTrack.offsetHeight - vh;
+    const prog     = Math.max(0, Math.min(1, scrolled / total));
+    const step     = Math.min(N_STEPS - 1, Math.floor(prog * N_STEPS));
+    showStep(step, false);
   }
 
-  window.onFormationChange = function(idx) {
-    if (!lv) return;
-    if (Date.now() - lastUserInteraction < 3000) return;
-    var preset = LANDING_ORBITS[idx];
-    if (!preset) return;
-    lv.removeAttribute('auto-rotate');
-    lv.cameraOrbit = preset.orbit;
-    lv.fieldOfView = preset.fov;
-    setTimeout(function() { lv.setAttribute('auto-rotate', ''); }, 1400);
-  };
+  /* ── Parallax: p5 canvas drifts at 0.18x ── */
+  const canvas = document.getElementById('p5Canvas');
+  if (canvas) canvas.style.transform = `translateY(${-sy * 0.18}px)`;
 
-  /* ── Landing camera readout ─────────────────────────── */
-  var landingCamText = document.getElementById('landingCamText');
-  (function camLoop() {
-    if (lv && landingCamText) {
-      try {
-        var o   = lv.getCameraOrbit();
-        var td  = (o.theta * 180 / Math.PI).toFixed(1);
-        var pd  = (o.phi   * 180 / Math.PI).toFixed(1);
-        var r   = o.radius.toFixed(3);
-        var fov = lv.getFieldOfView ? lv.getFieldOfView().toFixed(1) : '—';
-        landingCamText.textContent =
-          'orbit  ' + td + 'deg ' + pd + 'deg ' + r + 'm\n' +
-          'fov    ' + fov + 'deg';
-      } catch(_) {}
-    }
-    requestAnimationFrame(camLoop);
-  })();
+  /* ── Fade hero fixed elements ── */
+  const fade = Math.max(0, 1 - sy / (vh * 0.5));
+  ['.hero-content','.hero-badge','.hero-scroll-hint'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) { el.style.opacity = fade; el.style.pointerEvents = fade < 0.05 ? 'none' : ''; }
+  });
+
+  /* ── Nav gets solid bg past hero ── */
+  document.getElementById('siteNav')?.classList.toggle('scrolled', sy > vh * 0.4);
+
+  prevScrollY = sy;
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+
+
+/* ─────────────────────────────────────────────────────────
+   FORMATION → CAMERA SYNC (p5 formations ↔ model)
+───────────────────────────────────────────────────────── */
+const LANDING_ORBITS = [
+  { orbit:'49.2deg 70.9deg 167.397m', fov:'7.0deg' },
+  { orbit:'145.1deg 0.0deg 167.397m', fov:'7.0deg' },
+  { orbit:'-220.2deg 154.9deg 167.397m', fov:'7.0deg' },
+];
+let lastUserInteraction = 0;
+if (lv) lv.addEventListener('camera-change', e => {
+  if (e.detail?.source === 'user-interaction') lastUserInteraction = Date.now();
+});
+window.onFormationChange = idx => {
+  if (!lv || Date.now() - lastUserInteraction < 3000) return;
+  // Only during hero phase (before story track)
+  if (window.scrollY > window.innerHeight * 0.8) return;
+  const p = LANDING_ORBITS[idx]; if (!p) return;
+  lv.cameraOrbit = p.orbit;
+  lv.fieldOfView = p.fov;
+};
+
+
+/* ─────────────────────────────────────────────────────────
+   CAM READOUT (dev tool, hidden by default)
+───────────────────────────────────────────────────────── */
+const camText = document.getElementById('landingCamText');
+const camCopy = document.getElementById('landingCamCopy');
+if (camCopy) camCopy.onclick = () =>
+  navigator.clipboard.writeText(camText?.textContent || '').then(() => {
+    camCopy.textContent = 'copied!'; setTimeout(() => camCopy.textContent = 'copy', 1200);
+  });
+(function camLoop() {
+  if (lv && camText) {
+    try {
+      const o   = lv.getCameraOrbit();
+      const td  = (o.theta * 180/Math.PI).toFixed(1);
+      const pd  = (o.phi   * 180/Math.PI).toFixed(1);
+      camText.textContent = `${td}deg ${pd}deg ${o.radius.toFixed(3)}m  fov ${(lv.getFieldOfView?.() ?? 0).toFixed(1)}deg`;
+    } catch(_) {}
+  }
+  requestAnimationFrame(camLoop);
+})();
+
+
+/* ─────────────────────────────────────────────────────────
+   SPECS STRIP — count-up + entrance
+───────────────────────────────────────────────────────── */
+(function() {
+  const strip = document.querySelector('.specs-strip');
+  if (!strip) return;
+  let fired = false;
+  const obs = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || fired) return;
+    fired = true;
+    // Slide strip in
+    anime({ targets: strip, opacity:[0,1], translateY:[18,0], duration:700, easing:'easeOutExpo' });
+    // Count up each spec-val with a data-target
+    strip.querySelectorAll('.spec-val[data-target]').forEach((el, i) => {
+      const target = parseInt(el.dataset.target, 10);
+      const unit = el.querySelector('.spec-unit');
+      anime({
+        targets: { v: 0 },
+        v: target,
+        delay: i * 120,
+        duration: 1100,
+        easing: 'easeOutExpo',
+        update(anim) {
+          const val = Math.round(anim.animatables[0].target.v);
+          el.childNodes[0].textContent = val;
+          if (unit) el.appendChild(unit);
+        },
+      });
+    });
+    obs.disconnect();
+  }, { threshold: 0.4 });
+  strip.style.opacity = '0';
+  obs.observe(strip);
+})();
+
+
+/* ─────────────────────────────────────────────────────────
+   INTERSECTION OBSERVER — figure reveals
+───────────────────────────────────────────────────────── */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    anime({
+      targets: el,
+      opacity: [0, 1],
+      translateY: [24, 0],
+      duration: 700,
+      easing: 'easeOutExpo',
+    });
+    revealObs.unobserve(el);
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fig-reveal').forEach((el, i) => {
+  el.style.opacity = 0;
+  el._revealDelay = (i % 2) * 80;
+  revealObs.observe(el);
+});
+
+// Info section header + abstract fade in
+['.landing-info-hd', '.landing-info-abstract', '.landing-info-label + p'].forEach(sel => {
+  const el = document.querySelector(sel);
+  if (!el) return;
+  el.style.opacity = '0';
+  const o = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    anime({ targets: el, opacity:[0,1], translateY:[18,0], duration:800, easing:'easeOutExpo' });
+    o.disconnect();
+  }, { threshold: 0.2 });
+  o.observe(el);
+});
 </script>
 </body>
 </html>
