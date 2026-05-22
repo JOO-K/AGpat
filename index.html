@@ -128,7 +128,7 @@
     <div class="bf-visual">
       <model-viewer
         id="landingViewer"
-        src="models/rojas.glb"
+        src="models/newmodels/rojas.glb"
         camera-orbit="35deg 75deg 36m"
         min-camera-orbit="auto 0deg auto"
         max-camera-orbit="auto 180deg auto"
@@ -154,8 +154,8 @@
       <p class="bf-models-label">Embodiments</p>
 
       <a class="bf-model-thumb" href="patent.html">
-        <model-viewer src="models/rojas.glb"
-          camera-orbit="40.4deg 71.9deg 53.153m" field-of-view="26.2deg"
+        <model-viewer src="models/newmodels/rojas.glb"
+          camera-orbit="40.4deg 71.9deg 120%" field-of-view="24deg"
           auto-rotate rotation-per-second="18deg" auto-rotate-delay="0"
           interaction-prompt="none"
           shadow-intensity="1" exposure="1.1" environment-image="neutral"
@@ -169,7 +169,7 @@
 
       <a class="bf-model-thumb" href="patent.html">
         <model-viewer src="models/alt.glb"
-          camera-orbit="30.5deg 66.5deg 128.4m" field-of-view="20.1deg"
+          camera-orbit="30.5deg 66.5deg 120%" field-of-view="20deg"
           auto-rotate rotation-per-second="18deg" auto-rotate-delay="0"
           interaction-prompt="none"
           shadow-intensity="1" exposure="1.1" environment-image="neutral"
@@ -182,8 +182,8 @@
       </a>
 
       <a class="bf-model-thumb" href="patent.html">
-        <model-viewer src="models/rebuild.glb"
-          camera-orbit="45deg 54.74deg 120%" field-of-view="30deg"
+        <model-viewer src="models/newmodels/rebuild.glb"
+          camera-orbit="45deg 54.74deg 120%" field-of-view="24deg"
           auto-rotate rotation-per-second="18deg" auto-rotate-delay="0"
           interaction-prompt="none"
           shadow-intensity="1" exposure="1.1" environment-image="neutral"
@@ -201,41 +201,76 @@
   </div>
 
   <!-- View cutout cards -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden">
+    <defs>
+      <clipPath id="para-bb" clipPathUnits="objectBoundingBox">
+        <path d="M0.18347 0.09586L0.02293 0.60776C-0.02599 0.76377 0.01782 0.99405 0.09643 0.99405H0.73913C0.76775 0.99405 0.79481 0.96095 0.81262 0.90414L0.97321 0.39224C1.02206 0.23622 0.97824 0.00595 0.89963 0.00595H0.25695C0.22836 0.00595 0.20130 0.03905 0.18347 0.09586Z"/>
+      </clipPath>
+    </defs>
+  </svg>
   <div class="bf-cards">
 
     <div class="bf-card">
-      <svg class="bf-card-svg" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-        <defs><clipPath id="pc0"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/></clipPath></defs>
-        <image href="images/figs/page_02.png" x="0" y="0" width="213" height="84" clip-path="url(#pc0)" preserveAspectRatio="xMidYMid slice"/>
-        <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-      </svg>
+      <div class="bf-card-frame">
+        <model-viewer src="models/newmodels/nd_13.glb"
+          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
+          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+          interaction-prompt="none" disable-zoom disable-pan
+          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+          class="bf-card-mv">
+        </model-viewer>
+        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
+          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+        </svg>
+      </div>
       <p class="bf-card-label">ADAPTIVE</p>
     </div>
 
     <div class="bf-card">
-      <svg class="bf-card-svg" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-        <defs><clipPath id="pc1"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/></clipPath></defs>
-        <image href="images/figs/page_04.png" x="0" y="0" width="213" height="84" clip-path="url(#pc1)" preserveAspectRatio="xMidYMid slice"/>
-        <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-      </svg>
+      <div class="bf-card-frame">
+        <model-viewer src="models/newmodels/rojas.glb"
+          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
+          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+          interaction-prompt="none" disable-zoom disable-pan
+          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+          class="bf-card-mv">
+        </model-viewer>
+        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
+          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+        </svg>
+      </div>
       <p class="bf-card-label">PATENTED</p>
     </div>
 
     <div class="bf-card">
-      <svg class="bf-card-svg" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-        <defs><clipPath id="pc2"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/></clipPath></defs>
-        <image href="images/figs/page_03.png" x="0" y="0" width="213" height="84" clip-path="url(#pc2)" preserveAspectRatio="xMidYMid slice"/>
-        <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-      </svg>
+      <div class="bf-card-frame">
+        <model-viewer src="models/alt.glb"
+          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
+          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+          interaction-prompt="none" disable-zoom disable-pan
+          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+          class="bf-card-mv">
+        </model-viewer>
+        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
+          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+        </svg>
+      </div>
       <p class="bf-card-label">MEDICAL</p>
     </div>
 
     <div class="bf-card">
-      <svg class="bf-card-svg" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-        <defs><clipPath id="pc3"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/></clipPath></defs>
-        <image href="images/fig6b.png" x="0" y="0" width="213" height="84" clip-path="url(#pc3)" preserveAspectRatio="xMidYMid slice"/>
-        <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-      </svg>
+      <div class="bf-card-frame">
+        <model-viewer src="models/newmodels/rebuild.glb"
+          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
+          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+          interaction-prompt="none" disable-zoom disable-pan
+          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+          class="bf-card-mv">
+        </model-viewer>
+        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
+          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+        </svg>
+      </div>
       <p class="bf-card-label">RL3T</p>
     </div>
 
