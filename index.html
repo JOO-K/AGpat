@@ -153,47 +153,42 @@
     <div class="bf-content bf-models-col">
       <p class="bf-models-label">Embodiments</p>
 
-      <a class="bf-model-thumb" href="patent.html">
-        <model-viewer src="models/newmodels/rojas.glb"
-          camera-orbit="40.4deg 71.9deg 120%" field-of-view="24deg"
-          auto-rotate rotation-per-second="18deg" auto-rotate-delay="0"
-          interaction-prompt="none"
-          shadow-intensity="1" exposure="1.1" environment-image="neutral"
-          class="bf-thumb-viewer">
-        </model-viewer>
-        <div class="bf-thumb-info">
+      <div class="bf-models-row">
+
+        <div class="bf-model-thumb">
+          <model-viewer src="models/newmodels/rojas.glb"
+            camera-orbit="40.4deg 71.9deg 120%" field-of-view="24deg"
+            interaction-prompt="none" disable-zoom disable-pan
+            shadow-intensity="1" exposure="1.1" environment-image="neutral"
+            class="bf-thumb-viewer">
+          </model-viewer>
           <span class="bf-thumb-name">ROJAS v22</span>
           <span class="bf-thumb-tag">Primary</span>
         </div>
-      </a>
 
-      <a class="bf-model-thumb" href="patent.html">
-        <model-viewer src="models/alt.glb"
-          camera-orbit="30.5deg 66.5deg 120%" field-of-view="20deg"
-          auto-rotate rotation-per-second="18deg" auto-rotate-delay="0"
-          interaction-prompt="none"
-          shadow-intensity="1" exposure="1.1" environment-image="neutral"
-          class="bf-thumb-viewer">
-        </model-viewer>
-        <div class="bf-thumb-info">
+        <div class="bf-model-thumb">
+          <model-viewer src="models/alt.glb"
+            camera-orbit="30.5deg 66.5deg 120%" field-of-view="20deg"
+            interaction-prompt="none" disable-zoom disable-pan
+            shadow-intensity="1" exposure="1.1" environment-image="neutral"
+            class="bf-thumb-viewer">
+          </model-viewer>
           <span class="bf-thumb-name">ALT v47</span>
           <span class="bf-thumb-tag">Alternative</span>
         </div>
-      </a>
 
-      <a class="bf-model-thumb" href="patent.html">
-        <model-viewer src="models/newmodels/rebuild.glb"
-          camera-orbit="45deg 54.74deg 120%" field-of-view="24deg"
-          auto-rotate rotation-per-second="18deg" auto-rotate-delay="0"
-          interaction-prompt="none"
-          shadow-intensity="1" exposure="1.1" environment-image="neutral"
-          class="bf-thumb-viewer">
-        </model-viewer>
-        <div class="bf-thumb-info">
+        <div class="bf-model-thumb">
+          <model-viewer src="models/newmodels/rebuild.glb"
+            camera-orbit="45deg 54.74deg 120%" field-of-view="24deg"
+            interaction-prompt="none" disable-zoom disable-pan
+            shadow-intensity="1" exposure="1.1" environment-image="neutral"
+            class="bf-thumb-viewer">
+          </model-viewer>
           <span class="bf-thumb-name">REBUILD v1</span>
           <span class="bf-thumb-tag">Revised</span>
         </div>
-      </a>
+
+      </div>
 
       <a href="patent.html" class="bf-models-cta">View all in 3D &nbsp;&rarr;</a>
     </div>
@@ -414,6 +409,33 @@
       } catch(_) {}
     }
     requestAnimationFrame(camLoop);
+  })();
+
+  /* -- Thumbnail object turntable -------------------- */
+  (function() {
+    function initObjRot(mv) {
+      var rotX = 0, rotY = 0, lastX = 0, lastY = 0, drag = false, lastT = 0;
+      function tick(t) {
+        if (lastT && !drag) rotY += Math.min(t - lastT, 100) * 0.018;
+        lastT = t;
+        try { mv.orientation = rotX + 'deg ' + rotY + 'deg 0deg'; } catch(_) {}
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      mv.addEventListener('pointerdown', function(e) {
+        drag = true; lastX = e.clientX; lastY = e.clientY;
+        try { mv.setPointerCapture(e.pointerId); } catch(_) {}
+      });
+      mv.addEventListener('pointermove', function(e) {
+        if (!drag) return;
+        rotY += (e.clientX - lastX) * 0.6;
+        rotX = Math.max(-40, Math.min(40, rotX + (e.clientY - lastY) * 0.4));
+        lastX = e.clientX; lastY = e.clientY;
+      });
+      mv.addEventListener('pointerup',    function() { drag = false; });
+      mv.addEventListener('pointerleave', function() { drag = false; });
+    }
+    document.querySelectorAll('.bf-thumb-viewer').forEach(initObjRot);
   })();
 </script>
 </body>
