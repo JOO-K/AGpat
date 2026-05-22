@@ -3265,16 +3265,12 @@ body.patent-page {
   margin: 0 auto;
 }
 
-/* ── SVG column ─────────────────────────────────────── */
+/* ── Model column ───────────────────────────────────── */
 .bf-visual {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem 4rem 3.5rem;
   position: sticky;
   top: 0;
   height: 100vh;
+  overflow: hidden;
 }
 
 .bf-pelvis-svg {
@@ -3289,10 +3285,10 @@ body.patent-page {
 }
 
 .bf-model-viewer {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  flex: 1;
-  min-height: 0;
-  max-height: 82vh;
+  height: 100%;
   background: transparent !important;
   --poster-color: transparent !important;
 }
@@ -3312,8 +3308,13 @@ body.patent-page {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-top: 1.2rem;
   text-align: center;
+  position: absolute;
+  bottom: 1.4rem;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* ── Content column ─────────────────────────────────── */
@@ -3411,6 +3412,54 @@ body.patent-page {
 }
 .bf-link:hover { opacity: 0.7; text-decoration: none; }
 
+/* ── View cutout cards ──────────────────────────────── */
+.bf-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+  padding: 3rem 3.5rem 4.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-top: 1px solid var(--rule);
+}
+
+.bf-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.bf-card-svg {
+  width: 100%;
+  display: block;
+  filter:
+    drop-shadow(0 3px 10px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.22))
+    drop-shadow(0 0 20px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08));
+}
+
+.bf-card-path {
+  fill: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.06);
+  stroke: rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.42);
+  stroke-width: 1;
+}
+
+.bf-card-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-left: 2px;
+}
+
+.bf-card-sub {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  color: var(--dim);
+  padding-left: 2px;
+}
+
 /* ── Mobile ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .bf-container {
@@ -3418,15 +3467,18 @@ body.patent-page {
   }
   .bf-visual {
     position: static;
-    height: 60vw;
-    padding: 3rem 2rem 1.5rem;
+    height: 70vw;
     border-bottom: 1px solid var(--rule);
   }
-  .bf-pelvis-svg,
-  .bf-model-viewer { max-height: 55vw; }
   .bf-content {
     border-left: none;
     padding: 2.5rem 2rem 4rem;
   }
   .bf-stats { gap: 1.5rem; }
+  .bf-fig-label { position: absolute; bottom: 0.8rem; }
+  .bf-cards {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem 1.5rem 3rem;
+    gap: 1rem;
+  }
 }
