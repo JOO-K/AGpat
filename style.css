@@ -3412,14 +3412,83 @@ body.patent-page {
 }
 .bf-link:hover { opacity: 0.7; text-decoration: none; }
 
+/* ── Embodiments column ─────────────────────────────── */
+.bf-models-col {
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+}
+
+.bf-models-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 1.5rem;
+}
+
+.bf-model-thumb {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  transition: opacity 0.18s;
+}
+.bf-model-thumb:last-of-type { border-bottom: 1px solid var(--rule); }
+.bf-model-thumb:hover { opacity: 0.75; }
+
+.bf-thumb-viewer {
+  height: 100px;
+  background: transparent !important;
+  --poster-color: transparent !important;
+}
+
+.bf-thumb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.bf-thumb-name {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.bf-thumb-tag {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.bf-models-cta {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: 1.6rem;
+  transition: opacity 0.15s;
+  align-self: flex-start;
+}
+.bf-models-cta:hover { opacity: 0.65; }
+
 /* ── View cutout cards ──────────────────────────────── */
 .bf-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.4rem;
-  padding: 3rem 3.5rem 4.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 2rem;
+  padding: 3.5rem 4rem 5rem;
   border-top: 1px solid var(--rule);
 }
 
@@ -3470,11 +3539,12 @@ body.patent-page {
     height: 70vw;
     border-bottom: 1px solid var(--rule);
   }
-  .bf-content {
+  .bf-models-col {
     border-left: none;
-    padding: 2.5rem 2rem 4rem;
+    padding: 2rem 1.5rem 3rem;
   }
-  .bf-stats { gap: 1.5rem; }
+  .bf-model-thumb { grid-template-columns: 90px 1fr; }
+  .bf-thumb-viewer { height: 70px; }
   .bf-fig-label { position: absolute; bottom: 0.8rem; }
   .bf-cards {
     grid-template-columns: repeat(2, 1fr);
