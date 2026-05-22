@@ -1746,7 +1746,24 @@ section.in-view > h2 { color: var(--ink); }
   position: fixed;
   inset: 0;
   z-index: 0;
-  pointer-events: auto;
+  pointer-events: none;
+}
+.landing-bg-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.18;
+  filter:
+    drop-shadow(0 0 4px  rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.55))
+    drop-shadow(0 0 18px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.22));
+}
+.landing-bg-svg path {
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 .landing-viewer {
   width: 100%;
@@ -3271,6 +3288,15 @@ body.patent-page {
     drop-shadow(0 0 30px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.08));
 }
 
+.bf-model-viewer {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  max-height: 82vh;
+  background: transparent !important;
+  --poster-color: transparent !important;
+}
+
 .bf-pelvis-svg path {
   stroke: var(--ink);
   fill: none;
@@ -3392,11 +3418,12 @@ body.patent-page {
   }
   .bf-visual {
     position: static;
-    height: auto;
+    height: 60vw;
     padding: 3rem 2rem 1.5rem;
     border-bottom: 1px solid var(--rule);
   }
-  .bf-pelvis-svg { max-height: 55vw; }
+  .bf-pelvis-svg,
+  .bf-model-viewer { max-height: 55vw; }
   .bf-content {
     border-left: none;
     padding: 2.5rem 2rem 4rem;
