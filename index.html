@@ -62,6 +62,10 @@
         <button class="l-swatch active" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
         <button class="l-swatch" data-scheme="ember"     style="background:#c2410c" title="Ember"></button>
         <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
+        <span class="l-scheme-div"></span>
+        <button class="l-swatch" data-scheme="forest" style="background:#16a34a" title="Forest"></button>
+        <button class="l-swatch" data-scheme="gold"   style="background:#d97706" title="Gold"></button>
+        <button class="l-swatch swatch-aurora" data-scheme="aurora" title="Aurora"></button>
       </div>
     </div>
   </header>
@@ -249,9 +253,20 @@
     teal:      { accent:'#0d9488', mid:'#2dd4bf', bg:'#f0fdfa', ar:13,  ag:148, ab:136, model:[0.30,0.82,0.74] },
     ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28] },
     plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94] },
+    forest:    { accent:'#16a34a', mid:'#4ade80', bg:'#f0fdf4', ar:22,  ag:163, ab:74,  model:[0.18,0.75,0.38] },
+    gold:      { accent:'#d97706', mid:'#fcd34d', bg:'#fffbeb', ar:217, ag:119, ab:6,   model:[0.92,0.72,0.18] },
   };
   let currentScheme = localStorage.getItem('ag-scheme') || 'teal';
   const lv = document.getElementById('landingViewer');
+
+  function hslToRgb(h, s, l) {
+    s /= 100; l /= 100;
+    var a = s * Math.min(l, 1 - l);
+    function f(n) { var k = (n + h / 30) % 12; return Math.round((l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)))) * 255); }
+    return [f(0), f(8), f(4)];
+  }
+  var _auroraRaf = null;
+  function _stopAurora() { if (_auroraRaf) { cancelAnimationFrame(_auroraRaf); _auroraRaf = null; } }
 
   function applyModelColor(rgb) {
     if (!lv?.model) return;
@@ -278,6 +293,27 @@
   }
 
   function applyLandingScheme(name) {
+    _stopAurora();
+    if (name === 'aurora') {
+      currentScheme = 'aurora';
+      var t0 = performance.now();
+      (function tick(now) {
+        var h = ((now - t0) / 18000 * 360) % 360;
+        var lum = 44 + Math.sin((now - t0) / 2400) * 3;
+        var rgb = hslToRgb(h, 78, lum);
+        var css = document.documentElement.style;
+        css.setProperty('--accent',   'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')');
+        css.setProperty('--acc-mid',  'rgb(' + hslToRgb((h+28)%360, 68, lum+16).join(',') + ')');
+        css.setProperty('--acc-bg',   'hsl(' + h.toFixed(0) + ',90%,97%)');
+        css.setProperty('--accent-r', rgb[0]);
+        css.setProperty('--accent-g', rgb[1]);
+        css.setProperty('--accent-b', rgb[2]);
+        if (typeof window.updateSketchAccent === 'function') window.updateSketchAccent(rgb[0], rgb[1], rgb[2]);
+        _auroraRaf = requestAnimationFrame(tick);
+      })(t0);
+      document.querySelectorAll('.l-swatch').forEach(function(sw) { sw.classList.toggle('active', sw.dataset.scheme === 'aurora'); });
+      return;
+    }
     var s = L_SCHEMES[name];
     if (!s) return;
     currentScheme = name;
@@ -405,11 +441,28 @@
     document.querySelectorAll('.bf-thumb-viewer').forEach(initObjRot);
   })();
 
-  /* SVG pelvis/spine draw animation */
+  /* SVG pelvis/spine draw animation with leading dot */
   (function () {
     var bgSvg = document.querySelector('.landing-bg-svg');
     if (!bgSvg || typeof anime === 'undefined') return;
     var paths = Array.from(bgSvg.querySelectorAll('path'));
+
+    /* dot layer — own SVG so opacity:0.18 on bgSvg doesn't dim the dots */
+    var dotSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    dotSvg.setAttribute('viewBox', bgSvg.getAttribute('viewBox'));
+    dotSvg.setAttribute('class', 'landing-dot-svg');
+    dotSvg.setAttribute('aria-hidden', 'true');
+    bgSvg.parentNode.insertBefore(dotSvg, bgSvg.nextSibling);
+
+    var dots = paths.map(function () {
+      var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('r', '2');
+      c.setAttribute('fill', 'var(--accent)');
+      c.setAttribute('opacity', '0');
+      dotSvg.appendChild(c);
+      return c;
+    });
+
     paths.forEach(function (p) {
       try {
         var len = p.getTotalLength();
@@ -417,15 +470,30 @@
       } catch (_) {}
       p.style.opacity = '1';
     });
+
     anime({
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
       easing: 'easeInOutSine',
-      duration: 1800,
+      duration: 900,
       delay: anime.stagger(55),
       loop: true,
       direction: 'alternate',
       endDelay: 600,
+      update: function () {
+        paths.forEach(function (p, i) {
+          var offset = parseFloat(p.style.strokeDashoffset) || 0;
+          var total  = parseFloat(p.style.strokeDasharray)  || 0;
+          var drawn  = total - offset;
+          if (drawn <= 1 || drawn >= total - 1) { dots[i].setAttribute('opacity', '0'); return; }
+          try {
+            var pt = p.getPointAtLength(drawn);
+            dots[i].setAttribute('cx', pt.x);
+            dots[i].setAttribute('cy', pt.y);
+            dots[i].setAttribute('opacity', '1');
+          } catch (_) { dots[i].setAttribute('opacity', '0'); }
+        });
+      },
     });
   })();
 </script>
