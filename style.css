@@ -3293,6 +3293,7 @@ body.patent-page {
 .below-fold {
   position: relative;
   z-index: 1;
+  margin-top: 100vh;
 }
 
 .bf-container {
