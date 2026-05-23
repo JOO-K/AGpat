@@ -240,6 +240,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="sketch.js"></script>
 <script>
   /* â”€â”€ Landing color schemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
@@ -402,6 +403,30 @@
       mv.addEventListener('pointerleave', function() { drag = false; });
     }
     document.querySelectorAll('.bf-thumb-viewer').forEach(initObjRot);
+  })();
+
+  /* SVG pelvis/spine draw animation */
+  (function () {
+    var bgSvg = document.querySelector('.landing-bg-svg');
+    if (!bgSvg || typeof anime === 'undefined') return;
+    var paths = Array.from(bgSvg.querySelectorAll('path'));
+    paths.forEach(function (p) {
+      try {
+        var len = p.getTotalLength();
+        if (len > 0) { p.style.strokeDasharray = len; p.style.strokeDashoffset = len; }
+      } catch (_) {}
+      p.style.opacity = '1';
+    });
+    anime({
+      targets: paths,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'easeInOutSine',
+      duration: 1800,
+      delay: anime.stagger(55),
+      loop: true,
+      direction: 'alternate',
+      endDelay: 600,
+    });
   })();
 </script>
 </body>
