@@ -63,8 +63,6 @@
         <button class="l-swatch" data-scheme="ember"     style="background:#c2410c" title="Ember"></button>
         <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
         <span class="l-scheme-div"></span>
-        <button class="l-swatch" data-scheme="forest" style="background:#16a34a" title="Forest"></button>
-        <button class="l-swatch" data-scheme="gold"   style="background:#d97706" title="Gold"></button>
         <button class="l-swatch swatch-aurora" data-scheme="aurora" title="Aurora"></button>
       </div>
     </div>
@@ -253,8 +251,6 @@
     teal:      { accent:'#0d9488', mid:'#2dd4bf', bg:'#f0fdfa', ar:13,  ag:148, ab:136, model:[0.30,0.82,0.74] },
     ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28] },
     plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94] },
-    forest:    { accent:'#16a34a', mid:'#4ade80', bg:'#f0fdf4', ar:22,  ag:163, ab:74,  model:[0.18,0.75,0.38] },
-    gold:      { accent:'#d97706', mid:'#fcd34d', bg:'#fffbeb', ar:217, ag:119, ab:6,   model:[0.92,0.72,0.18] },
   };
   let currentScheme = localStorage.getItem('ag-scheme') || 'teal';
   const lv = document.getElementById('landingViewer');
@@ -482,15 +478,18 @@
       endDelay: 1400,
       update: function () {
         paths.forEach(function (p, i) {
-          var offset = parseFloat(p.style.strokeDashoffset) || 0;
           var total  = parseFloat(p.style.strokeDasharray)  || 0;
-          var drawn  = total - offset;
-          if (drawn <= 1 || drawn >= total - 1) { dots[i].setAttribute('opacity', '0'); return; }
+          var offset = parseFloat(p.style.strokeDashoffset);
+          if (isNaN(offset)) offset = total;
+          var drawn  = Math.max(0, total - offset);
+          var fade   = Math.min(drawn / (total * 0.08), 1) *
+                       Math.min((total - drawn) / (total * 0.08), 1);
+          if (fade < 0.01) { dots[i].setAttribute('opacity', '0'); return; }
           try {
-            var pt = p.getPointAtLength(drawn);
+            var pt = p.getPointAtLength(Math.min(drawn, total));
             dots[i].setAttribute('cx', pt.x);
             dots[i].setAttribute('cy', pt.y);
-            dots[i].setAttribute('opacity', '0.55');
+            dots[i].setAttribute('opacity', (0.55 * fade).toFixed(3));
           } catch (_) { dots[i].setAttribute('opacity', '0'); }
         });
       },
