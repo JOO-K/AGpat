@@ -106,7 +106,7 @@
     </div>
   </section>
 
-  <div class="landing-cam-info" id="landingCamInfo">
+  <div class="landing-cam-info" id="landingCamInfo" style="display:none">
     <pre id="landingCamText">loadingâ€¦</pre>
     <button id="landingCamCopy" onclick="navigator.clipboard.writeText(document.getElementById('landingCamText').textContent).then(()=>{this.textContent='copied!';setTimeout(()=>this.textContent='copy',1200)})">copy</button>
   </div>
@@ -126,7 +126,7 @@
 
     <div class="bf-model-card">
       <model-viewer src="models/newmodels/rojas.glb"
-        camera-orbit="40.4deg 71.9deg 120%" field-of-view="24deg"
+        camera-orbit="40.4deg 71.9deg 150%" field-of-view="22deg"
         interaction-prompt="none" disable-zoom disable-pan
         shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
         class="bf-thumb-viewer">
@@ -137,7 +137,7 @@
 
     <div class="bf-model-card">
       <model-viewer src="models/alt.glb"
-        camera-orbit="30.5deg 66.5deg 120%" field-of-view="20deg"
+        camera-orbit="30.5deg 66.5deg 150%" field-of-view="20deg"
         interaction-prompt="none" disable-zoom disable-pan
         shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
         class="bf-thumb-viewer">
@@ -148,7 +148,7 @@
 
     <div class="bf-model-card">
       <model-viewer src="models/newmodels/rebuild.glb"
-        camera-orbit="45deg 54.74deg 120%" field-of-view="24deg"
+        camera-orbit="45deg 54.74deg 150%" field-of-view="22deg"
         interaction-prompt="none" disable-zoom disable-pan
         shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
         class="bf-thumb-viewer">

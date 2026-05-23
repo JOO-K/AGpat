@@ -1428,19 +1428,16 @@ section.in-view > h2 { color: var(--ink); }
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .landing-body {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  overflow-x: hidden;
 }
 
 .landing {
-  flex: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   padding: 3rem 4rem 3rem 5.5rem;
-  gap: 0;
-  position: relative;
-  z-index: 1;
   pointer-events: none;
 }
 
@@ -3285,6 +3282,7 @@ body.patent-page {
 .below-fold {
   position: relative;
   z-index: 1;
+  margin-top: 100vh;
 }
 
 .bf-container {
@@ -3514,7 +3512,7 @@ body.patent-page {
 .bf-models-row-full {
   display: flex;
   gap: 2.5rem;
-  padding: 5rem 5rem 1rem;
+  padding: 2.5rem 3rem 1rem;
   justify-content: center;
   align-items: flex-start;
   max-width: 1300px;
@@ -3530,7 +3528,8 @@ body.patent-page {
 }
 
 .bf-model-card .bf-thumb-viewer {
-  aspect-ratio: 4 / 5;
+  height: clamp(300px, 50vh, 520px);
+  aspect-ratio: unset;
 }
 
 .bf-cta-centered {
