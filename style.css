@@ -3285,8 +3285,6 @@ body.patent-page {
 .below-fold {
   position: relative;
   z-index: 1;
-  background: #fff;
-  border-top: 1px solid var(--rule);
 }
 
 .bf-container {
@@ -3512,6 +3510,35 @@ body.patent-page {
 }
 .bf-models-cta:hover { opacity: 0.65; }
 
+/* New equal-width models row -------------------------------- */
+.bf-models-row-full {
+  display: flex;
+  gap: 2.5rem;
+  padding: 5rem 5rem 1rem;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.bf-model-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.bf-model-card .bf-thumb-viewer {
+  aspect-ratio: 4 / 5;
+}
+
+.bf-cta-centered {
+  display: block;
+  text-align: center;
+  margin: 0 auto 1.5rem;
+}
+
 /* ── View cutout cards ──────────────────────────────── */
 .bf-cards {
   display: grid;
@@ -3580,20 +3607,15 @@ body.patent-page {
 
 /* ── Mobile ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .bf-container {
-    grid-template-columns: 1fr;
+  .bf-models-row-full {
+    flex-direction: column;
+    padding: 3rem 1.5rem 1rem;
+    gap: 2rem;
   }
-  .bf-visual {
-    position: static;
-    height: 70vw;
-    border-bottom: 1px solid var(--rule);
-  }
-  .bf-models-col {
-    border-left: none;
-    padding: 2rem 1.5rem 2.5rem;
-  }
-  .bf-models-row { gap: 0.5rem; }
-  .bf-fig-label { position: absolute; bottom: 0.8rem; }
+
+
+
+
   .bf-cards {
     grid-template-columns: repeat(2, 1fr);
     padding: 2rem 1.5rem 3rem;

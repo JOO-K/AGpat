@@ -122,78 +122,44 @@
      BELOW-FOLD: anatomical context + patent info
 â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <section class="below-fold">
-  <div class="bf-container">
+  <div class="bf-models-row-full">
 
-    <!-- Left: interactive 3D model (sticky) -->
-    <div class="bf-visual">
-      <model-viewer
-        id="landingViewer"
-        src="models/newmodels/rojas.glb"
-        camera-orbit="35deg 75deg 36m"
-        min-camera-orbit="auto 0deg auto"
-        max-camera-orbit="auto 180deg auto"
-        field-of-view="30deg"
-        camera-controls
-        disable-pan
-        disable-zoom
-        auto-rotate
-        rotation-per-second="14deg"
-        auto-rotate-delay="2000"
-        interpolation-decay="200"
-        interaction-prompt="none"
-        shadow-intensity="1.2"
-        exposure="1.15"
-        environment-image="neutral"
-        class="bf-model-viewer">
+    <div class="bf-model-card">
+      <model-viewer src="models/newmodels/rojas.glb"
+        camera-orbit="40.4deg 71.9deg 120%" field-of-view="24deg"
+        interaction-prompt="none" disable-zoom disable-pan
+        shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+        class="bf-thumb-viewer">
       </model-viewer>
-      <p class="bf-fig-label">ROJAS v22 &nbsp;·&nbsp; Interactive 3D Model</p>
+      <span class="bf-thumb-name">ROJAS v22</span>
+      <span class="bf-thumb-tag">Primary</span>
     </div>
 
-    <!-- Right: embodiments showcase -->
-    <div class="bf-content bf-models-col">
-      <p class="bf-models-label">Embodiments</p>
+    <div class="bf-model-card">
+      <model-viewer src="models/alt.glb"
+        camera-orbit="30.5deg 66.5deg 120%" field-of-view="20deg"
+        interaction-prompt="none" disable-zoom disable-pan
+        shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+        class="bf-thumb-viewer">
+      </model-viewer>
+      <span class="bf-thumb-name">ALT v47</span>
+      <span class="bf-thumb-tag">Alternative</span>
+    </div>
 
-      <div class="bf-models-row">
-
-        <div class="bf-model-thumb">
-          <model-viewer src="models/newmodels/rojas.glb"
-            camera-orbit="40.4deg 71.9deg 120%" field-of-view="24deg"
-            interaction-prompt="none" disable-zoom disable-pan
-            shadow-intensity="1" exposure="1.1" environment-image="neutral"
-            class="bf-thumb-viewer">
-          </model-viewer>
-          <span class="bf-thumb-name">ROJAS v22</span>
-          <span class="bf-thumb-tag">Primary</span>
-        </div>
-
-        <div class="bf-model-thumb">
-          <model-viewer src="models/alt.glb"
-            camera-orbit="30.5deg 66.5deg 120%" field-of-view="20deg"
-            interaction-prompt="none" disable-zoom disable-pan
-            shadow-intensity="1" exposure="1.1" environment-image="neutral"
-            class="bf-thumb-viewer">
-          </model-viewer>
-          <span class="bf-thumb-name">ALT v47</span>
-          <span class="bf-thumb-tag">Alternative</span>
-        </div>
-
-        <div class="bf-model-thumb">
-          <model-viewer src="models/newmodels/rebuild.glb"
-            camera-orbit="45deg 54.74deg 120%" field-of-view="24deg"
-            interaction-prompt="none" disable-zoom disable-pan
-            shadow-intensity="1" exposure="1.1" environment-image="neutral"
-            class="bf-thumb-viewer">
-          </model-viewer>
-          <span class="bf-thumb-name">REBUILD v1</span>
-          <span class="bf-thumb-tag">Revised</span>
-        </div>
-
-      </div>
-
-      <a href="patent.html" class="bf-models-cta">View all in 3D &nbsp;&rarr;</a>
+    <div class="bf-model-card">
+      <model-viewer src="models/newmodels/rebuild.glb"
+        camera-orbit="45deg 54.74deg 120%" field-of-view="24deg"
+        interaction-prompt="none" disable-zoom disable-pan
+        shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
+        class="bf-thumb-viewer">
+      </model-viewer>
+      <span class="bf-thumb-name">REBUILD v1</span>
+      <span class="bf-thumb-tag">Revised</span>
     </div>
 
   </div>
+
+  <a href="patent.html" class="bf-models-cta bf-cta-centered">View all in 3D &nbsp;→</a>
 
   <!-- View cutout cards -->
   <svg width="0" height="0" style="position:absolute;overflow:hidden">
