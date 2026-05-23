@@ -155,8 +155,8 @@ new p5(function(p) {
   // Outer cylinder rails + top dome cap + sinusoidal spring coil + extraction loop
   function buildSideView() {
     const cx = p.width * 0.14, cy = p.height * 0.63;
-    const W  = Math.min(p.width, p.height) * 0.115;
-    const H  = Math.min(p.width, p.height) * 0.48;
+    const W  = Math.min(p.width, p.height) * 0.085;
+    const H  = Math.min(p.width, p.height) * 0.36;
     const top = cy - H * 0.5, bot = cy + H * 0.5;
     const pts = [];
 
@@ -192,7 +192,7 @@ new p5(function(p) {
   // Rosette r = R + A·cos(6θ) with inner channel ring
   function buildTopView() {
     const cx = p.width * 0.14, cy = p.height * 0.63;
-    const R  = Math.min(p.width, p.height) * 0.21;
+    const R  = Math.min(p.width, p.height) * 0.16;
     const A  = R * 0.26;
     const pts = [];
 
@@ -215,8 +215,8 @@ new p5(function(p) {
   // Six foreshortened ellipses stacked vertically — the 3/4-angle spring view
   function buildIsoCoil() {
     const cx  = p.width * 0.14, cy = p.height * 0.63;
-    const W   = Math.min(p.width, p.height) * 0.20;
-    const H   = Math.min(p.width, p.height) * 0.44;
+    const W   = Math.min(p.width, p.height) * 0.15;
+    const H   = Math.min(p.width, p.height) * 0.33;
     const nT  = 6;
     const eR  = 0.30; // y-compression (foreshortening)
     const pts = [];
