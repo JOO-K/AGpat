@@ -1795,8 +1795,8 @@ section.in-view > h2 { color: var(--ink); }
   height: 100%;
   pointer-events: none;
   filter:
-    drop-shadow(0 0 3px  rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.95))
-    drop-shadow(0 0 10px rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.55));
+    drop-shadow(0 0 2px  rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.6))
+    drop-shadow(0 0 6px  rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.25));
 }
 
 .landing-bg-svg {

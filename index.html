@@ -456,7 +456,7 @@
 
     var dots = paths.map(function () {
       var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      c.setAttribute('r', '2');
+      c.setAttribute('r', '1.5');
       c.setAttribute('fill', 'var(--accent)');
       c.setAttribute('opacity', '0');
       dotSvg.appendChild(c);
@@ -475,11 +475,11 @@
       targets: paths,
       strokeDashoffset: [anime.setDashoffset, 0],
       easing: 'easeInOutSine',
-      duration: 900,
-      delay: anime.stagger(55),
+      duration: 2000,
+      delay: anime.stagger(30),
       loop: true,
       direction: 'alternate',
-      endDelay: 600,
+      endDelay: 1400,
       update: function () {
         paths.forEach(function (p, i) {
           var offset = parseFloat(p.style.strokeDashoffset) || 0;
@@ -490,7 +490,7 @@
             var pt = p.getPointAtLength(drawn);
             dots[i].setAttribute('cx', pt.x);
             dots[i].setAttribute('cy', pt.y);
-            dots[i].setAttribute('opacity', '1');
+            dots[i].setAttribute('opacity', '0.55');
           } catch (_) { dots[i].setAttribute('opacity', '0'); }
         });
       },
