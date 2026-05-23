@@ -1445,7 +1445,8 @@ section.in-view > h2 { color: var(--ink); }
 .landing-logo-link,
 .landing-header-right,
 .landing-footer,
-.landing-cam-info {
+.landing-cam-info,
+.landing-header {
   pointer-events: auto;
 }
 
@@ -1454,11 +1455,16 @@ section.in-view > h2 { color: var(--ink); }
 .cta-text    { pointer-events: none; }
 
 .landing-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 1.5rem;
-  margin-bottom: auto;
-  padding-bottom: 2rem;
+  padding: 2.2rem 4rem 1.6rem 5.5rem;
+  pointer-events: none;
 }
 
 .landing-logo {
@@ -1755,15 +1761,20 @@ section.in-view > h2 { color: var(--ink); }
 }
 
 .landing-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-top: 2rem;
-  border-top: 1px solid var(--rule);
+  padding: 1.2rem 4rem 1.5rem 5.5rem;
+  border-top: 1px solid rgba(var(--accent-r), var(--accent-g), var(--accent-b), 0.12);
   font-family: var(--mono);
   font-size: 0.62rem;
   color: var(--dim);
-  margin-top: auto;
+  pointer-events: auto;
   animation: l-fade-in 0.7s 1.15s ease both;
 }
 
@@ -3282,7 +3293,6 @@ body.patent-page {
 .below-fold {
   position: relative;
   z-index: 1;
-  margin-top: 100vh;
 }
 
 .bf-container {
@@ -3512,7 +3522,7 @@ body.patent-page {
 .bf-models-row-full {
   display: flex;
   gap: 2.5rem;
-  padding: 2.5rem 3rem 1rem;
+  padding: 7.5rem 3rem 1.5rem;
   justify-content: center;
   align-items: flex-start;
   max-width: 1300px;
