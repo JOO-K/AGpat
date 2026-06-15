@@ -18,6 +18,7 @@
   function applyLandingScheme(name) {
     if (_agRaf) { cancelAnimationFrame(_agRaf); _agRaf = null; }
     if (name === 'aurora') {
+      document.documentElement.removeAttribute('data-scheme');
       var t0 = performance.now();
       (function tick(now) {
         var h = ((now - t0) / 18000 * 360) % 360;
@@ -53,8 +54,8 @@
     }
   }
   /* Set data-scheme before first paint, then apply full scheme once DOM ready */
-  (function(){ var s = localStorage.getItem('ag-scheme'); if (s && s !== 'aurora') document.documentElement.setAttribute('data-scheme', s); })();
-  document.addEventListener('DOMContentLoaded', function() { applyLandingScheme(localStorage.getItem('ag-scheme') || 'teal'); });
+  (function(){ var s = localStorage.getItem('ag-scheme') || 'ember'; if (s !== 'aurora') document.documentElement.setAttribute('data-scheme', s); })();
+  document.addEventListener('DOMContentLoaded', function() { applyLandingScheme(localStorage.getItem('ag-scheme') || 'ember'); });
   </script>
   <script type="importmap">{"imports":{"animejs":"https://cdn.jsdelivr.net/npm/animejs@4/+esm"}}</script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
@@ -109,9 +110,9 @@
     <a href="index.html" class="landing-logo landing-logo-link"><img src="images/LOGO RL3T.png" class="nav-logo-img" alt="RL3T"></a>
     <div class="landing-header-right">
       <div class="landing-scheme-row">
+        <button class="l-swatch active" data-scheme="ember" title="Ember" onclick="applyLandingScheme('ember')" style="background:#c2410c"></button>
         <button class="l-swatch" data-scheme="blueprint" title="Blueprint" onclick="applyLandingScheme('blueprint')" style="background:#1d4ed8"></button>
-        <button class="l-swatch active" data-scheme="teal" title="Teal" onclick="applyLandingScheme('teal')" style="background:#0d9488"></button>
-        <button class="l-swatch" data-scheme="ember" title="Ember" onclick="applyLandingScheme('ember')" style="background:#c2410c"></button>
+        <button class="l-swatch" data-scheme="teal" title="Teal" onclick="applyLandingScheme('teal')" style="background:#0d9488"></button>
         <button class="l-swatch" data-scheme="plum" title="Plum" onclick="applyLandingScheme('plum')" style="background:#7c3aed"></button>
         <button class="l-swatch l-swatch-aurora" data-scheme="aurora" title="Aurora" onclick="applyLandingScheme('aurora')"></button>
       </div>
