@@ -26,7 +26,8 @@ website/
     rojas.glb        — Primary model (ROJAS v22) — 3 materials: Body(16), Drawstring & Knot(20), Ring(22)
     alt.glb          — Alt embodiment (ALT v47)
     rebuild.glb      — Rebuild (REBUILD v1)
-    newmodels/       — Staged next versions (nd_13.glb, rojas.glb, rebuild.glb) — not yet live
+    newmodels/       — Staged next versions (nd_13.glb, rojas.glb, rebuild.glb) — used in stg-section
+    agfigs/          — Patent figure GLBs (fig1.glb, fig2.glb, fig5a5b.glb) — used in stg-section stages 02–04
     rojas_old.glb / rojas_original_backup.glb / rojas_reexport.glb — backups
     alt_old.glb / rebuild_old.glb — backups
     alt.obj / alt.stl / alt.usdz — export variants
@@ -274,14 +275,102 @@ Divider is `.scheme-divider` (1px vertical rule). Aurora swatch has spinning con
 - `d3-delaunay@6` from jsdelivr (index.html — used by sketch.js for particle formations)
 - Google Fonts: EB Garamond + IBM Plex Mono + Inter (Inter only in index.html)
 
+## Deployment stages section (index.html)
+
+A second full section sits immediately below the 100vh landing (via `margin-top: 100vh`). It shows 5 speculum deployment stages with a switching 3D model and left-panel text.
+
+### HTML structure
+```html
+<section class="stg-section">
+  <div class="stg-left">           <!-- tab nav + text -->
+    <nav class="stg-tabs">         <!-- 01…05 buttons -->
+    <div class="stg-content">      <!-- kicker / headline / body -->
+  </div>
+  <div class="stg-right">          <!-- position: relative -->
+    <div class="stg-mv-wrap">      <!-- extends 160px outside section top+bottom -->
+      <model-viewer id="stgMvA">   <!-- front buffer -->
+      <model-viewer id="stgMvB">   <!-- back buffer (hidden, loads next model) -->
+    </div>
+  </div>
+</section>
+```
+
+### Key CSS
+```css
+.stg-section {
+  height: 680px; background: #fff; overflow: visible;   /* overflow visible = model pokes out */
+  box-shadow:
+    0 -70px 120px -10px rgba(var(--accent-r), ..., 0.12),
+    0  70px 120px -10px rgba(var(--accent-r), ..., 0.12),
+    0 0 0 1px rgba(0,0,0,0.04);
+}
+/* Canvas wrapper extends 160px beyond section edges so model overflows */
+.stg-mv-wrap { position: absolute; top: -160px; bottom: -160px; left: 0; right: 0; }
+.stg-mv {
+  position: absolute; inset: 0; background-color: transparent;
+  filter:
+    url(#stg-model-outline)          /* SVG outline filter — added just before <script> tags */
+    drop-shadow(0 2px 10px rgba(0,0,0,0.13))
+    drop-shadow(0 8px 36px rgba(0,0,0,0.08));
+}
+.stg-mv--vis { opacity: 1; z-index: 2; pointer-events: auto; }
+.stg-mv--hid { opacity: 0; z-index: 1; }                      /* crossfade: 0.6s ease */
+.stg-content.is-exiting { opacity: 0; transform: translateY(14px); }
+```
+
+### SVG filter (inline, just before script tags in index.html)
+```html
+<filter id="stg-model-outline" x="-8%" y="-8%" width="116%" height="116%">
+  <feMorphology in="SourceAlpha" operator="dilate" radius="0.5" result="dilated"/>
+  <feFlood flood-color="#000" flood-opacity="0.18" result="outline-color"/>
+  <feComposite in="outline-color" in2="dilated" operator="in" result="outline"/>
+  <feComposite in="SourceGraphic" in2="outline" operator="over"/>
+</filter>
+```
+
+### Camera
+- Orbit: `-45deg 54.74deg 88%` — isometric (Blender upper-left gizmo corner = arccos(1/√3) elevation)
+- FOV: `10deg` — very narrow for near-orthographic (parallel projection feel)
+- `shadow-intensity="0"` — no floor plane; transparent background via `background-color: transparent`
+
+### Stage models
+| Tab | Model | Label |
+|-----|-------|-------|
+| 01 | `models/newmodels/rojas.glb` | The Adapter / Deployment Mechanism |
+| 02 | `models/agfigs/fig1.glb` | Introduction / Speculum Positioned |
+| 03 | `models/agfigs/fig2.glb` | Deployment / Radial Expansion |
+| 04 | `models/agfigs/fig5a5b.glb` | Full Expansion / Maximum Field of View |
+| 05 | `models/newmodels/nd_13.glb` | In Situ / Anatomical Context |
+
+`models/agfigs/` subfolder contains the patent figure GLBs.
+
+### JS stage switcher (inline script in index.html)
+Double-buffer crossfade: `front` (visible) / `back` (hidden). On tab click:
+1. Tabs update active class
+2. Text: `.is-exiting` → 300ms → swap content → remove `.is-exiting`
+3. Set `back` model src + camera → on `load` event: swap vis/hid classes → swap front/back pointers → `busy = false` after 650ms
+
+## Color scheme system
+- **Both pages** have an early inline script in `<head>` that reads `localStorage('ag-scheme')` and applies it before first paint (no FOUC)
+- **`L_SCHEMES` on index.html** includes all 6 schemes: blueprint, teal, ember, plum, forest, gold (+ aurora handled separately)
+- **`SCHEMES` in script.js** (patent.html) has same 6 schemes
+- Both pages save/read `localStorage` key `'ag-scheme'` — aurora is never saved (always falls back to last non-aurora)
+
+## Video controls (index.html showcase sections)
+- Each `.showcase-video` has `.vid-controls` below the video
+- Play button: parallelogram SVG (same viewBox as `.l-swatch` / `.vc-btn`) with accent glass fill
+- Scrub bar: `.vid-scrub` styled to match `.rot-slider` (accent thumb, transparent track)
+- JS: inline at bottom of index.html, scoped per `.showcase-video`
+
 ## Known limitations / pending work
 - **REBUILD v1 default camera:** still using placeholder `45deg 54.74deg 120%`
 - **Fig angles:** FIG 1, 2, 4A, 5A, 5B, 6A, 6B still use percentage orbit values, not metre-based exact angles
 - **progress.html:** Built — scroll-animated skeleton SVG + vertical timeline (5 phases, anime.js, expandable blocks)
 - **Primary CTA button:** Fixed — now links to `progress.html`
 - **Hotspot positions:** May need fine-tuning (current Y-up coordinates are estimated)
-- **newmodels/ folder:** Contains staged next model versions (nd_13.glb, rojas.glb, rebuild.glb) — not yet wired into the site
+- **newmodels/ folder:** Contains staged next model versions (nd_13.glb, rojas.glb, rebuild.glb) — wired into stg-section
 - **Patent figures:** images/figs/ has all 16 drawing sheets as PNGs — not yet embedded in patent.html
+- **Stg-section model overflow:** The visual overflow relies on `overflow: visible` propagating through flex hierarchy — verify cross-browser
 
 ## Deploy
 ```bash

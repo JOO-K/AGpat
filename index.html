@@ -6,9 +6,15 @@
   <title>RL3T â€” Adaptive and Radially Expanding Speculum</title>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+  /* Apply stored color scheme before first paint — prevents FOUC */
+  (function(){var s=localStorage.getItem('ag-scheme');if(!s||s==='aurora')return;var m={blueprint:{a:'#1d4ed8',m:'#3b82f6',b:'#eff6ff',r:29,g:78,nb:216},teal:{a:'#0d9488',m:'#2dd4bf',b:'#f0fdfa',r:13,g:148,nb:136},ember:{a:'#c2410c',m:'#f97316',b:'#fff7ed',r:194,g:65,nb:12},plum:{a:'#7c3aed',m:'#a78bfa',b:'#f5f3ff',r:124,g:58,nb:237},forest:{a:'#16a34a',m:'#4ade80',b:'#f0fdf4',r:22,g:163,nb:74},gold:{a:'#d97706',m:'#fcd34d',b:'#fffbeb',r:217,g:119,nb:6}};var c=m[s];if(!c)return;var r=document.documentElement.style;r.setProperty('--accent',c.a);r.setProperty('--acc-mid',c.m);r.setProperty('--acc-bg',c.b);r.setProperty('--accent-r',c.r);r.setProperty('--accent-g',c.g);r.setProperty('--accent-b',c.nb);})();
+  </script>
+  <script type="importmap">{"imports":{"animejs":"https://cdn.jsdelivr.net/npm/animejs@4/+esm"}}</script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body class="landing-body">
+<div class="hero-wrap" id="heroWrap">
 <!-- Hero background: pelvis + lower spine SVG -->
 <div class="landing-bg" id="landingBg">
   <svg class="landing-bg-svg" viewBox="228 1165 670 605" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -50,20 +56,19 @@
     <path d="M637 1656.32C631.333 1650.66 618.3 1640.22 607.5 1645.82M635 1641.82C629.333 1639.32 615.1 1635.52 601.5 1640.32"/>
   </svg>
 </div>
-
+      
 <main class="landing">
 
   <header class="landing-header">
     <a href="index.html" class="landing-logo landing-logo-link"><img src="images/LOGO RL3T.png" class="nav-logo-img" alt="RL3T"></a>
     <div class="landing-header-right">
-      <span class="landing-tagline">RL3T LLC &nbsp;Â·&nbsp; Durham, NC</span>
       <div class="landing-scheme-row">
-        <button class="l-swatch" data-scheme="blueprint" style="background:#1d4ed8" title="Blueprint"></button>
-        <button class="l-swatch active" data-scheme="teal"      style="background:#0d9488" title="Teal"></button>
-        <button class="l-swatch" data-scheme="ember"     style="background:#c2410c" title="Ember"></button>
-        <button class="l-swatch" data-scheme="plum"      style="background:#7c3aed" title="Plum"></button>
+        <button class="l-swatch" data-scheme="blueprint" title="Blueprint"><svg class="l-swatch-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z" fill="#1d4ed8"/></svg></button>
+        <button class="l-swatch active" data-scheme="teal" title="Teal"><svg class="l-swatch-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z" fill="#0d9488"/></svg></button>
+        <button class="l-swatch" data-scheme="ember" title="Ember"><svg class="l-swatch-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z" fill="#c2410c"/></svg></button>
+        <button class="l-swatch" data-scheme="plum" title="Plum"><svg class="l-swatch-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z" fill="#7c3aed"/></svg></button>
         <span class="l-scheme-div"></span>
-        <button class="l-swatch swatch-aurora" data-scheme="aurora" title="Aurora"></button>
+        <button class="l-swatch l-swatch-aurora" data-scheme="aurora" title="Aurora"><svg class="l-swatch-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="l-aurora-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1d4ed8"/><stop offset="33%" stop-color="#0d9488"/><stop offset="66%" stop-color="#c2410c"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><path d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z" fill="url(#l-aurora-grad)"/></svg></button>
       </div>
     </div>
   </header>
@@ -76,7 +81,8 @@
     </div>
     <p class="landing-logo-est">Est. 2024</p>
     <p class="landing-logo-geo">PERU &nbsp;Â·&nbsp; USA</p>
-  </div>
+  <p class="landing-logo-desc">Company funded with the goal of advancing women&#39;s healthcare technologies, focusing the comfort and experience of the patient.</p>
+</div>
 
   <section class="landing-hero">
     <div class="landing-ctas">
@@ -88,8 +94,8 @@
             <path class="cta-hitarea" d="M273.5 0.5H7.5C3.63401 0.5 0.5 3.63401 0.5 7.5C0.5 11.366 3.634 14.5 7.5 14.5H261.5C275.307 14.5 286.5 25.6929 286.5 39.5V321.5C286.5 335.307 297.693 346.5 311.5 346.5H509.5C523.307 346.5 534.5 335.307 534.5 321.5V291.25V261C534.5 247.193 523.307 236 509.5 236H323.5C309.693 236 298.5 224.807 298.5 211V25.5C298.5 11.6929 287.307 0.5 273.5 0.5Z" fill="transparent" stroke="none"/>
           </svg>
           <div class="cta-text">
-            <span class="cta-label">Patent &amp; 3D Model</span>
-            <span class="cta-desc">Full specification with interactive viewer</span>
+            <span class="cta-label">Patent Backed Technology</span>
+            <span class="cta-desc">US 12,507,882 B2<br>Issue date: December 30, 2025</span>
           </div>
         </a>
         <a href="progress.html" class="cta-btn cta-secondary">
@@ -100,8 +106,8 @@
             <path class="cta-hitarea" d="M279.5 15H7.75C3.74594 15 0.5 11.7541 0.5 7.75C0.5 3.74594 3.74594 0.5 7.75 0.5H508.5C522.307 0.5 533.5 11.6929 533.5 25.5V212C533.5 225.807 522.307 237 508.5 237H329.5C315.693 237 304.5 225.807 304.5 212V40C304.5 26.1929 293.307 15 279.5 15Z" fill="transparent" stroke="none"/>
           </svg>
           <div class="cta-text">
-            <span class="cta-label">Development Updates</span>
-            <span class="cta-desc">Progress history &amp; commercialization roadmap</span>
+            <span class="cta-label">Design and Development Roadmap</span>
+            <span class="cta-desc">Engineering milestones toward clinical deployment</span>
           </div>
         </a>
       </div>
@@ -114,136 +120,142 @@
   </div>
 
   <footer class="landing-footer">
-    <span>Inventor: Arlette Geller &nbsp;Â·&nbsp; Assignee: RL3T LLC</span>
-    <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank">View on USPTO â†—</a>
+    <span class="footer-quote">Patient centered technology &mdash; Used by women first, made for women second.</span>
+    <span class="footer-center">RL3T LLC &nbsp;&middot;&nbsp; Wilmington, Delaware &nbsp;&middot;&nbsp; 2023</span>
+    <a href="https://ppubs.uspto.gov/external/print/pdfRedirectDownload/12507882?requestToken=eyJzdWIiOiJlMzQ0YTk3MS0zNmVkLTQzNTMtOGE5MC1iZGM5ODQ4ZjJhNmMiLCJ2ZXIiOiI2MGZjOTQ1YS0zZTQ1LTRlODktODE1My1mNzhhMDZmNTAxY2YiLCJleHAiOjB9" target="_blank">View on USPTO &nearr;</a>
   </footer>
 
 </main>
+</div><!-- /hero-wrap -->
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     BELOW-FOLD: anatomical context + patent info
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<section class="below-fold">
-  <div class="bf-models-row-full">
+<!-- ── SHOWCASE SECTIONS ──────────────────────────────────── -->
+<div class="showcase-stack">
 
-    <div class="bf-model-card">
-      <model-viewer src="models/newmodels/rojas.glb"
-        camera-orbit="40.4deg 71.9deg 150%" field-of-view="22deg"
-        interaction-prompt="none" disable-zoom disable-pan
-        shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-        class="bf-thumb-viewer">
-      </model-viewer>
-      <span class="bf-thumb-name">ROJAS v22</span>
-      <span class="bf-thumb-tag">Primary</span>
-    </div>
-
-    <div class="bf-model-card">
-      <model-viewer src="models/alt.glb"
-        camera-orbit="30.5deg 66.5deg 150%" field-of-view="20deg"
-        interaction-prompt="none" disable-zoom disable-pan
-        shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-        class="bf-thumb-viewer">
-      </model-viewer>
-      <span class="bf-thumb-name">ALT v47</span>
-      <span class="bf-thumb-tag">Alternative</span>
-    </div>
-
-    <div class="bf-model-card">
-      <model-viewer src="models/newmodels/rebuild.glb"
-        camera-orbit="45deg 54.74deg 150%" field-of-view="22deg"
-        interaction-prompt="none" disable-zoom disable-pan
-        shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-        class="bf-thumb-viewer">
-      </model-viewer>
-      <span class="bf-thumb-name">REBUILD v1</span>
-      <span class="bf-thumb-tag">Revised</span>
-    </div>
-
-  </div>
-
-  <a href="patent.html" class="bf-models-cta bf-cta-centered">View all in 3D &nbsp;→</a>
-
-  <!-- View cutout cards -->
-  <svg width="0" height="0" style="position:absolute;overflow:hidden">
-    <defs>
-      <clipPath id="para-bb" clipPathUnits="objectBoundingBox">
-        <path d="M0.18347 0.09586L0.02293 0.60776C-0.02599 0.76377 0.01782 0.99405 0.09643 0.99405H0.73913C0.76775 0.99405 0.79481 0.96095 0.81262 0.90414L0.97321 0.39224C1.02206 0.23622 0.97824 0.00595 0.89963 0.00595H0.25695C0.22836 0.00595 0.20130 0.03905 0.18347 0.09586Z"/>
-      </clipPath>
-    </defs>
-  </svg>
-  <div class="bf-cards">
-
-    <div class="bf-card">
-      <div class="bf-card-frame">
-        <model-viewer src="models/newmodels/nd_13.glb"
-          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
-          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
-          interaction-prompt="none" disable-zoom disable-pan
-          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-          class="bf-card-mv">
-        </model-viewer>
-        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-        </svg>
+  <!-- Section 1 -->
+  <section class="showcase-section">
+    <div class="showcase-video">
+      <video muted playsinline>
+        <source src="assets-review/videos/Expansor Anim v5.mp4" type="video/mp4">
+      </video>
+      <div class="vid-controls">
+        <button class="vid-play-btn" aria-label="Play">
+          <svg class="vid-play-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path class="vid-play-shape" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+          </svg>
+          <span class="vid-play-icon">&#9654;</span>
+        </button>
+        <input class="vid-scrub" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+        <span class="vid-time">0:00</span>
       </div>
-      <p class="bf-card-label">ADAPTIVE</p>
+      <p class="showcase-video-caption">Fig. 1 — Adapter insertion sequence, pre-deployment configuration</p>
     </div>
-
-    <div class="bf-card">
-      <div class="bf-card-frame">
-        <model-viewer src="models/newmodels/rojas.glb"
-          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
-          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+    <div class="showcase-text">
+      <p class="stg-kicker">The Adapter</p>
+      <h2 class="showcase-headline">Deployment<br>Mechanism</h2>
+      <p class="stg-body">The proprietary adapter — compact and enclosed, engineered for smooth insertion before speculum deployment begins.</p>
+    </div>
+    <div class="showcase-model">
+      <div class="showcase-mv-wrap">
+        <model-viewer
+          src="models/newmodels/rojas.glb"
+          camera-orbit="-45deg 54.74deg 88%" field-of-view="10deg"
           interaction-prompt="none" disable-zoom disable-pan
-          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-          class="bf-card-mv">
+          shadow-intensity="0" exposure="1.1" environment-image="neutral"
+          class="showcase-mv">
         </model-viewer>
-        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-        </svg>
       </div>
-      <p class="bf-card-label">PATENTED</p>
     </div>
+  </section>
 
-    <div class="bf-card">
-      <div class="bf-card-frame">
-        <model-viewer src="models/alt.glb"
-          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
-          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+  <!-- Section 2 — swap video + model to suit -->
+  <section class="showcase-section">
+    <div class="showcase-video">
+      <video muted playsinline>
+        <source src="assets-review/videos/Expansor Anim v5.mp4" type="video/mp4">
+      </video>
+      <div class="vid-controls">
+        <button class="vid-play-btn" aria-label="Play">
+          <svg class="vid-play-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path class="vid-play-shape" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+          </svg>
+          <span class="vid-play-icon">&#9654;</span>
+        </button>
+        <input class="vid-scrub" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+        <span class="vid-time">0:00</span>
+      </div>
+      <p class="showcase-video-caption">Fig. 2 — Expansor spring mechanism, radial expansion cycle</p>
+    </div>
+    <div class="showcase-text">
+      <p class="stg-kicker">Radial Expansion</p>
+      <h2 class="showcase-headline">Spring<br>Technology</h2>
+      <p class="stg-body">The expansor transitions from compressed to equilibrium state, exerting a gentle outward force against the orifice wall.</p>
+    </div>
+    <div class="showcase-model">
+      <div class="showcase-mv-wrap">
+        <model-viewer
+          src="models/alt.glb"
+          camera-orbit="-45deg 54.74deg 88%" field-of-view="10deg"
           interaction-prompt="none" disable-zoom disable-pan
-          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-          class="bf-card-mv">
+          shadow-intensity="0" exposure="1.1" environment-image="neutral"
+          class="showcase-mv">
         </model-viewer>
-        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-        </svg>
       </div>
-      <p class="bf-card-label">MEDICAL</p>
     </div>
+  </section>
 
-    <div class="bf-card">
-      <div class="bf-card-frame">
-        <model-viewer src="models/newmodels/rebuild.glb"
-          camera-orbit="30deg 75deg 135%" field-of-view="24deg"
-          auto-rotate rotation-per-second="20deg" auto-rotate-delay="0"
+  <!-- Section 3 — swap video + model to suit -->
+  <section class="showcase-section">
+    <div class="showcase-video">
+      <video muted playsinline>
+        <source src="assets-review/videos/Expansor Anim v5.mp4" type="video/mp4">
+      </video>
+      <div class="vid-controls">
+        <button class="vid-play-btn" aria-label="Play">
+          <svg class="vid-play-svg" viewBox="0 0 213 84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path class="vid-play-shape" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
+          </svg>
+          <span class="vid-play-icon">&#9654;</span>
+        </button>
+        <input class="vid-scrub" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+        <span class="vid-time">0:00</span>
+      </div>
+      <p class="showcase-video-caption">Fig. 3 — Single-drawstring retrieval, cross-section reduction</p>
+    </div>
+    <div class="showcase-text">
+      <p class="stg-kicker">Retrieval</p>
+      <h2 class="showcase-headline">Simple<br>Removal</h2>
+      <p class="stg-body">A single drawstring reduces the cross-section of the expansor, allowing gentle and comfortable removal.</p>
+    </div>
+    <div class="showcase-model">
+      <div class="showcase-mv-wrap">
+        <model-viewer
+          src="models/rebuild.glb"
+          camera-orbit="-45deg 54.74deg 88%" field-of-view="10deg"
           interaction-prompt="none" disable-zoom disable-pan
-          shadow-intensity="1.2" exposure="1.15" environment-image="neutral"
-          class="bf-card-mv">
+          shadow-intensity="0" exposure="1.1" environment-image="neutral"
+          class="showcase-mv">
         </model-viewer>
-        <svg class="bf-card-border" viewBox="0 0 213 84" xmlns="http://www.w3.org/2000/svg">
-          <path class="bf-card-path" d="M39.077 8.05215L4.88427 51.0522C-5.53628 64.1568 3.79564 83.5 20.5384 83.5H157.434C163.53 83.5 169.293 80.7195 173.088 75.9478L207.28 32.9478C217.701 19.8432 208.369 0.5 191.626 0.5H54.7311C48.6348 0.5 42.8714 3.28052 39.077 8.05215Z"/>
-        </svg>
       </div>
-      <p class="bf-card-label">RL3T</p>
     </div>
+  </section>
 
-  </div>
-</section>
+</div>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="stg-model-outline" color-interpolation-filters="sRGB" x="-8%" y="-8%" width="116%" height="116%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="0.5" result="dilated"/>
+      <feFlood flood-color="#000" flood-opacity="0.18" result="outline-color"/>
+      <feComposite in="outline-color" in2="dilated" operator="in" result="outline"/>
+      <feComposite in="SourceGraphic" in2="outline" operator="over"/>
+    </filter>
+  </defs>
+</svg>
 
 <script src="https://cdn.jsdelivr.net/npm/d3-delaunay@6"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="sketch.js"></script>
+
 <script>
   /* â”€â”€ Landing color schemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   const L_SCHEMES = {
@@ -251,6 +263,8 @@
     teal:      { accent:'#0d9488', mid:'#2dd4bf', bg:'#f0fdfa', ar:13,  ag:148, ab:136, model:[0.30,0.82,0.74] },
     ember:     { accent:'#c2410c', mid:'#f97316', bg:'#fff7ed', ar:194, ag:65,  ab:12,  model:[0.88,0.50,0.28] },
     plum:      { accent:'#7c3aed', mid:'#a78bfa', bg:'#f5f3ff', ar:124, ag:58,  ab:237, model:[0.70,0.50,0.94] },
+    forest:    { accent:'#16a34a', mid:'#4ade80', bg:'#f0fdf4', ar:22,  ag:163, ab:74,  model:[0.25,0.85,0.45] },
+    gold:      { accent:'#d97706', mid:'#fcd34d', bg:'#fffbeb', ar:217, ag:119, ab:6,   model:[0.90,0.60,0.15] },
   };
   let currentScheme = localStorage.getItem('ag-scheme') || 'teal';
   const lv = document.getElementById('landingViewer');
@@ -403,7 +417,8 @@
         var r   = o.radius.toFixed(3);
         var fov = lv.getFieldOfView ? lv.getFieldOfView().toFixed(1) : 'â€”';
         landingCamText.textContent =
-          'orbit  ' + td + 'deg ' + pd + 'deg ' + r + 'm\n' +
+          'orbit  ' + td + 'deg ' + pd + 'deg ' + r + 'm
+' +
           'fov    ' + fov + 'deg';
       } catch(_) {}
     }
@@ -437,64 +452,125 @@
     document.querySelectorAll('.bf-thumb-viewer').forEach(initObjRot);
   })();
 
-  /* SVG pelvis/spine draw animation with leading dot */
-  (function () {
-    var bgSvg = document.querySelector('.landing-bg-svg');
-    if (!bgSvg || typeof anime === 'undefined') return;
-    var paths = Array.from(bgSvg.querySelectorAll('path'));
+  /* SVG spine animation moved to module script below */
 
-    /* dot layer — own SVG so opacity:0.18 on bgSvg doesn't dim the dots */
-    var dotSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    dotSvg.setAttribute('viewBox', bgSvg.getAttribute('viewBox'));
-    dotSvg.setAttribute('class', 'landing-dot-svg');
-    dotSvg.setAttribute('aria-hidden', 'true');
-    bgSvg.parentNode.insertBefore(dotSvg, bgSvg.nextSibling);
 
-    var dots = paths.map(function () {
-      var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      c.setAttribute('r', '1.5');
-      c.setAttribute('fill', 'var(--accent)');
-      c.setAttribute('opacity', '0');
-      dotSvg.appendChild(c);
-      return c;
-    });
+</script>
 
-    paths.forEach(function (p) {
-      try {
-        var len = p.getTotalLength();
-        if (len > 0) { p.style.strokeDasharray = len; p.style.strokeDashoffset = len; }
-      } catch (_) {}
-      p.style.opacity = '1';
-    });
+<script type="module">
+import { animate, svg } from 'animejs';
 
-    anime({
-      targets: paths,
-      strokeDashoffset: [anime.setDashoffset, 0],
-      easing: 'easeInOutSine',
-      duration: 2000,
-      delay: anime.stagger(30),
+const DRAW = 2800;  // ms to draw each stroke
+const HOLD = 5000;  // ms to hold fully visible
+const FADE = 1200;  // ms to fade out opacity
+const DEAD = 600;   // ms invisible pause before next cycle
+
+const bgSvg = document.querySelector('.landing-bg-svg');
+if (bgSvg) {
+  const paths = Array.from(bgSvg.querySelectorAll('path'));
+
+  const dotLayer = document.createElement('div');
+  dotLayer.className = 'landing-dot-layer';
+  dotLayer.setAttribute('aria-hidden', 'true');
+  bgSvg.parentNode.appendChild(dotLayer);
+
+  paths.forEach((path, i) => {
+    const delay = i * 45;
+
+    /* stroke draw: in → hold → remains drawn during fade */
+    const [drawable] = svg.createDrawable(path);
+    animate(drawable, {
+      draw: [
+        { to: '0 0', duration: 0 },
+        { to: '0 1', duration: DRAW },
+        { to: '0 1', duration: HOLD + FADE },
+        { to: '0 0', duration: 0 },
+        { to: '0 0', duration: DEAD },
+      ],
+      ease: 'inOutSine',
+      delay,
       loop: true,
-      direction: 'alternate',
-      endDelay: 1400,
-      update: function () {
-        paths.forEach(function (p, i) {
-          var total  = parseFloat(p.style.strokeDasharray)  || 0;
-          var offset = parseFloat(p.style.strokeDashoffset);
-          if (isNaN(offset)) offset = total;
-          var drawn  = Math.max(0, total - offset);
-          var fade   = Math.min(drawn / (total * 0.08), 1) *
-                       Math.min((total - drawn) / (total * 0.08), 1);
-          if (fade < 0.01) { dots[i].setAttribute('opacity', '0'); return; }
-          try {
-            var pt = p.getPointAtLength(Math.min(drawn, total));
-            dots[i].setAttribute('cx', pt.x);
-            dots[i].setAttribute('cy', pt.y);
-            dots[i].setAttribute('opacity', (0.55 * fade).toFixed(3));
-          } catch (_) { dots[i].setAttribute('opacity', '0'); }
-        });
-      },
     });
-  })();
+
+    /* path opacity: visible through draw+hold, then fades out, holds invisible */
+    animate(path, {
+      opacity: [
+        { to: 1, duration: 0 },
+        { to: 1, duration: DRAW + HOLD },
+        { to: 0, duration: FADE },
+        { to: 0, duration: DEAD },
+      ],
+      ease: 'linear',
+      delay,
+      loop: true,
+    });
+
+    /* dot: travels during DRAW then parks at path end for the rest of the cycle */
+    const dot = document.createElement('div');
+    dot.className = 'spine-dot';
+    dotLayer.appendChild(dot);
+
+    animate(dot, {
+      ...svg.createMotionPath(path),
+      ease: 'inOutSine',
+      duration: DRAW,
+      endDelay: HOLD + FADE + DEAD,
+      delay,
+      loop: true,
+    });
+
+    /* dot opacity: quick fade in at start, holds, fades out with stroke */
+    animate(dot, {
+      opacity: [
+        { to: 0,   duration: 0 },
+        { to: 0.6, duration: 180 },
+        { to: 0.6, duration: DRAW + HOLD - 180 },
+        { to: 0,   duration: FADE },
+        { to: 0,   duration: DEAD },
+      ],
+      ease: 'linear',
+      delay,
+      loop: true,
+    });
+  });
+}
+</script>
+
+<script>
+(function() {
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  }
+  document.querySelectorAll('.showcase-video').forEach(function(wrap) {
+    const video  = wrap.querySelector('video');
+    const btn    = wrap.querySelector('.vid-play-btn');
+    const scrub  = wrap.querySelector('.vid-scrub');
+    const timer  = wrap.querySelector('.vid-time');
+    let seeking  = false;
+
+    btn.addEventListener('click', function() {
+      video.paused ? video.play() : video.pause();
+    });
+    video.addEventListener('play',  function() { btn.innerHTML = '&#10074;&#10074;'; });
+    video.addEventListener('pause', function() { btn.innerHTML = '&#9654;'; });
+    video.addEventListener('ended', function() { btn.innerHTML = '&#9654;'; scrub.value = 0; });
+
+    video.addEventListener('timeupdate', function() {
+      if (!seeking) scrub.value = (video.currentTime / video.duration * 100) || 0;
+      timer.textContent = fmt(video.currentTime);
+    });
+
+    scrub.addEventListener('mousedown', function() { seeking = true; });
+    scrub.addEventListener('touchstart', function() { seeking = true; }, { passive: true });
+    scrub.addEventListener('input', function() {
+      video.currentTime = scrub.value / 100 * video.duration;
+      timer.textContent = fmt(video.currentTime);
+    });
+    scrub.addEventListener('mouseup',   function() { seeking = false; });
+    scrub.addEventListener('touchend',  function() { seeking = false; });
+  });
+})();
 </script>
 </body>
 </html>

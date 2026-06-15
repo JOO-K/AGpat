@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>US 12,507,882 B2 — Adaptive and Radially Expanding Speculum</title>
+  <script>
+  /* Apply stored color scheme before first paint — prevents FOUC */
+  (function(){var s=localStorage.getItem('ag-scheme');if(!s||s==='aurora')return;var m={blueprint:{a:'#1d4ed8',m:'#3b82f6',b:'#eff6ff',r:29,g:78,nb:216},teal:{a:'#0d9488',m:'#2dd4bf',b:'#f0fdfa',r:13,g:148,nb:136},ember:{a:'#c2410c',m:'#f97316',b:'#fff7ed',r:194,g:65,nb:12},plum:{a:'#7c3aed',m:'#a78bfa',b:'#f5f3ff',r:124,g:58,nb:237},forest:{a:'#16a34a',m:'#4ade80',b:'#f0fdf4',r:22,g:163,nb:74},gold:{a:'#d97706',m:'#fcd34d',b:'#fffbeb',r:217,g:119,nb:6}};var c=m[s];if(!c)return;var r=document.documentElement.style;r.setProperty('--accent',c.a);r.setProperty('--acc-mid',c.m);r.setProperty('--acc-bg',c.b);r.setProperty('--accent-r',c.r);r.setProperty('--accent-g',c.g);r.setProperty('--accent-b',c.nb);})();
+  </script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -50,18 +54,17 @@
         </div>
       </div>
 
-      <!-- Title -->
-      <div class="pi-title-block">
-        <span class="pi-code pi-fcode">(54)</span>
-        <div class="pi-title-text">Adaptive and Radially Expanding Speculum</div>
-      </div>
-
       <!-- Two-column metadata -->
       <div class="pi-meta-grid">
 
         <!-- LEFT: bibliographic fields -->
         <div class="pi-meta-col">
           <table class="pi-fields">
+            <tr>
+              <td class="pi-code">(54)</td>
+              <td colspan="2" class="pi-title-field">Adaptive and Radially Expanding Speculum</td>
+            </tr>
+            <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(71)</td>
               <td class="pi-field-label">Applicant:</td>
@@ -133,20 +136,29 @@
             <tr class="spacer"><td colspan="3"></td></tr>
             <tr>
               <td class="pi-code">(58)</td>
-              <td class="pi-field-label">Field of Classification Search</td>
-              <td>CPC:&ensp;<span class="pi-mono">A61B 1/303; A61B 1/32; A61B 2017/0225; A61B 17/12145; A61B 17/12172; A61F 2002/825</span><br>See application file for complete search history.</td>
+              <td colspan="2" class="pi-field-label">Field of Classification Search</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="2" class="pi-cpc-text">CPC:&ensp;<span class="pi-mono">A61B 1/303; A61B 1/32; A61B 2017/0225; A61B 17/12145; A61B 17/12172; A61F 2002/825</span><br>See application file for complete search history.</td>
             </tr>
           </table>
-        </div><!-- /.pi-meta-col left -->
 
-        <!-- RIGHT: references cited -->
-        <div class="pi-meta-col">
-          <div class="pi-section-head">(56)&ensp;References Cited</div>
-
+          <div class="pi-ref-heading">
+            <span class="pi-code">(56)</span>
+            <span class="pi-ref-heading-text">References Cited</span>
+          </div>
           <div class="pi-ref-cat">U.S. Patent Documents</div>
           <table class="pi-refs">
             <tr><td>5,342,385</td><td>A</td><td>&nbsp;8/1994</td><td>Norelli et al.</td></tr>
             <tr><td>6,302,861</td><td>B2</td><td>10/2001</td><td>Tweddell, III et al.</td></tr>
+          </table>
+        </div><!-- /.pi-meta-col left -->
+
+        <!-- RIGHT: references cited (continued) -->
+        <div class="pi-meta-col">
+          <div class="pi-ref-cat">U.S. Patent Documents</div>
+          <table class="pi-refs">
             <tr><td>6,902,530</td><td>B1</td><td>&nbsp;6/2005</td><td>Pianka</td></tr>
             <tr><td>7,549,982</td><td>B2</td><td>&nbsp;6/2009</td><td>Carlin</td></tr>
             <tr><td>7,744,556</td><td>B2</td><td>&nbsp;6/2010</td><td>Heuer et al.</td></tr>
@@ -169,19 +181,19 @@
             <p>Primary Examiner — Julianna N Harvey</p>
             <p>Attorney, Agent, or Firm — Husch Blackwell LLP</p>
           </div>
+
+          <!-- Abstract moved into right column -->
+          <div class="pi-abstract">
+            <div class="pi-abstract-label">(57)&ensp;Abstract</div>
+            <p>An adaptive and radially expanding speculum is provided. The speculum includes an expansor that is configured for being inserted into an orifice, exerting an outward force against an orifice wall, and retaining the orifice in an expanded state until it is removed. The expansor can take the form of a radial compression spring, and may be adapted for transitioning between at least a compressed state, a partially expanded (or partially compressed) state, and an equilibrium state. The expansor may include generally longitudinally extending members located between proximal transition portions and distal transition portions. The proximal and distal transition portions may include spring characteristics that cause the expansor to exert force on the orifice when it is inserted therein. The speculum may further comprise a drawstring which, when pulled, reduces a cross section of at least a portion of the expansor such that it may be removed from the orifice.</p>
+            <div class="pi-claims-row">
+              <span>11 Claims, 16 Drawing Sheets</span>
+              <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank">View full patent ↗</a>
+            </div>
+          </div>
         </div><!-- /.pi-meta-col right -->
 
       </div><!-- /.pi-meta-grid -->
-
-      <!-- Abstract -->
-      <div class="pi-abstract">
-        <div class="pi-abstract-label">(57)&ensp;Abstract</div>
-        <p>An adaptive and radially expanding speculum is provided. The speculum includes an expansor that is configured for being inserted into an orifice, exerting an outward force against an orifice wall, and retaining the orifice in an expanded state until it is removed. The expansor can take the form of a radial compression spring, and may be adapted for transitioning between at least a compressed state, a partially expanded (or partially compressed) state, and an equilibrium state. The expansor may include generally longitudinally extending members located between proximal transition portions and distal transition portions. The proximal and distal transition portions may include spring characteristics that cause the expansor to exert force on the orifice when it is inserted therein. The speculum may further comprise a drawstring which, when pulled, reduces a cross section of at least a portion of the expansor such that it may be removed from the orifice.</p>
-        <div class="pi-claims-row">
-          <span>11 Claims, 16 Drawing Sheets</span>
-          <a href="https://ppubs.uspto.gov/api/patents/html/12507882?source=USPAT&requestToken=eyJzdWIiOiI5M2E4OWJjNi1iNDkwLTQxYjAtOGJkYS0wYTllODlhYTczY2EiLCJ2ZXIiOiI5OTQ5MTdhMC0yODVmLTQwYmUtYThkMi0yZmZmNzE3MDYyMjAiLCJleHAiOjB9" target="_blank">View full patent ↗</a>
-        </div>
-      </div>
 
     </div><!-- /.patent-intro -->
 
@@ -517,5 +529,699 @@
 
 <button class="back-to-text-btn" id="backToText">↑ Back to text</button>
 <script src="script.js"></script>
+
+<!-- ══════════════════════════════════════════════════════
+     PATENT TEXT EDITOR — WYSIWYG style + text editor
+     Activated via ✏ EDIT button in nav.
+     Changes stay local; use Copy/Download to send edits back.
+══════════════════════════════════════════════════════ -->
+<style>
+/* ── Edit toggle button — left side, below nav, never overlaps swatches ── */
+#editToggleBtn {
+  position: fixed;
+  top: 48px;
+  left: 12px;
+  z-index: 9999;
+  background: rgba(30,30,40,0.82);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 5px;
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  padding: 5px 12px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#editToggleBtn:hover { background: rgba(50,50,70,0.92); color: #fff; }
+#editToggleBtn.ep-on {
+  background: rgba(30,60,100,0.88);
+  border-color: rgba(99,179,237,0.55);
+  color: #7ec8f0;
+}
+
+/* ── Editor panel ── */
+#editPanel {
+  position: fixed;
+  top: 80px;
+  left: 12px;
+  width: 228px;
+  background: rgba(12,12,18,0.93);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.11);
+  border-radius: 10px;
+  color: #dde;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  z-index: 9998;
+  display: none;
+  user-select: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+#editPanel.ep-visible { display: block; }
+
+/* drag handle */
+#epDragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px 10px 0 0;
+  cursor: grab;
+  background: rgba(255,255,255,0.04);
+}
+#epDragHandle:active { cursor: grabbing; }
+#epDragHandle .ep-drag-title {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+}
+#epDragHandle .ep-drag-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0.3;
+}
+#epDragHandle .ep-drag-dots span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.ep-sec {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.ep-sec:last-child { border-bottom: none; }
+
+.ep-lbl {
+  color: rgba(255,255,255,0.38);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ep-tag {
+  color: #7ec8f0;
+  background: rgba(99,179,237,0.12);
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 9px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Mode row */
+.ep-modes { display: flex; gap: 5px; }
+.ep-mode {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 5px;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  padding: 6px 2px;
+  text-align: center;
+  transition: background 0.12s;
+}
+.ep-mode.ep-active-mode {
+  background: rgba(99,179,237,0.22);
+  border-color: rgba(99,179,237,0.45);
+  color: #7ec8f0;
+}
+
+/* Property rows */
+.ep-prop {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.ep-prop-lbl {
+  width: 74px;
+  color: rgba(255,255,255,0.55);
+  font-size: 9.5px;
+  flex-shrink: 0;
+}
+.ep-num {
+  width: 42px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 4px;
+  color: #dde;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  padding: 2px 4px;
+  text-align: right;
+  -moz-appearance: textfield;
+}
+.ep-num::-webkit-inner-spin-button,
+.ep-num::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ep-num:focus { outline: none; border-color: rgba(99,179,237,0.5); }
+
+.ep-adj {
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 4px;
+  color: #bbc;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  padding: 1px 6px;
+  transition: background 0.1s;
+}
+.ep-adj:hover { background: rgba(255,255,255,0.18); color: #fff; }
+
+/* Format buttons row */
+.ep-fmt { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+.ep-fmt-btn {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  color: #bbc;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 3px 8px;
+  transition: background 0.1s;
+}
+.ep-fmt-btn:hover { background: rgba(255,255,255,0.17); color: #fff; }
+.ep-fmt-btn.ep-fmt-on { background: rgba(99,179,237,0.25); border-color: rgba(99,179,237,0.45); color: #7ec8f0; }
+
+/* Save buttons */
+.ep-save-btn {
+  display: block;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 7px 8px;
+  text-align: center;
+  transition: background 0.12s;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+.ep-save-primary {
+  background: rgba(72,187,120,0.18);
+  border: 1px solid rgba(72,187,120,0.4);
+  color: #68d391;
+}
+.ep-save-primary:hover { background: rgba(72,187,120,0.30); }
+.ep-save-secondary {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.13);
+  color: rgba(255,255,255,0.55);
+}
+.ep-save-secondary:hover { background: rgba(255,255,255,0.12); }
+.ep-save-status {
+  font-size: 9px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  margin-top: 4px;
+  min-height: 13px;
+}
+
+/* Controls locked when nothing selected */
+#epControls.ep-no-sel .ep-adj,
+#epControls.ep-no-sel .ep-num,
+#epControls.ep-no-sel .ep-fmt-btn { opacity: 0.3; pointer-events: none; }
+#epControls.ep-no-sel .ep-lbl { color: rgba(255,255,255,0.28); }
+
+/* Hint text */
+.ep-hint {
+  color: rgba(255,255,255,0.3);
+  font-size: 8.5px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+/* Hover / selected highlights on patent body elements */
+.ed-hover  { outline: 2px dashed rgba(99,179,237,0.45) !important; outline-offset: 1px; }
+.ed-sel    { outline: 2px solid rgba(99,179,237,0.85) !important;  outline-offset: 1px; }
+
+/* Text-edit mode */
+.ed-text-mode { cursor: text; }
+.ed-text-mode:focus { outline: none; }
+
+/* Dim style controls when in text mode — no opacity, which triggers compositing bugs */
+#epControls.ep-inactive {
+  pointer-events: none;
+  color: rgba(255,255,255,0.25);
+}
+#epControls.ep-inactive .ep-prop-lbl,
+#epControls.ep-inactive .ep-num,
+#epControls.ep-inactive .ep-adj,
+#epControls.ep-inactive .ep-fmt-btn,
+#epControls.ep-inactive .ep-lbl { color: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.06); }
+</style>
+
+<!-- Standalone edit toggle — outside nav to avoid flex/z-index conflicts -->
+<button id="editToggleBtn" title="Toggle text formatting editor">✏ EDIT</button>
+
+<!-- Editor panel DOM -->
+<div id="editPanel">
+
+  <!-- Drag handle -->
+  <div id="epDragHandle">
+    <span class="ep-drag-title">Text Editor</span>
+    <span class="ep-drag-dots"><span></span><span></span><span></span></span>
+  </div>
+
+  <!-- Mode selector -->
+  <div class="ep-sec">
+    <div class="ep-lbl">Edit Mode</div>
+    <div class="ep-modes">
+      <button class="ep-mode ep-active-mode" id="epStyleMode">STYLE</button>
+      <button class="ep-mode" id="epTextMode">TEXT</button>
+    </div>
+    <div class="ep-hint" id="epModeHint">Click any element to select it, then adjust below.</div>
+  </div>
+
+  <!-- Style controls -->
+  <div class="ep-sec ep-no-sel" id="epControls">
+    <div class="ep-lbl" id="epSelLabel">← click text to select</div>
+
+    <div class="ep-prop">
+      <span class="ep-prop-lbl">font-size</span>
+      <button class="ep-adj" data-prop="fontSize" data-delta="-1">−</button>
+      <input  class="ep-num" id="epFontSize" type="number" min="4" max="120" step="0.5">
+      <button class="ep-adj" data-prop="fontSize" data-delta="1">+</button>
+      <span style="font-size:9px;color:rgba(255,255,255,0.3)">px</span>
+    </div>
+
+    <div class="ep-prop">
+      <span class="ep-prop-lbl">line-height</span>
+      <button class="ep-adj" data-prop="lineHeight" data-delta="-1">−</button>
+      <input  class="ep-num" id="epLineHeight" type="number" min="1" max="100" step="0.5">
+      <button class="ep-adj" data-prop="lineHeight" data-delta="1">+</button>
+      <span style="font-size:9px;color:rgba(255,255,255,0.3)">px</span>
+    </div>
+
+    <div class="ep-prop">
+      <span class="ep-prop-lbl">indent (pl)</span>
+      <button class="ep-adj" data-prop="paddingLeft" data-delta="-4">−</button>
+      <input  class="ep-num" id="epIndent" type="number" min="0" max="300" step="4">
+      <button class="ep-adj" data-prop="paddingLeft" data-delta="4">+</button>
+      <span style="font-size:9px;color:rgba(255,255,255,0.3)">px</span>
+    </div>
+
+    <div class="ep-prop">
+      <span class="ep-prop-lbl">text-indent</span>
+      <button class="ep-adj" data-prop="textIndent" data-delta="-4">−</button>
+      <input  class="ep-num" id="epTextIndent" type="number" min="-100" max="200" step="4">
+      <button class="ep-adj" data-prop="textIndent" data-delta="4">+</button>
+      <span style="font-size:9px;color:rgba(255,255,255,0.3)">px</span>
+    </div>
+
+    <div class="ep-prop">
+      <span class="ep-prop-lbl">margin-top</span>
+      <button class="ep-adj" data-prop="marginTop" data-delta="-2">−</button>
+      <input  class="ep-num" id="epMarginTop" type="number" min="-60" max="200" step="2">
+      <button class="ep-adj" data-prop="marginTop" data-delta="2">+</button>
+      <span style="font-size:9px;color:rgba(255,255,255,0.3)">px</span>
+    </div>
+
+    <div class="ep-prop">
+      <span class="ep-prop-lbl">margin-bot</span>
+      <button class="ep-adj" data-prop="marginBottom" data-delta="-2">−</button>
+      <input  class="ep-num" id="epMarginBot" type="number" min="-60" max="200" step="2">
+      <button class="ep-adj" data-prop="marginBottom" data-delta="2">+</button>
+      <span style="font-size:9px;color:rgba(255,255,255,0.3)">px</span>
+    </div>
+
+    <div class="ep-fmt">
+      <button class="ep-fmt-btn" id="epBold"   style="font-weight:bold">B</button>
+      <button class="ep-fmt-btn" id="epItalic" style="font-style:italic">I</button>
+      <button class="ep-fmt-btn" id="epCaps"   style="font-size:9px;letter-spacing:0.05em">ALL CAPS</button>
+      <button class="ep-fmt-btn" id="epColorBlack"  title="Black text"       style="color:#fff;background:#111;border-color:#333">A</button>
+      <button class="ep-fmt-btn" id="epColorGray"   title="Gray text"        style="color:#888;background:rgba(255,255,255,0.06)">A</button>
+      <button class="ep-fmt-btn" id="epHighlight"   title="Yellow highlight" style="background:#ffe066;color:#111;border-color:#e6c800">▌</button>
+      <button class="ep-fmt-btn" id="epAlignL" title="Align left">⬅</button>
+      <button class="ep-fmt-btn" id="epAlignC" title="Center">≡</button>
+      <button class="ep-fmt-btn" id="epAlignR" title="Align right">➡</button>
+      <button class="ep-fmt-btn" id="epClearSel" title="Remove all inline styles from selected element" style="font-size:9px;letter-spacing:0.04em">CLR</button>
+    </div>
+  </div>
+
+  <!-- Save -->
+  <div class="ep-sec">
+    <button class="ep-save-btn ep-save-primary"    id="epSaveFile">💾 Save to patent.html</button>
+    <button class="ep-save-btn ep-save-secondary"  id="epClearAll">🗑 Clear all edits</button>
+    <div class="ep-save-status" id="epStatus">auto-saves to browser on each change</div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const toggleBtn  = document.getElementById('editToggleBtn');
+  const panel      = document.getElementById('editPanel');
+  const dragHandle = document.getElementById('epDragHandle');
+  const patBody    = document.querySelector('.patent-body');
+
+  // ── Drag to move panel ──
+  let dragging = false, dragOffX = 0, dragOffY = 0;
+  dragHandle.addEventListener('mousedown', e => {
+    dragging = true;
+    const r = panel.getBoundingClientRect();
+    dragOffX = e.clientX - r.left;
+    dragOffY = e.clientY - r.top;
+    panel.style.transition = 'none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    let nx = e.clientX - dragOffX;
+    let ny = e.clientY - dragOffY;
+    // keep panel within viewport
+    nx = Math.max(0, Math.min(nx, window.innerWidth  - panel.offsetWidth));
+    ny = Math.max(0, Math.min(ny, window.innerHeight - panel.offsetHeight));
+    panel.style.left = nx + 'px';
+    panel.style.top  = ny + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+
+  // ── state ──
+  let editOn   = false;
+  let textMode = false;
+  let sel      = null; // currently selected element
+  let hov      = null; // currently hovered element
+
+  // ── prop → {inputEl, unit} ──
+  const PROPS = {
+    fontSize:     { el: document.getElementById('epFontSize'),   unit: 'px' },
+    lineHeight:   { el: document.getElementById('epLineHeight'), unit: 'px' },
+    paddingLeft:  { el: document.getElementById('epIndent'),     unit: 'px' },
+    textIndent:   { el: document.getElementById('epTextIndent'), unit: 'px' },
+    marginTop:    { el: document.getElementById('epMarginTop'),  unit: 'px' },
+    marginBottom: { el: document.getElementById('epMarginBot'),  unit: 'px' },
+  };
+
+  // ── Toggle edit mode ──
+  toggleBtn.addEventListener('click', () => {
+    editOn = !editOn;
+    toggleBtn.textContent = editOn ? '✏ EDITING' : '✏ EDIT';
+    toggleBtn.classList.toggle('ep-on', editOn);
+    panel.classList.toggle('ep-visible', editOn);
+    if (editOn) {
+      patBody.style.pointerEvents = 'auto';
+    } else {
+      patBody.style.pointerEvents = '';
+      exitTextMode();
+      deselect();
+    }
+  });
+
+  // ── Mode buttons ──
+  document.getElementById('epStyleMode').addEventListener('click', () => switchMode(false));
+  document.getElementById('epTextMode').addEventListener('click',  () => switchMode(true));
+
+  function switchMode(toText) {
+    textMode = toText;
+    document.getElementById('epStyleMode').classList.toggle('ep-active-mode', !toText);
+    document.getElementById('epTextMode').classList.toggle('ep-active-mode',  toText);
+    document.getElementById('epModeHint').textContent = toText
+      ? 'Edit text directly. Use Style mode for spacing/size.'
+      : 'Click any element to select it, then adjust below.';
+    document.getElementById('epControls').classList.toggle('ep-inactive', toText);
+
+    if (toText) {
+      enterTextMode();
+      deselect();
+    } else {
+      exitTextMode();
+    }
+  }
+
+  function enterTextMode() {
+    // Make the whole patent-body contenteditable in one go — avoids the browser
+    // rebalancing CSS columns when individual child elements get contenteditable.
+    patBody.classList.add('ed-text-mode');
+    patBody.contentEditable = 'true';
+  }
+  function exitTextMode() {
+    patBody.classList.remove('ed-text-mode');
+    patBody.removeAttribute('contenteditable');
+  }
+
+  // ── Hover highlight (style mode only) ──
+  patBody.addEventListener('mouseover', e => {
+    if (!editOn || textMode) return;
+    const t = e.target;
+    if (t === patBody) return;
+    if (hov && hov !== sel) hov.classList.remove('ed-hover');
+    if (t !== sel) t.classList.add('ed-hover');
+    hov = t;
+  });
+  patBody.addEventListener('mouseout', e => {
+    if (!editOn || textMode) return;
+    if (hov && hov !== sel) { hov.classList.remove('ed-hover'); hov = null; }
+  });
+
+  const epControls  = document.getElementById('epControls');
+  const epSelLabel  = document.getElementById('epSelLabel');
+
+  function setSelectionUI(el) {
+    if (el) {
+      const tag = el.tagName.toLowerCase();
+      const cls = el.className
+        ? '.' + el.className.split(' ').filter(c => !['ed-sel','ed-hover'].includes(c))[0]
+        : '';
+      epSelLabel.textContent = 'Selected: ' + tag + (cls !== '.' ? cls : '');
+      epControls.classList.remove('ep-no-sel');
+    } else {
+      epSelLabel.textContent = '← click text to select';
+      epControls.classList.add('ep-no-sel');
+    }
+  }
+
+  // ── Click to select (style mode only) ──
+  patBody.addEventListener('click', e => {
+    if (!editOn || textMode) return;
+    e.stopPropagation();
+    const t = e.target;
+    if (t === patBody) { deselect(); return; }
+    if (t === sel)     { deselect(); return; }
+    deselect();
+    sel = t;
+    sel.classList.remove('ed-hover');
+    sel.classList.add('ed-sel');
+    setSelectionUI(sel);
+    readStyles(t);
+  });
+
+  // Deselect when clicking outside patent body
+  document.addEventListener('click', e => {
+    if (editOn && !textMode && !patBody.contains(e.target) && !panel.contains(e.target)) deselect();
+  });
+
+  function deselect() {
+    if (sel) { sel.classList.remove('ed-sel'); sel = null; }
+    setSelectionUI(null);
+    clearInputs();
+  }
+
+  // ── Read computed styles into toolbar ──
+  function readStyles(el) {
+    const cs = window.getComputedStyle(el);
+    PROPS.fontSize.el.value     = parseFloat(cs.fontSize).toFixed(1);
+    const lhPx = cs.lineHeight === 'normal'
+      ? (parseFloat(cs.fontSize) * 1.2).toFixed(1)
+      : parseFloat(cs.lineHeight).toFixed(1);
+    PROPS.lineHeight.el.value   = lhPx;
+    PROPS.paddingLeft.el.value  = parseFloat(cs.paddingLeft).toFixed(0);
+    PROPS.textIndent.el.value   = parseFloat(cs.textIndent).toFixed(0);
+    PROPS.marginTop.el.value    = parseFloat(cs.marginTop).toFixed(0);
+    PROPS.marginBottom.el.value = parseFloat(cs.marginBottom).toFixed(0);
+  }
+  function clearInputs() {
+    Object.values(PROPS).forEach(p => { p.el.value = ''; });
+  }
+
+  // ── localStorage key ──
+  const LS_KEY = 'patent-editor-v1';
+
+  // ── Assign stable data-eid to every editable element ──
+  function assignEids() {
+    let n = 0;
+    patBody.querySelectorAll('*').forEach(el => {
+      if (!el.dataset.eid) el.dataset.eid = 'E' + (++n);
+    });
+  }
+
+  // ── Persist inline style changes to localStorage (style edits only) ──
+  function persist() {
+    const map = {};
+    patBody.querySelectorAll('[data-eid]').forEach(el => {
+      if (el.getAttribute('style')) map[el.dataset.eid] = el.getAttribute('style');
+    });
+    try { localStorage.setItem(LS_KEY, JSON.stringify(map)); } catch(e) {}
+    showStatus('saved ✓', 1400);
+  }
+
+  // ── Restore saved styles from localStorage ──
+  function restore() {
+    let raw;
+    try { raw = localStorage.getItem(LS_KEY); } catch(e) {}
+    if (!raw) return;
+    let map;
+    try { map = JSON.parse(raw); } catch(e) { return; }
+    patBody.querySelectorAll('[data-eid]').forEach(el => {
+      if (map[el.dataset.eid]) el.setAttribute('style', map[el.dataset.eid]);
+    });
+  }
+
+  // ── Status line ──
+  const statusEl = document.getElementById('epStatus');
+  let statusTimer;
+  function showStatus(msg, ms) {
+    statusEl.textContent = msg;
+    clearTimeout(statusTimer);
+    if (ms) statusTimer = setTimeout(() => { statusEl.textContent = 'auto-saves to browser on each change'; }, ms);
+  }
+
+  // ── Apply a CSS property to selected element ──
+  function applyStyle(prop, val) {
+    if (!sel) return;
+    sel.style[prop] = PROPS[prop].unit ? `${val}${PROPS[prop].unit}` : `${val}`;
+    readStyles(sel);
+    persist();
+  }
+
+  // +/- delta buttons
+  document.querySelectorAll('.ep-adj[data-prop]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!sel) return;
+      const prop  = btn.dataset.prop;
+      const delta = parseFloat(btn.dataset.delta);
+      const cur   = parseFloat(PROPS[prop].el.value) || 0;
+      applyStyle(prop, parseFloat((cur + delta).toFixed(3)));
+    });
+  });
+
+  // Direct number input
+  Object.entries(PROPS).forEach(([prop, { el }]) => {
+    el.addEventListener('change', () => {
+      if (sel) applyStyle(prop, parseFloat(el.value));
+    });
+  });
+
+  // Format buttons
+  document.getElementById('epBold').addEventListener('click', () => {
+    if (!sel) return;
+    const w = window.getComputedStyle(sel).fontWeight;
+    sel.style.fontWeight = (w === '700' || w === 'bold') ? 'normal' : 'bold';
+    persist();
+  });
+  document.getElementById('epItalic').addEventListener('click', () => {
+    if (!sel) return;
+    sel.style.fontStyle = window.getComputedStyle(sel).fontStyle === 'italic' ? 'normal' : 'italic';
+    persist();
+  });
+  document.getElementById('epCaps').addEventListener('click', () => {
+    if (!sel) return;
+    sel.style.textTransform = window.getComputedStyle(sel).textTransform === 'uppercase' ? 'none' : 'uppercase';
+    persist();
+  });
+  document.getElementById('epColorBlack').addEventListener('click', () => { if (sel) { sel.style.color = '#111'; persist(); } });
+  document.getElementById('epColorGray').addEventListener('click',  () => { if (sel) { sel.style.color = 'var(--dim)'; persist(); } });
+  document.getElementById('epHighlight').addEventListener('click',  () => {
+    if (!sel) return;
+    sel.style.backgroundColor = window.getComputedStyle(sel).backgroundColor === 'rgb(255, 224, 102)' ? '' : '#ffe066';
+    persist();
+  });
+  document.getElementById('epAlignL').addEventListener('click', () => { if (sel) { sel.style.textAlign = 'left';   persist(); } });
+  document.getElementById('epAlignC').addEventListener('click', () => { if (sel) { sel.style.textAlign = 'center'; persist(); } });
+  document.getElementById('epAlignR').addEventListener('click', () => { if (sel) { sel.style.textAlign = 'right';  persist(); } });
+  document.getElementById('epClearSel').addEventListener('click', () => {
+    if (!sel) return;
+    sel.removeAttribute('style');
+    readStyles(sel);
+    persist();
+  });
+
+  // Text-mode: remind user to save to file (text changes not in localStorage)
+  let textSaveTimer;
+  patBody.addEventListener('input', () => {
+    if (!textMode) return;
+    clearTimeout(textSaveTimer);
+    textSaveTimer = setTimeout(() => showStatus('text changed — use 💾 Save to File', 4000), 600);
+  });
+
+  // ── Build full page HTML for saving (strips editor UI state) ──
+  function buildPageHTML() {
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('.ed-sel, .ed-hover').forEach(el => el.classList.remove('ed-sel','ed-hover'));
+    clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    const pb = clone.querySelector('.patent-body');
+    if (pb) { pb.classList.remove('ed-text-mode'); pb.style.pointerEvents = ''; }
+    return '<!DOCTYPE html>\n' + clone.outerHTML;
+  }
+
+  // ── Save to file (File System Access API) ──
+  document.getElementById('epSaveFile').addEventListener('click', async function () {
+    if (!window.showSaveFilePicker) {
+      // Fallback: download
+      const blob = new Blob([buildPageHTML()], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'patent.html';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      showStatus('downloaded patent.html', 3000);
+      return;
+    }
+    try {
+      showStatus('pick where to save…');
+      const handle = await window.showSaveFilePicker({
+        suggestedName: 'patent.html',
+        types: [{ description: 'HTML file', accept: { 'text/html': ['.html'] } }],
+      });
+      showStatus('writing…');
+      const writable = await handle.createWritable();
+      await writable.write(buildPageHTML());
+      await writable.close();
+      showStatus('✓ saved to ' + handle.name, 4000);
+    } catch (e) {
+      if (e.name !== 'AbortError') showStatus('save failed: ' + e.message, 4000);
+      else showStatus('cancelled', 2000);
+    }
+  });
+
+  // ── Clear all saved edits ──
+  document.getElementById('epClearAll').addEventListener('click', () => {
+    if (!confirm('Remove all saved edits and reload the original styles?')) return;
+    try { localStorage.removeItem(LS_KEY); } catch(e) {}
+    patBody.querySelectorAll('[data-eid]').forEach(el => {
+      el.removeAttribute('style');
+    });
+    showStatus('edits cleared', 2000);
+  });
+
+  // ── Init: assign eids, restore saved edits ──
+  assignEids();
+  restore();
+
+})();
+</script>
 </body>
 </html>

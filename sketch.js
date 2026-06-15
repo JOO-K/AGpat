@@ -7,13 +7,13 @@ new p5(function(p) {
   let idleFrames  = 0;
   let switchTimer = 0;       // frames since last formation switch
   let cutCooldown = 0;       // frames until next cut allowed
-  let cutEffect   = 0;       // 0–1, decays after a cut, expands repulsion radius
+  let cutEffect   = 0;       // 0-1, decays after a cut, expands repulsion radius
   let formIdx     = 0;
   let allFormations = [];
   let formation   = [];
   let accentR = 29, accentG = 78, accentB = 216;
 
-  // Voronoi — 22 slow-drifting agents define the cells
+  // Voronoi -- 22 slow-drifting agents define the cells
   const N_VOR = 22;
   let vorAgents = [];
   let wanderer  = null;
@@ -55,13 +55,11 @@ new p5(function(p) {
       const ft  = p.frameCount;
       ctx.save();
 
-      // ── Cells: state-cycling fill / outline / dashed ──────
       for (let i = 0; i < vorAgents.length; i++) {
         const cell = vor.cellPolygon(i);
         if (!cell || cell.length < 3) continue;
         const a     = vorAgents[i];
         const pulse = 0.5 + 0.5 * Math.sin(ft * 0.007 + a.seed);
-        // Each cell slowly cycles through states on its own rhythm
         const stateF = (Math.sin(ft * 0.0025 + a.seed * 3.7) + 1) / 2;
         const state  = stateF < 0.42 ? 0 : stateF < 0.74 ? 1 : 2;
         const hue    = (a.baseHue + ft * 0.012) % 360;
@@ -72,7 +70,6 @@ new p5(function(p) {
         ctx.closePath();
 
         if (state === 1) {
-          // Filled — soft accent-tinted wash
           ctx.fillStyle = `hsla(${hue},48%,94%,${(0.10 + pulse * 0.16).toFixed(3)})`;
           ctx.fill();
         }
@@ -88,7 +85,6 @@ new p5(function(p) {
         ctx.setLineDash([]);
       }
 
-      // ── Neighbor connections between close agents ─────────
       const MAX_CONN = 130;
       ctx.lineWidth = 0.4;
       for (let i = 0; i < vorAgents.length; i++) {
@@ -108,7 +104,6 @@ new p5(function(p) {
         }
       }
 
-      // ── Dashed circles at each agent ─────────────────────
       for (let i = 0; i < vorAgents.length; i++) {
         const a     = vorAgents[i];
         const hue   = (a.baseHue + ft * 0.012) % 360;
@@ -122,10 +117,8 @@ new p5(function(p) {
         ctx.setLineDash([]);
       }
 
-      // ── Slow wanderer circle ──────────────────────────────
       if (wanderer) { wanderer.update(); wanderer.draw(ctx, ft); }
 
-      // ── Centroid dots — pulsing ───────────────────────────
       for (let i = 0; i < vorAgents.length; i++) {
         const a     = vorAgents[i];
         const pulse = 0.5 + 0.5 * Math.sin(ft * 0.009 + a.seed * 1.8);
@@ -151,8 +144,7 @@ new p5(function(p) {
 
   window.updateSketchAccent = function(r, g, b) { accentR = r; accentG = g; accentB = b; };
 
-  // ── Formation 0 — FIG. 6A side view ──────────────────────
-  // Outer cylinder rails + top dome cap + sinusoidal spring coil + extraction loop
+  // Formation 0 -- FIG. 6A side view
   function buildSideView() {
     const cx = p.width * 0.14, cy = p.height * 0.63;
     const W  = Math.min(p.width, p.height) * 0.085;
@@ -188,8 +180,7 @@ new p5(function(p) {
     return pts;
   }
 
-  // ── Formation 1 — FIG. 4B top view ───────────────────────
-  // Rosette r = R + A·cos(6θ) with inner channel ring
+  // Formation 1 -- FIG. 4B top view
   function buildTopView() {
     const cx = p.width * 0.14, cy = p.height * 0.63;
     const R  = Math.min(p.width, p.height) * 0.16;
@@ -211,14 +202,13 @@ new p5(function(p) {
     return pts;
   }
 
-  // ── Formation 2 — FIG. 4A isometric coil ─────────────────
-  // Six foreshortened ellipses stacked vertically — the 3/4-angle spring view
+  // Formation 2 -- FIG. 4A isometric coil
   function buildIsoCoil() {
     const cx  = p.width * 0.14, cy = p.height * 0.63;
     const W   = Math.min(p.width, p.height) * 0.15;
     const H   = Math.min(p.width, p.height) * 0.33;
     const nT  = 6;
-    const eR  = 0.30; // y-compression (foreshortening)
+    const eR  = 0.30;
     const pts = [];
     const ppt = Math.floor(N / nT);
 
@@ -270,14 +260,13 @@ new p5(function(p) {
     switchTimer = 0;
     if (wasCut) {
       cutEffect   = 1.0;
-      cutCooldown = 90; // ~1.5 s before next cut
+      cutCooldown = 90;
     }
     if (typeof window.onFormationChange === 'function') {
       window.onFormationChange(formIdx);
     }
   }
 
-  // ── Particle ──────────────────────────────────────────────
   class Dot {
     constructor(i) {
       this.x     = p.random(p.width);
@@ -292,7 +281,6 @@ new p5(function(p) {
     }
 
     update(sv, strength, repR) {
-      // Perlin noise — always-on gentle drift keeps particles alive in formation
       const ns = 0.0025, nt = p.frameCount * 0.005;
       this.vx += (p.noise(this.x * ns,      this.y * ns,      nt + this.seed) - 0.5) * 0.10;
       this.vy += (p.noise(this.x * ns + 40, this.y * ns + 40, nt + this.seed) - 0.5) * 0.10;
@@ -302,7 +290,6 @@ new p5(function(p) {
         this.vy += (formation[this.hi].y - this.y) * strength;
       }
 
-      // Mouse repulsion (radius expands on cut for burst effect)
       const dx = this.x - mX, dy = this.y - mY;
       const d2 = dx * dx + dy * dy;
       if (d2 < repR * repR && d2 > 1) {
@@ -322,19 +309,15 @@ new p5(function(p) {
     }
   }
 
-  // ── Setup ─────────────────────────────────────────────────
   p.setup = function() {
     const cnv = p.createCanvas(p.windowWidth, p.windowHeight);
     cnv.id('p5Canvas');
-    cnv.style('position',       'fixed');
+    cnv.parent('heroWrap');
+    cnv.style('position',       'absolute');
     cnv.style('top',            '0');
     cnv.style('left',           '0');
     cnv.style('pointer-events', 'none');
     cnv.style('z-index',        '0');
-
-    // Insert before .landing-bg so model-viewer (later in DOM) paints on top
-    const landingBg = document.querySelector('.landing-bg');
-    if (landingBg) document.body.insertBefore(cnv.elt, landingBg);
 
     readAccent();
     for (let i = 0; i < N; i++) dots.push(new Dot(i));
@@ -350,7 +333,6 @@ new p5(function(p) {
       mX  = e.clientX; mY = e.clientY;
       idleFrames = 0;
 
-      // Cut: fast swipe through the formation zone advances to next figure
       if (pmX > 0 && cutCooldown === 0) {
         const speed  = Math.sqrt((mX - pmX) ** 2 + (mY - pmY) ** 2);
         const cx     = p.width / 2, cy = p.height / 2;
@@ -366,7 +348,6 @@ new p5(function(p) {
     window.addEventListener('touchend', () => { mX = -9999; mY = -9999; }, { passive: true });
   };
 
-  // ── Draw ──────────────────────────────────────────────────
   p.draw = function() {
     p.clear();
     drawVoronoi();
@@ -376,14 +357,12 @@ new p5(function(p) {
     if (cutCooldown > 0) cutCooldown--;
     cutEffect = Math.max(0, cutEffect - 0.028);
 
-    // Auto-advance every ~11 s
     if (switchTimer >= SWITCH_INTERVAL) advanceFormation(false);
 
     const formT    = Math.max(0, Math.min(1, (idleFrames - 120) / 200));
     const strength = formT * 0.011;
-    const repR     = 140 + cutEffect * 180; // up to 320 during a cut burst
+    const repR     = 140 + cutEffect * 180;
 
-    // Blend line/dot color from cool grey toward accent as shape forms
     const t  = formT * 0.38;
     const lr = Math.round(148 + (accentR - 148) * t);
     const lg = Math.round(162 + (accentG - 162) * t);
@@ -419,7 +398,6 @@ new p5(function(p) {
         p.circle(d.x, d.y, d.r * 2);
       }
     }
-
   };
 
   p.windowResized = function() {
