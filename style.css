@@ -2214,6 +2214,19 @@ section.in-view > h2 { color: var(--ink); }
   align-items: center;
   animation: l-fade-in 0.6s 0.42s ease both;
 }
+
+/* Scheme picker lifted out of hero-wrap to avoid stacking-context click issues */
+.landing-scheme-fixed {
+  position: fixed;
+  top: 2.2rem;
+  right: 4rem;
+  z-index: 9999;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  animation: l-fade-in 0.6s 0.42s ease both;
+  pointer-events: auto;
+}
 .l-swatch {
   width: 52px;
   height: 20px;
