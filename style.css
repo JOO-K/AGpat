@@ -2029,7 +2029,7 @@ section.in-view > h2 { color: var(--ink); }
 
 /* â”€â”€ Primary (Development Updates): dark glass â”€â”€ */
 .cta-primary {
-  top: 77px;
+  top: 67px;
   z-index: 4;
   animation: l-fade-in 0.8s 0.72s ease both;
 }
