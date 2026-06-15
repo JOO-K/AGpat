@@ -7,8 +7,54 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
-  /* Set data-scheme before first paint so CSS attribute rules apply immediately */
-  (function(){var s=localStorage.getItem('ag-scheme');if(s&&s!=='aurora')document.documentElement.dataset.scheme=s;})();
+  /* Color switcher — defined here so onclick attrs work no matter what else fails */
+  var _AG = {
+    blueprint: ['#1d4ed8','#3b82f6','#eff6ff',29,78,216],
+    teal:      ['#0d9488','#2dd4bf','#f0fdfa',13,148,136],
+    ember:     ['#c2410c','#f97316','#fff7ed',194,65,12],
+    plum:      ['#7c3aed','#a78bfa','#f5f3ff',124,58,237]
+  };
+  var _agRaf = null;
+  function applyLandingScheme(name) {
+    if (_agRaf) { cancelAnimationFrame(_agRaf); _agRaf = null; }
+    if (name === 'aurora') {
+      var t0 = performance.now();
+      (function tick(now) {
+        var h = ((now - t0) / 18000 * 360) % 360;
+        var lum = 44, s2 = 78;
+        s2 /= 100; lum /= 100;
+        var a = s2 * Math.min(lum, 1 - lum);
+        function f(n) { var k = (n + h/30) % 12; return Math.round((lum - a*Math.max(-1, Math.min(k-3, Math.min(9-k,1))))*255); }
+        var r = f(0), g = f(8), b = f(4);
+        _agInject('rgb('+r+','+g+','+b+')','rgb('+r+','+g+','+b+')','hsl('+Math.round(h)+',90%,97%)',r,g,b);
+        _agRaf = requestAnimationFrame(tick);
+      })(t0);
+      _agSetActive('aurora');
+      localStorage.setItem('ag-scheme','aurora');
+      return;
+    }
+    var s = _AG[name];
+    if (!s) return;
+    _agInject(s[0],s[1],s[2],s[3],s[4],s[5]);
+    document.documentElement.setAttribute('data-scheme', name);
+    _agSetActive(name);
+    localStorage.setItem('ag-scheme', name);
+    if (typeof window.updateSketchAccent === 'function') window.updateSketchAccent(s[3],s[4],s[5]);
+  }
+  function _agInject(accent, mid, bg, r, g, b) {
+    var el = document.getElementById('ag-vars');
+    if (!el) { el = document.createElement('style'); el.id = 'ag-vars'; document.head.appendChild(el); }
+    el.textContent = ':root{--accent:'+accent+';--acc-mid:'+mid+';--acc-bg:'+bg+';--accent-r:'+r+';--accent-g:'+g+';--accent-b:'+b+'}';
+  }
+  function _agSetActive(name) {
+    var btns = document.querySelectorAll('.l-swatch');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('active', btns[i].getAttribute('data-scheme') === name);
+    }
+  }
+  /* Set data-scheme before first paint, then apply full scheme once DOM ready */
+  (function(){ var s = localStorage.getItem('ag-scheme'); if (s && s !== 'aurora') document.documentElement.setAttribute('data-scheme', s); })();
+  document.addEventListener('DOMContentLoaded', function() { applyLandingScheme(localStorage.getItem('ag-scheme') || 'teal'); });
   </script>
   <script type="importmap">{"imports":{"animejs":"https://cdn.jsdelivr.net/npm/animejs@4/+esm"}}</script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
@@ -301,55 +347,7 @@
     } catch(_) {}
   }
 
-  var _CSS_VARS = ['--accent','--acc-mid','--acc-bg','--accent-r','--accent-g','--accent-b'];
-
-  function _injectVars(accent, mid, bg, r, g, b) {
-    var el = document.getElementById('ag-scheme-vars');
-    if (!el) { el = document.createElement('style'); el.id = 'ag-scheme-vars'; document.head.appendChild(el); }
-    el.textContent = ':root{--accent:' + accent + ';--acc-mid:' + mid + ';--acc-bg:' + bg + ';--accent-r:' + r + ';--accent-g:' + g + ';--accent-b:' + b + '}';
-  }
-
-  function applyLandingScheme(name) {
-    _stopAurora();
-    if (name === 'aurora') {
-      currentScheme = 'aurora';
-      document.documentElement.removeAttribute('data-scheme');
-      var t0 = performance.now();
-      (function tick(now) {
-        var h = ((now - t0) / 18000 * 360) % 360;
-        var lum = 44 + Math.sin((now - t0) / 2400) * 3;
-        var rgb = hslToRgb(h, 78, lum);
-        _injectVars(
-          'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')',
-          'rgb(' + hslToRgb((h+28)%360, 68, lum+16).join(',') + ')',
-          'hsl(' + h.toFixed(0) + ',90%,97%)',
-          rgb[0], rgb[1], rgb[2]
-        );
-        if (typeof window.updateSketchAccent === 'function') window.updateSketchAccent(rgb[0], rgb[1], rgb[2]);
-        _auroraRaf = requestAnimationFrame(tick);
-      })(t0);
-      document.querySelectorAll('.l-swatch').forEach(function(sw) { sw.classList.toggle('active', sw.dataset.scheme === 'aurora'); });
-      return;
-    }
-    var s = L_SCHEMES[name];
-    if (!s) return;
-    currentScheme = name;
-    localStorage.setItem('ag-scheme', name);
-    _injectVars(s.accent, s.mid, s.bg, s.ar, s.ag, s.ab);
-    document.documentElement.dataset.scheme = name;
-    document.querySelectorAll('.l-swatch').forEach(function(sw) {
-      sw.classList.toggle('active', sw.dataset.scheme === name);
-    });
-    applyModelColor(s.model);
-    if (typeof window.updateSketchAccent === 'function')
-      window.updateSketchAccent(s.ar, s.ag, s.ab);
-    if (lv) lv.style.filter =
-      'drop-shadow(0 20px 60px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.20)) ' +
-      'drop-shadow(0 4px 18px rgba(' + s.ar + ',' + s.ag + ',' + s.ab + ',0.10))';
-  }
-
-  applyLandingScheme(currentScheme);
-  if (lv) lv.addEventListener('load', function() { applyLandingScheme(currentScheme); });
+  if (lv) lv.addEventListener('load', function() { applyLandingScheme(localStorage.getItem('ag-scheme') || 'teal'); });
 
   /* â”€â”€ SVG hover + draw animation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   document.addEventListener('DOMContentLoaded', function () {
