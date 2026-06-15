@@ -361,18 +361,18 @@
     });
 
     var drawPath     = document.querySelector('.cta-path-draw');
-    var secondaryBtn = document.querySelector('.cta-btn.cta-secondary');
-    if (!drawPath || !secondaryBtn) return;
+    var secondaryHit = document.querySelector('.cta-secondary .cta-hitarea');
+    if (!drawPath || !secondaryHit) return;
 
     var len = drawPath.getTotalLength();
     drawPath.style.strokeDasharray  = len;
     drawPath.style.strokeDashoffset = len;
 
-    secondaryBtn.addEventListener('mouseenter', function () {
+    secondaryHit.addEventListener('mouseover', function () {
       drawPath.style.transition = 'stroke-dashoffset 1.9s cubic-bezier(0.76, 0, 0.24, 1)';
       drawPath.style.strokeDashoffset = 0;
     });
-    secondaryBtn.addEventListener('mouseleave', function () {
+    secondaryHit.addEventListener('mouseout', function () {
       drawPath.style.transition = 'stroke-dashoffset 1.1s ease-in';
       drawPath.style.strokeDashoffset = len;
     });

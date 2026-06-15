@@ -1766,7 +1766,8 @@ section.in-view > h2 { color: var(--ink); }
   pointer-events: auto;
 }
 
-/* CTA hitbox: only the L-shaped SVG path, not the full bounding box */
+/* CTA: btn handles hover; hitarea keeps precise click shape */
+.cta-btn     { pointer-events: auto; }
 .cta-hitarea { pointer-events: all; }
 .cta-text    { pointer-events: none; }
 
