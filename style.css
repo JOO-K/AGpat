@@ -2224,7 +2224,6 @@ section.in-view > h2 { color: var(--ink); }
   display: flex;
   gap: 5px;
   align-items: center;
-  animation: l-fade-in 0.6s 0.42s ease both;
   pointer-events: auto;
 }
 .l-swatch {
