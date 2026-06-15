@@ -1857,6 +1857,7 @@ section.in-view > h2 { color: var(--ink); }
 .landing-logo-caduceus {
   font-size: 1.2rem;
   opacity: 0.8;
+  font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols', sans-serif;
 }
 
 .landing-logo-est {
