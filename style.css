@@ -23,6 +23,14 @@
   --pt-lh:   1.205;
 }
 
+/* ── Color scheme overrides via data-scheme attribute ─── */
+html[data-scheme="blueprint"] { --accent: #1d4ed8; --acc-mid: #3b82f6; --acc-bg: #eff6ff; --accent-r: 29;  --accent-g: 78;  --accent-b: 216; }
+html[data-scheme="teal"]      { --accent: #0d9488; --acc-mid: #2dd4bf; --acc-bg: #f0fdfa; --accent-r: 13;  --accent-g: 148; --accent-b: 136; }
+html[data-scheme="ember"]     { --accent: #c2410c; --acc-mid: #f97316; --acc-bg: #fff7ed; --accent-r: 194; --accent-g: 65;  --accent-b: 12;  }
+html[data-scheme="plum"]      { --accent: #7c3aed; --acc-mid: #a78bfa; --acc-bg: #f5f3ff; --accent-r: 124; --accent-g: 58;  --accent-b: 237; }
+html[data-scheme="forest"]    { --accent: #16a34a; --acc-mid: #4ade80; --acc-bg: #f0fdf4; --accent-r: 22;  --accent-g: 163; --accent-b: 74;  }
+html[data-scheme="gold"]      { --accent: #d97706; --acc-mid: #fcd34d; --acc-bg: #fffbeb; --accent-r: 217; --accent-g: 119; --accent-b: 6;   }
+
 html { scroll-behavior: smooth; }
 
 body {

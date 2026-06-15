@@ -25,15 +25,17 @@ function _stopAurora() {
   if (_auroraRaf) { cancelAnimationFrame(_auroraRaf); _auroraRaf = null; }
 }
 
+const _CSS_VARS = ['--accent','--acc-mid','--acc-bg','--accent-r','--accent-g','--accent-b'];
+
 function applyScheme(name) {
   _stopAurora();
-  if (name !== 'aurora') localStorage.setItem('ag-scheme', name);
 
   if (name === 'aurora') {
+    document.documentElement.removeAttribute('data-scheme');
     const t0 = performance.now();
     (function tick(now) {
-      const h   = ((now - t0) / 18000 * 360) % 360;           // full cycle ~18 s
-      const lum = 44 + Math.sin((now - t0) / 2400) * 3;       // subtle ±3% brightness pulse
+      const h   = ((now - t0) / 18000 * 360) % 360;
+      const lum = 44 + Math.sin((now - t0) / 2400) * 3;
       const [ar, ag, ab] = hslToRgb(h, 78, lum);
       const [mr, mg, mb] = hslToRgb((h + 28) % 360, 68, lum + 16);
       const css = document.documentElement.style;
@@ -51,15 +53,12 @@ function applyScheme(name) {
     return;
   }
 
+  if (name !== 'aurora') localStorage.setItem('ag-scheme', name);
   const s = SCHEMES[name];
   if (!s) return;
-  const r = document.documentElement.style;
-  r.setProperty('--accent',   s.accent);
-  r.setProperty('--acc-mid',  s.mid);
-  r.setProperty('--acc-bg',   s.bg);
-  r.setProperty('--accent-r', s.ar);
-  r.setProperty('--accent-g', s.ag);
-  r.setProperty('--accent-b', s.ab);
+  /* Clear any inline vars left from aurora, then let CSS attribute rule apply */
+  _CSS_VARS.forEach(v => document.documentElement.style.removeProperty(v));
+  document.documentElement.dataset.scheme = name;
   document.querySelectorAll('.swatch').forEach(sw => {
     sw.classList.toggle('active', sw.dataset.scheme === name);
   });

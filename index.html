@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
-  /* Apply stored color scheme before first paint — prevents FOUC */
-  (function(){var s=localStorage.getItem('ag-scheme');if(!s||s==='aurora')return;var m={blueprint:{a:'#1d4ed8',m:'#3b82f6',b:'#eff6ff',r:29,g:78,nb:216},teal:{a:'#0d9488',m:'#2dd4bf',b:'#f0fdfa',r:13,g:148,nb:136},ember:{a:'#c2410c',m:'#f97316',b:'#fff7ed',r:194,g:65,nb:12},plum:{a:'#7c3aed',m:'#a78bfa',b:'#f5f3ff',r:124,g:58,nb:237},forest:{a:'#16a34a',m:'#4ade80',b:'#f0fdf4',r:22,g:163,nb:74},gold:{a:'#d97706',m:'#fcd34d',b:'#fffbeb',r:217,g:119,nb:6}};var c=m[s];if(!c)return;var r=document.documentElement.style;r.setProperty('--accent',c.a);r.setProperty('--acc-mid',c.m);r.setProperty('--acc-bg',c.b);r.setProperty('--accent-r',c.r);r.setProperty('--accent-g',c.g);r.setProperty('--accent-b',c.nb);})();
+  /* Set data-scheme before first paint so CSS attribute rules apply immediately */
+  (function(){var s=localStorage.getItem('ag-scheme');if(s&&s!=='aurora')document.documentElement.dataset.scheme=s;})();
   </script>
   <script type="importmap">{"imports":{"animejs":"https://cdn.jsdelivr.net/npm/animejs@4/+esm"}}</script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
@@ -302,10 +302,13 @@
     } catch(_) {}
   }
 
+  var _CSS_VARS = ['--accent','--acc-mid','--acc-bg','--accent-r','--accent-g','--accent-b'];
+
   function applyLandingScheme(name) {
     _stopAurora();
     if (name === 'aurora') {
       currentScheme = 'aurora';
+      document.documentElement.removeAttribute('data-scheme');
       var t0 = performance.now();
       (function tick(now) {
         var h = ((now - t0) / 18000 * 360) % 360;
@@ -328,13 +331,9 @@
     if (!s) return;
     currentScheme = name;
     localStorage.setItem('ag-scheme', name);
-    var r = document.documentElement.style;
-    r.setProperty('--accent',   s.accent);
-    r.setProperty('--acc-mid',  s.mid);
-    r.setProperty('--acc-bg',   s.bg);
-    r.setProperty('--accent-r', s.ar);
-    r.setProperty('--accent-g', s.ag);
-    r.setProperty('--accent-b', s.ab);
+    /* Clear any inline vars left from aurora, then let CSS attribute rule apply */
+    _CSS_VARS.forEach(function(v) { document.documentElement.style.removeProperty(v); });
+    document.documentElement.dataset.scheme = name;
     document.querySelectorAll('.l-swatch').forEach(function(sw) {
       sw.classList.toggle('active', sw.dataset.scheme === name);
     });
