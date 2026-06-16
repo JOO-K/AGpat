@@ -1766,8 +1766,8 @@ section.in-view > h2 { color: var(--ink); }
   pointer-events: auto;
 }
 
-/* CTA: btn handles hover; hitarea keeps precise click shape */
-.cta-btn     { pointer-events: auto; }
+/* CTA: hitarea SVG path is the precise click+hover shape; btn passes bubbled events through */
+.cta-btn     { pointer-events: none; }
 .cta-hitarea { pointer-events: all; }
 .cta-text    { pointer-events: none; }
 
@@ -2030,7 +2030,7 @@ section.in-view > h2 { color: var(--ink); }
 
 /* â”€â”€ Primary (Development Updates): dark glass â”€â”€ */
 .cta-primary {
-  top: 67px;
+  top: 70px;
   z-index: 4;
   animation: l-fade-in 0.8s 0.72s ease both;
 }
