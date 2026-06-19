@@ -353,6 +353,7 @@ function setPartVisibility(matIdx, visible) {
 const PART_ORBIT_MAP = {
   'Expansor': '30deg 65deg 90%', 'Body': '30deg 65deg 90%',
   'Speculum': '30deg 65deg 90%',
+  'Expanded Speculum': '30deg 65deg 90%',
   'Unexpanded Speculum': '-20deg 60deg 130%',
   'Drawstring': '85deg 88deg 52%', 'Drawstring & Knot': '85deg 88deg 52%', 'Knot': '85deg 88deg 52%',
   'Ring': '85deg 88deg 52%', 'Loop': '85deg 88deg 52%',
@@ -360,23 +361,32 @@ const PART_ORBIT_MAP = {
 };
 const PART_RN_MAP = {
   'Expansor': '16', 'Body': '16',
-  'Speculum': '16',
-  'Unexpanded Speculum': '28',
+  'Speculum': '12',
+  'Expanded Speculum': '16',
+  'Unexpanded Speculum': '12',
   'Drawstring': '20', 'Drawstring & Knot': '20', 'Knot': '20',
   'Ring': '22', 'Loop': '22',
   'Plunger': '26', 'Outer Tube': '28',
 };
 
-/* Display name override for the part tree header */
+/* Display name for the part tree header (overrides tab data-name lookup) */
 const MODEL_DISPLAY_NAME = {
-  'models/agfigs/fig1.glb': 'Speculum',
+  'models/agfigs/fig1.glb': 'Speculum and Expansor',
   'models/agfigs/fig2.glb': 'Expansor',
+  'models/agfigs/fig5a5b.glb': 'Unexpanded Speculum',
+  'models/rojas.glb': 'Speculum v1',
+  'models/alt.glb': 'Speculum Relative to Hand',
+  'models/rebuild.glb': 'Expanded and Unexpanded Speculum',
 };
 
 /* Per-model part name overrides by material index */
 const MODEL_PART_NAMES = {
-  'models/agfigs/fig1.glb': ['Unexpanded Speculum', 'Speculum', 'Expansor'],
-  'models/agfigs/fig2.glb': ['Outer Tube', 'Expansor'],
+  'models/agfigs/fig1.glb':    ['Unexpanded Speculum', 'Speculum', 'Expansor'],
+  'models/agfigs/fig2.glb':    ['Outer Tube', 'Expansor'],
+  'models/agfigs/fig5a5b.glb': ['Unexpanded Speculum'],
+  'models/rojas.glb':          ['Expansor', 'Drawstring', 'Ring'],
+  'models/alt.glb':            ['Expansor'],
+  'models/rebuild.glb':        ['Expanded Speculum', 'Unexpanded Speculum'],
 };
 
 function buildPartTree(mv, activeSrc) {
