@@ -355,6 +355,7 @@ const PART_ORBIT_MAP = {
   'Speculum': '30deg 65deg 90%',
   'Expanded Speculum': '30deg 65deg 90%',
   'Unexpanded Speculum': '-20deg 60deg 130%',
+  'String': '85deg 88deg 52%',
   'Drawstring': '85deg 88deg 52%', 'Drawstring & Knot': '85deg 88deg 52%', 'Knot': '85deg 88deg 52%',
   'Ring': '85deg 88deg 52%', 'Loop': '85deg 88deg 52%',
   'Plunger': '-20deg 60deg 130%', 'Outer Tube': '-20deg 60deg 130%',
@@ -364,7 +365,7 @@ const PART_RN_MAP = {
   'Speculum': '12',
   'Expanded Speculum': '16',
   'Unexpanded Speculum': '12',
-  'Drawstring': '20', 'Drawstring & Knot': '20', 'Knot': '20',
+  'String': '20', 'Drawstring': '20', 'Drawstring & Knot': '20', 'Knot': '20',
   'Ring': '22', 'Loop': '22',
   'Plunger': '26', 'Outer Tube': '28',
 };
@@ -384,7 +385,7 @@ const MODEL_PART_NAMES = {
   'models/agfigs/fig1.glb':    ['Unexpanded Speculum', 'Speculum', 'Expansor'],
   'models/agfigs/fig2.glb':    ['Outer Tube', 'Expansor'],
   'models/agfigs/fig5a5b.glb': ['Unexpanded Speculum'],
-  'models/rojas.glb':          ['Expansor', 'Drawstring', 'Ring'],
+  'models/rojas.glb':          ['Expansor', 'String', 'Ring'],
   'models/alt.glb':            ['Expansor'],
   'models/rebuild.glb':        ['Expanded Speculum', 'Unexpanded Speculum'],
 };
