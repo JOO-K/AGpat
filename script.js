@@ -163,7 +163,7 @@ function snapTo(orbit, label, src, target, fov, resetTurntable = false) {
     applyCamera();
   }
 
-  if (figDisp) figDisp.textContent = label || '';
+  if (figDisp) figDisp.textContent = (src && MODEL_DISPLAY_NAME[src]) || label || '';
   vBtns.forEach(b => b.classList.toggle('active', b.dataset.orbit === orbit));
 }
 
@@ -352,15 +352,31 @@ function setPartVisibility(matIdx, visible) {
 /* ── Dynamic part tree ─────────────────────────────────── */
 const PART_ORBIT_MAP = {
   'Expansor': '30deg 65deg 90%', 'Body': '30deg 65deg 90%',
+  'Speculum': '30deg 65deg 90%',
+  'Unexpanded Speculum': '-20deg 60deg 130%',
   'Drawstring': '85deg 88deg 52%', 'Drawstring & Knot': '85deg 88deg 52%', 'Knot': '85deg 88deg 52%',
   'Ring': '85deg 88deg 52%', 'Loop': '85deg 88deg 52%',
   'Plunger': '-20deg 60deg 130%', 'Outer Tube': '-20deg 60deg 130%',
 };
 const PART_RN_MAP = {
   'Expansor': '16', 'Body': '16',
+  'Speculum': '16',
+  'Unexpanded Speculum': '28',
   'Drawstring': '20', 'Drawstring & Knot': '20', 'Knot': '20',
   'Ring': '22', 'Loop': '22',
   'Plunger': '26', 'Outer Tube': '28',
+};
+
+/* Display name override for the part tree header */
+const MODEL_DISPLAY_NAME = {
+  'models/agfigs/fig1.glb': 'Speculum',
+  'models/agfigs/fig2.glb': 'Expansor',
+};
+
+/* Per-model part name overrides by material index */
+const MODEL_PART_NAMES = {
+  'models/agfigs/fig1.glb': ['Unexpanded Speculum', 'Speculum', 'Expansor'],
+  'models/agfigs/fig2.glb': ['Outer Tube', 'Expansor'],
 };
 
 function buildPartTree(mv, activeSrc) {
@@ -368,7 +384,8 @@ function buildPartTree(mv, activeSrc) {
   const treeHeader = document.querySelector('.tree-header');
   if (!treeList) return;
   const src       = activeSrc || document.querySelector('.mtab.active')?.dataset.src || 'models/rojas.glb';
-  const modelName = document.querySelector(`.mtab[data-src="${CSS.escape(src)}"]`)?.dataset.name || '';
+  const tabName   = document.querySelector(`.mtab[data-src="${CSS.escape(src)}"]`)?.dataset.name || '';
+  const modelName = MODEL_DISPLAY_NAME[src] || tabName;
   if (treeHeader) treeHeader.textContent = modelName ? `PARTS · ${modelName}` : 'PARTS';
 
   Object.keys(visState).forEach(k => delete visState[k]);
@@ -379,8 +396,9 @@ function buildPartTree(mv, activeSrc) {
     return;
   }
 
+  const partNameOverrides = MODEL_PART_NAMES[src];
   treeList.innerHTML = mats.map((mat, i) => {
-    const name  = mat.name || `Part ${i + 1}`;
+    const name  = (partNameOverrides && partNameOverrides[i]) ? partNameOverrides[i] : (mat.name || `Part ${i + 1}`);
     const rn    = PART_RN_MAP[name] || '';
     const orbit = PART_ORBIT_MAP[name] || '30deg 65deg 90%';
     return `<li class="tree-item">
